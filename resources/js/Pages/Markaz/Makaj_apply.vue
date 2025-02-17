@@ -1,91 +1,120 @@
 <script setup>
 import { ref } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import markaz_apply_form from './markaz_apply_form.vue';
+import { router } from '@inertiajs/vue3'
+
 const items = ref([
   { id: 1, details: "Example Details 1" },
   { id: 2, details: "Example Details 2" },
 ]);
 
-const applyForm = () => {
-  console.log("Redirecting to apply form...");
+const showForm = ref(false);
+
+// Toggle form visibility
+const toggleForm = () => {
+  showForm.value = !showForm.value;
 };
 
+// Handle edit action
 const editItem = (item) => {
   console.log("Editing item:", item);
 };
 
+// Handle view action
 const viewItem = (item) => {
   console.log("Viewing item:", item);
 };
 
+// Handle delete action
 const deleteItem = (item) => {
   console.log("Deleting item:", item);
 };
 </script>
 
 <template>
-    <AuthenticatedLayout>
+  <AuthenticatedLayout>
 
-  <div class="bg-white shadow-md rounded-md overflow-hidden mt-5 mx-3">
-    <!-- Card Header -->
-    <div class="bg-blue-900 text-white px-4 py-3 flex justify-end">
+      <div class="container mx-auto px-4 mt-5">
+        <!-- Form Section -->
+        <div v-if="showForm">
+          <markaz_apply_form />
+          <div class="bg-blue-900 text-white px-4 py-3 flex justify-end mb-3">
+            <button
+              class="px-3 py-2 text-sm bg-red-600 text-white rounded hover:bg-red-700"
+              @click="toggleForm"
+              aria-label="Close Form"
+            >
+            পেছনে যাই
+            </button>
+          </div>
+        </div>
+
+        <!-- Table Section -->
+       <div v-else class="bg-white rounded-md shadow-lg">
+    <!-- Header with Apply Button -->
+    <div class="bg-[#727D73] text-white px-6 py-4 rounded-t-md flex justify-between items-center">
+      <h2 class="text-xl font-semibold">আবেদন তালিকা</h2>
       <button
-        class="px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
-        @click="applyForm"
+        class="px-4 py-2 text-xl bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 ease-in-out shadow-md"
+        @click="toggleForm"
+        aria-label="Apply Now"
       >
         আবেদন করুন
       </button>
     </div>
 
-    <!-- Table Section -->
-    <div class="p-4">
-      <div class="overflow-x-auto">
-        <table class="w-full border-collapse border border-gray-300">
-          <thead class="bg-yellow-500 text-white">
-            <tr>
-              <th class="p-2 border">আবেদন নং</th>
-              <th class="p-2 border">আবেদনের তারিখ</th>
-              <th class="p-2 border">আবেদনের বিস্তারিত</th>
-              <th class="p-2 border">মন্তব্য</th>
-              <th class="p-2 border">স্ট্যাটাস</th>
-              <th class="p-2 border">করনীয়</th>
+    <!-- Table Container -->
+    <div class="p-6">
+      <div class="overflow-x-auto rounded-md border border-gray-200 shadow">
+        <table class="w-full">
+          <thead>
+            <tr class="bg-gradient-to-r from-yellow-500 to-yellow-600">
+              <th class="px-4 py-3 text-white font-semibold border-b">আবেদন নং</th>
+              <th class="px-4 py-3 text-white font-semibold border-b">আবেদনের তারিখ</th>
+              <th class="px-4 py-3 text-white font-semibold border-b">আবেদনের বিস্তারিত</th>
+              <th class="px-4 py-3 text-white font-semibold border-b">ছা্ত্র সংখ্যা</th>
+              <th class="px-4 py-3 text-white font-semibold border-b">মাদরাসা সংখ্যা</th>
+              <th class="px-4 py-3 text-white font-semibold border-b">স্ট্যাটাস</th>
+              <th class="px-4 py-3 text-white font-semibold border-b">করনীয়</th>
             </tr>
           </thead>
-          <tbody>
-            <tr
-              v-for="item in items"
-              :key="item.id"
-              class="hover:bg-gray-100"
+          <tbody class="bg-white">
+            <tr 
+              v-for="item in items" 
+              :key="item.id" 
+              class="hover:bg-gray-50 transition duration-150 ease-in-out border-b"
             >
-              <td class="p-2 border text-center">55568</td>
-              <td class="p-2 border text-center">05/05/2023</td>
-              <td class="p-2 border text-center">{{ item.details }}</td>
-              <td class="p-2 border text-center">
-                <span class="text-blue-600 cursor-pointer">
+              <td class="px-4 py-3 text-center">55568</td>
+              <td class="px-4 py-3 text-center">05/05/2023</td>
+              <td class="px-4 py-3 text-center">{{ item.details }}</td>
+               <td class="px-4 py-3 text-center">{{ item.details }}</td>
+              <td class="px-4 py-3 text-center">
+                <span class="text-blue-600 cursor-pointer hover:text-blue-800">
                   <i class="fas fa-comment-alt"></i>
                 </span>
               </td>
-              <td class="p-2 border text-center">
-                <span class="px-2 py-1 text-xs font-bold text-green-800 bg-green-200 rounded">
-                  মন্জুর হয়েছে
+              <td class="px-4 py-3 text-center">
+                <span class="px-3 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">
+                  মন্জুর হয়েছে
                 </span>
               </td>
-              <td class="p-2 border text-center">
-                <div class="flex justify-center space-x-2">
+              <td class="px-4 py-3 text-center">
+                <div class="flex justify-center space-x-3">
                   <button
-                    class="p-1 text-white bg-gray-600 rounded hover:bg-gray-700"
+                    class="p-2 text-white bg-gray-600 rounded-lg hover:bg-gray-700 transition duration-200"
                     @click="editItem(item)"
                   >
                     <i class="fas fa-paper-plane"></i>
                   </button>
                   <button
-                    class="p-1 text-white bg-blue-500 rounded hover:bg-blue-600"
+                    class="p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200"
                     @click="viewItem(item)"
                   >
                     <i class="fas fa-eye"></i>
                   </button>
                   <button
-                    class="p-1 text-white bg-red-500 rounded hover:bg-red-600"
+                    class="p-2 text-white bg-red-500 rounded-lg hover:bg-red-600 transition duration-200"
                     @click="deleteItem(item)"
                   >
                     <i class="fas fa-trash-alt"></i>
@@ -98,11 +127,7 @@ const deleteItem = (item) => {
       </div>
     </div>
   </div>
-
-
-
-
-
-
-    </AuthenticatedLayout>
+      </div>
+  
+  </AuthenticatedLayout>
 </template>

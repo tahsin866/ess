@@ -38,7 +38,6 @@ const openMessages = () => {
 </script>
 
 <template>
-
 <!-- massage & Notification -->
 
 
@@ -50,17 +49,17 @@ const openMessages = () => {
     class="flex min-h-screen bg-gray-100 dark:bg-gray-900">
         <!-- Sidebar -->
         <aside :class="{'hidden sm:block': !sidebarOpen}" class="bg-gray-800 text-white w-64 flex-shrink-0 fixed h-screen">
-            <div class="h-16 flex items-center justify-center bg-gray-900 text-lg font-semibold">
+            <div class="h-16 flex text-xl items-center justify-center bg-gray-900 font-semibold">
              সনদ শাখা
             </div>
             <nav style=" font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="mt-4 space-y-2 overflow-y-auto">
-                <Link :href="route ('dashboard')" class="block px-4 py-2 hover:bg-gray-700">ড্যাশবোর্ড</Link>
+                <Link :href="route ('dashboard')" class="block text-xl px-4 py-2 hover:bg-gray-700">ড্যাশবোর্ড</Link>
 
 <!-- তাকমিল -->
                 <div>
                     <button
                         @click="dropdownOpen.takmil = !dropdownOpen.takmil"
-                        class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full text-xl flex justify-between items-center  px-4 py-2 hover:bg-gray-700"
                     >
                     মারকায
                         <svg
@@ -78,12 +77,12 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.takmil" class="pl-6">
-                        <Link :href="route('Markaz.Makaj_apply')" class="block px-4 py-2 hover:bg-gray-700">মারকায আবেদন</Link>
+                        <Link :href="route('Markaz.Makaj_apply')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারকায আবেদন</Link>
 
-                        <Link href="route('#')" class="block px-4 py-2 hover:bg-gray-700">মারকায পরিবর্তন</Link>
+                        <Link href="route('#')" class="block px-4 py-2 hover:bg-gray-700 text-xl">মারকায পরিবর্তন</Link>
 
-                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 hover:bg-gray-700">মারহালা পরিবর্তন</Link>
-                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 hover:bg-gray-700">মন্জুরী পত্র আবেদন</Link>
+                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারহালা পরিবর্তন</Link>
+                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-gray-700">মন্জুরী পত্র আবেদন</Link>
 
                     </div>
                 </div>
@@ -93,7 +92,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.orders = !dropdownOpen.orders"
-                        class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-gray-700"
                     >
                 নিবন্ধন সংক্রান্ত
                         <svg
@@ -111,11 +110,11 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.orders" class="pl-6">
-                        <Link href="route('sanawia.sanawaia')" class="block px-4 py-2 hover:bg-gray-700">পরীক্ষার্থী নিবন্ধন</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700">নিবন্ধন তালিকা</Link>
-                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 py-2 hover:bg-gray-700">নিবন্ধন পত্র</Link>
-                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 py-2 hover:bg-gray-700">ড্রাফ্ট/সফ্ট ডিলিট</Link>
-                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 py-2 hover:bg-gray-700">পেমেন্ট</Link>
+                        <Link href="route('sanawia.sanawaia')" class="block px-4 py-2 hover:bg-gray-700 text-xl ">পরীক্ষার্থী নিবন্ধন</Link>
+                        <Link href="#" class="block text-xl px-4 py-2 hover:bg-gray-700">নিবন্ধন তালিকা</Link>
+                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-gray-700">নিবন্ধন পত্র</Link>
+                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-gray-700">ড্রাফ্ট/সফ্ট ডিলিট</Link>
+                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl  py-2 hover:bg-gray-700">পেমেন্ট</Link>
                     </div>
                 </div>
 <!--
@@ -123,7 +122,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.sanawia = !dropdownOpen.sanawia"
-                        class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-gray-700"
                     >
                 অন্তর্ভুক্তি সংক্রান্ত
                         <svg
@@ -141,9 +140,9 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.sanawia" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-gray-700">আবেদন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700">সনদ কর্যক্রম</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
+                        <Link href="" class="block px-4 text-xl py-2 hover:bg-gray-700">আবেদন তালিকা</Link>
+                        <Link href="#" class="block px-4 text-xl py-2 hover:bg-gray-700">সনদ কর্যক্রম</Link>
                     </div>
                 </div>
 
@@ -171,7 +170,7 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.mutawassita" class="pl-6">
-                        <Link href="route('mutawassitah.Mutawassitah')" class="block px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
+                        <Link href="route('mutawassitah.Mutawassitah')" class="block text-xl px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
                         <Link href="" class="block px-4 py-2 hover:bg-gray-700">আবেদন তালিকা</Link>
                         <Link href="route('mutawassitah.mutawassitahcirtificate')" class="block px-4 py-2 hover:bg-gray-700">সনদ কর্যক্রম</Link>
                     </div>
