@@ -99,28 +99,29 @@ const deleteItem = (item) => {
                   মন্জুর হয়েছে
                 </span>
               </td>
-              <td class="px-4 py-3 text-center">
-                <div class="flex justify-center space-x-3">
-                  <button
-                    class="p-2 text-white bg-gray-600 rounded-lg hover:bg-gray-700 transition duration-200"
-                    @click="editItem(item)"
-                  >
-                    <i class="fas fa-paper-plane"></i>
-                  </button>
-                  <button
-                    class="p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200"
-                    @click="viewItem(item)"
-                  >
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button
-                    class="p-2 text-white bg-red-500 rounded-lg hover:bg-red-600 transition duration-200"
-                    @click="deleteItem(item)"
-                  >
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </div>
-              </td>
+            <td class="px-4 py-3 text-center">
+  <div class="inline-flex rounded-md shadow overflow-hidden">
+    <button
+      class="p-2 text-white bg-gray-600 hover:bg-gray-700 transition duration-200 border-r border-gray-500"
+      @click="editItem(item)"
+    >
+      <i class="fas fa-paper-plane"></i>
+    </button>
+    <button
+      class="p-2 text-white bg-blue-500 hover:bg-blue-600 transition duration-200 border-r border-blue-400"
+      @click="viewItem(item)"
+    >
+      <i class="fas fa-eye"></i>
+    </button>
+    <button
+      class="p-2 text-white bg-red-500 hover:bg-red-600 transition duration-200"
+      @click="deleteItem(item)"
+    >
+      <i class="fas fa-trash-alt"></i>
+    </button>
+  </div>
+</td>
+
             </tr>
           </tbody>
         </table>
