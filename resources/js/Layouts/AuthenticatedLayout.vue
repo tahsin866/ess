@@ -61,7 +61,7 @@ const openMessages = () => {
                         @click="dropdownOpen.takmil = !dropdownOpen.takmil"
                         class="w-full text-xl flex justify-between items-center  px-4 py-2 hover:bg-gray-700"
                     >
-                    মারকায
+                    আবেদন সংক্রান্ত
                         <svg
                             class="w-4 h-4 transition-transform"
                             :class="{'rotate-180': dropdownOpen.takmil}"
