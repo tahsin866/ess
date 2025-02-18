@@ -1,284 +1,77 @@
-<script setup>
-import { ref, computed } from 'vue'
-
-const form = ref({
-  input1: 0,
-  input2: 0,
-  input3: 0,
-  input4: 0,
-  input5: 0,
-  totalStudents: 0,
-  requirements: ''
-})
-
-
-const rows = ref([
-  {
-    fazilat: "",
-    sanabiya_ulya: "",
-    sanabiya: "",
-    mutawassita: "",
-    ibtedaiyyah: "",
-    hifzul_quran: "",
-    madrasa: ""
-  }
-]);
-
-const totalSum = computed(() => {
-  return form.value.input1 + form.value.input2 + form.value.input3 + 
-         form.value.input4 + form.value.input5
-})
-
-const addRow = () => {
-  rows.value.push({
-    fazilat: "",
-    sanabiya_ulya: "",
-    sanabiya: "",
-    mutawassita: "",
-    ibtedaiyyah: "",
-    hifzul_quran: "",
-    madrasa: ""
-  });
-};
-
-const removeRow = (index) => {
-  if (rows.value.length > 1) {
-    rows.value.splice(index, 1);
-  }
-};
-
-const submitForm = () => {
-  console.log('Form data:', {
-    mainForm: form.value,
-    madrasaList: rows.value
-  })
-}
-
-
-
-const selectedFile = ref(null)
-const showPreview = ref(false)
-const fileUrl = ref('')
-const fileType = ref('')
-
-const handleFileSelect = (event) => {
-  const file = event.target.files[0]
-  if (file) {
-    selectedFile.value = file
-    fileUrl.value = URL.createObjectURL(file)
-    fileType.value = file.type.split('/')[0] // 'image' or 'application'
-    showPreview.value = true
-  }
-}
-
-const closePreview = () => {
-  showPreview.value = false
-  fileUrl.value = ''
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
-
 <template>
-  <div class="p-6 bg-white rounded-lg shadow-lg mt-5 mb-3">
-    <!-- First Section -->
-   <div class="mb-8 mt-5">
-    <h3 class="text-xl text-blue-600 font-semibold mb-4">আবেদনকৃত মাদরাসায় পরীক্ষা দিতে ইচ্ছুক মাদরাসার তালিকা ও তথ্য</h3>
-    <div class="flex flex-col gap-4">
-      <div
-        v-for="(row, index) in rows"
-        :key="index"
-        class="flex flex-wrap gap-4 items-end border p-4 rounded-md shadow-md"
-      >
-        <div class="flex-1 min-w-[150px]">
-          <label class="block text-xl font-medium text-gray-700">ফযীলত</label>
-          <input
-            type="number"
-            v-model="row.fazilat"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-            placeholder="ছাত্র সংখ্যা লিখুন"
-          />
-        </div>
-        <div class="flex-1 min-w-[150px]">
-          <label class="block text-xl font-medium text-gray-700">সানাবিয়া ‍উলইয়া</label>
-          <input
-            type="number"
-            v-model="row.sanabiya_ulya"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-            placeholder="ছাত্র সংখ্যা লিখুন"
-          />
-        </div>
-        <div class="flex-1 min-w-[150px]">
-          <label class="block text-xl font-medium text-gray-700">সানাবিয়া</label>
-          <input
-            type="number"
-            v-model="row.sanabiya"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-            placeholder="ছাত্র সংখ্যা লিখুন"
-          />
-        </div>
-        <div class="flex-1 min-w-[150px]">
-          <label class="block text-xl font-medium text-gray-700">মুতাওয়াসসিতা</label>
-          <input
-            type="number"
-            v-model="row.mutawassita"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-            placeholder="ছাত্র সংখ্যা লিখুন"
-          />
-        </div>
-        <div class="flex-1 min-w-[150px]">
-          <label class="block text-xl font-medium text-gray-700">ইবতেদাইয়্যাহ</label>
-          <input
-            type="number"
-            v-model="row.ibtedaiyyah"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-            placeholder="ছাত্র সংখ্যা লিখুন"
-          />
-        </div>
-        <div class="flex-1 min-w-[150px]">
-          <label class="block text-xl font-medium text-gray-700">হিফজুল কোরান</label>
-          <input
-            type="number"
-            v-model="row.hifzul_quran"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-            placeholder="ছাত্র সংখ্যা লিখুন"
-          />
-        </div>
-        <div class="flex-1 min-w-[150px]">
-          <label class="block text-xl font-medium text-gray-700">মাদরাসা নির্বাচন করুন</label>
-          <select
-            v-model="row.madrasa"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md"
-          >
-            <option value="">মাদরাসা সিলেক্ট করুন</option>
-            <option value="mad1">Madarsa 1</option>
-            <option value="mad2">Madarsa 2</option>
-          </select>
+    <div class="bg-white rounded-t-lg shadow-md p-6  mx-auto">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">মারকাজ প্রাপ্তির শর্তাবলী ও নিয়মাবলী</h2>
+
+      <div class="space-y-4 mb-8 text-gray-700">
+        <!-- Terms List -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <ol class="list-decimal list-inside space-y-3">
+            <li>মারকায আবেদনের জন্য বেফাকের কেন্দ্রীয় পরীক্ষায় কমপক্ষে ৩ বছর অংশগ্রহণ করতে হবে।</li>
+            <li>বেফাক হতে প্রকাশিত পাঠ্যবই পড়াতে হবে এবং বেফাক কর্তৃক নির্ধারিত বার্ষিক চাঁদা ও ফি পরিশোধ থাকতে হবে।</li>
+            <li>বেফাক হতে প্রকাশিত পাঠ্যবই পড়াতে হবে এবং বেফাক কর্তৃক নির্ধারিত বার্ষিক চাঁদা ও ফি পরিশোধ থাকতে হবে।</li>
+            <!-- Add all other terms here -->
+          </ol>
         </div>
 
-        <!-- Remove Button -->
-        <div>
-          <button
-            v-if="rows.length > 1"
-            @click="removeRow(index)"
-            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-          >
-            -
-          </button>
+        <!-- Fee Information -->
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <p class="font-semibold">মারকাজ মঞ্জুরির ফি: ৯,০০০/- টাকা (এককালীন)</p>
         </div>
-      </div>
 
-      <!-- Add Row Button -->
-      <button
-        @click="addRow"
-        class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-      >
-        +
-      </button>
-    </div>
-  </div>
-
-    <!-- Second Section -->
-    <div class="mb-8">
-      <div class="mt-4">
-        <label class="block text-xl text-blue-600 font-semibold  mb-2">মারকায প্রাপ্তির প্রয়োজনীয়তা</label>
-        <textarea 
-          v-model="form.requirements"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          rows="4"
-        ></textarea>
-      </div>
-    </div>
-
-    <!-- Third Section -->
- <div class="mb-8">
-    <h3 class="text-xl text-blue-600 font-semibold mb-4">সংযুক্তি</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="space-y-2">
-         <label class="block text-lg font-medium text-gray-700 mb-2">ফাইল নির্বাচন করুন</label>
-  <div class="relative flex items-center border border-gray-300 rounded-md overflow-hidden bg-white">
-    <input 
-      type="file"
-      @change="handleFileSelect"
-      class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-      accept="image/*,.pdf,.doc,.docx"
-    >
-    <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded-l-md hover:bg-blue-600">
-      ফাইল আপলোড
-    </button>
-    <span class="px-4 py-2 flex-1 text-gray-700 truncate bg-gray-100">{{ selectedFileName || "কোনো ফাইল নির্বাচিত হয়নি" }}</span>
-  </div>
-</div>
-        
-        <!-- Preview Modal -->
-        <div v-if="showPreview" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div class="bg-white p-4 rounded-lg max-w-4xl w-full mx-4">
-            <div class="flex justify-end mb-2">
-              <button 
-                @click="closePreview"
-                class="bg-gray-200 p-2 rounded-full hover:bg-gray-300"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            <!-- Image Preview -->
-            <img 
-              v-if="fileType === 'image'"
-              :src="fileUrl"
-              class="max-h-[80vh] mx-auto"
-              alt="Preview"
+        <!-- Agreement Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex items-start gap-3">
+            <input
+              type="checkbox"
+              v-model="isAgreed"
+              id="agreement"
+              class="mt-1.5 h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             >
-            
-            <!-- Document Preview -->
-            <iframe
-              v-else
-              :src="fileUrl"
-              class="w-full h-[80vh]"
-              frameborder="0"
-            ></iframe>
+            <label for="agreement" class="text-gray-700">
+              আমি অঙ্গীকার করছি যে, উপরোক্ত কোনো শর্ত পূরণ না হলে এবং আবেদন ফরমে কোনো অসম্পূর্ণ বা ভুল তথ্য প্রদান করলে; কিংবা নিবন্ধন ও অন্তর্ভুক্তি পরীক্ষার্থী প্রকৃত সংখ্যার চেয়ে বেশি দেখিয়ে থাকলে এবং মারকায-বিধি পালনে কোনোরূপ অসঙ্গতি পরিলক্ষিত হলে, বেফাক কর্তৃপক্ষের যে কোনো ফয়সালা মানতে বাধ্য থাকব।
+            </label>
           </div>
         </div>
-
-        <!-- File Name Display -->
-        <div v-if="selectedFile" class="mt-2 text-sm text-gray-600">
-          Selected: {{ selectedFile.name }}
-        </div>
       </div>
+
+      <!-- Next Button -->
+      <div class="flex justify-end">
+  <Link
+    :href="route('Markaz.markaz_agreement_form')"
+    :disabled="!isAgreed"
+    :class="[
+      'px-4 py-2 rounded-md font-semibold transition-all duration-200 flex items-center gap-2',
+      isAgreed
+        ? 'bg-blue-600 text-white hover:bg-blue-700'
+        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+    ]"
+  >
+    <span>পরবর্তী ধাপ</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+    </svg>
+  </Link>
+</div>
+
     </div>
-  </div>
+  </template>
 
-    <div class="mt-8">
-      <button 
-        @click="submitForm"
-        class="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-      >
-        সেভ করুন
-      </button>
-    </div>
+  <script setup>
+  import { Link } from '@inertiajs/vue3';
+import { ref } from 'vue'
 
-</template>
-<style scoped>
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.3s ease;
-}
+  const isAgreed = ref(false)
 
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
-}
-</style>
+  const handleNext = () => {
+    if (isAgreed.value) {
+      // Navigate to next step or emit event
+      console.log('Proceeding to next step')
+    }
+  }
+  </script>
+
+  <style scoped>
+  .list-decimal li {
+    margin-bottom: 1rem;
+  }
+  </style>

@@ -30,9 +30,34 @@ Route::get('Markaz/Makaj_apply', function() {
     return Inertia::render('Markaz/Makaj_apply');
 })->name('Markaz.Makaj_apply');
 
+Route::get('Markaz/markaz_change_table', function() {
+    return Inertia::render('Markaz/markaz_change_table');
+})->name('Markaz.markaz_change_table');
 
 
+Route::get('Markaz/Makaj_change', function() {
+    return Inertia::render('Markaz/Makaj_change');
+})->name('Markaz.Makaj_change');
+
+Route::get('Markaz/markaz_agreement_form', function() {
+    return Inertia::render('Markaz/markaz_agreement_form');
+})->name('Markaz.markaz_agreement_form');
 
 
+Route::get('Markaz/marhala_change_table', function() {
+    return Inertia::render('Markaz/marhala_change_table');
+})->name('Markaz.marhala_change_table');
 
+
+Route::get('Markaz/marhala_change', function() {
+    return Inertia::render('Markaz/marhala_change');
+})->name('Markaz.marhala_change');
+
+Route::get('students_registration/student_registration', function() {
+    return Inertia::render('students_registration/student_registration');
+})->name('students_registration.student_registration');
+
+Route::get('students_registration/student_reg_table', function() {
+    return Inertia::render('students_registration/student_reg_table');
+})->name('students_registration.student_reg_table');
 require __DIR__.'/auth.php';

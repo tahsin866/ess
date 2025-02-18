@@ -79,9 +79,10 @@ const openMessages = () => {
                     <div v-if="dropdownOpen.takmil" class="pl-6">
                         <Link :href="route('Markaz.Makaj_apply')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারকায আবেদন</Link>
 
-                        <Link href="route('#')" class="block px-4 py-2 hover:bg-gray-700 text-xl">মারকায পরিবর্তন</Link>
+                        <Link :href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারকায পরিবর্তন</Link>
 
-                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারহালা পরিবর্তন</Link>
+
+                        <Link :href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারহালা পরিবর্তন</Link>
                         <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-gray-700">মন্জুরী পত্র আবেদন</Link>
 
                     </div>
@@ -92,7 +93,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.orders = !dropdownOpen.orders"
-                        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full  text-xl flex justify-between items-center px-4 py-2 hover:bg-gray-700"
                     >
                 নিবন্ধন সংক্রান্ত
                         <svg
@@ -110,7 +111,7 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.orders" class="pl-6">
-                        <Link href="route('sanawia.sanawaia')" class="block px-4 py-2 hover:bg-gray-700 text-xl ">পরীক্ষার্থী নিবন্ধন</Link>
+                        <Link :href="route('students_registration.student_registration')" class="block px-4 py-2 hover:bg-gray-700 text-xl ">পরীক্ষার্থী নিবন্ধন</Link>
                         <Link href="#" class="block text-xl px-4 py-2 hover:bg-gray-700">নিবন্ধন তালিকা</Link>
                         <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-gray-700">নিবন্ধন পত্র</Link>
                         <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-gray-700">ড্রাফ্ট/সফ্ট ডিলিট</Link>
@@ -152,7 +153,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.mutawassita = !dropdownOpen.mutawassita"
-                        class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-gray-700"
                     >
              নেগরান/মুমতাহিন
                         <svg
@@ -170,9 +171,9 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.mutawassita" class="pl-6">
-                        <Link href="route('mutawassitah.Mutawassitah')" class="block text-xl px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-gray-700">আবেদন তালিকা</Link>
-                        <Link href="route('mutawassitah.mutawassitahcirtificate')" class="block px-4 py-2 hover:bg-gray-700">সনদ কর্যক্রম</Link>
+                        <Link href="route('mutawassitah.Mutawassitah')" class="block text-xl px-4 py-2 text-xl hover:bg-gray-700">সকল ছাত্র</Link>
+                        <Link href="" class="block px-4 py-2 text-xl hover:bg-gray-700">আবেদন তালিকা</Link>
+                        <Link href="route('mutawassitah.mutawassitahcirtificate')" class="block px-4 py-2 text-xl hover:bg-gray-700">সনদ কর্যক্রম</Link>
                     </div>
                 </div>
 
@@ -183,7 +184,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.ibtedaia = !dropdownOpen.ibtedaia"
-                        class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-gray-700"
                     >
            মারকায সংক্রান্ত
                         <svg
@@ -201,9 +202,9 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.ibtedaia" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-gray-700">আবেদন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700">সনদ কর্যক্রম</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-gray-700 text-xl">আবেদন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">সনদ কর্যক্রম</Link>
                     </div>
                 </div>
 
@@ -212,7 +213,7 @@ const openMessages = () => {
 <div>
                     <button
                         @click="dropdownOpen.HifzulQuran = !dropdownOpen.HifzulQuran"
-                        class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-gray-700"
                     >
                    রিপোর্টস
                         <svg
@@ -230,9 +231,9 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.HifzulQuran" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-gray-700">আবেদন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700">সনদ কর্যক্রম</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 text-xl hover:bg-gray-700">সকল ছাত্র</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-gray-700 text-xl">আবেদন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">সনদ কর্যক্রম</Link>
                     </div>
                 </div>
 
@@ -243,7 +244,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.Qirat = !dropdownOpen.Qirat"
-                        class="w-full flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-gray-700"
                     >
                 প্রয়োজনীয় ডকুমেন্টস
                         <svg
@@ -261,9 +262,9 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.Qirat" class="pl-6">
-                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-gray-700">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-gray-700">আবেদন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700">সনদ কর্যক্রম</Link>
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-gray-700 text-xl">সকল ছাত্র</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-gray-700 text-xl">আবেদন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">সনদ কর্যক্রম</Link>
                     </div>
                 </div>
 
@@ -272,8 +273,8 @@ const openMessages = () => {
 
 
 
-                <Link href="#" class="block px-4 py-2 hover:bg-gray-700">মেসেজিং</Link>
-                <Link href="#" class="block px-4 py-2 hover:bg-gray-700">নোটিস</Link>
+                <Link href="#" class="block px-4 text-xl py-2 hover:bg-gray-700">মেসেজিং</Link>
+                <Link href="#" class="block px-4 text-xl py-2 hover:bg-gray-700">নোটিস</Link>
             </nav>
         </aside>
 
@@ -402,7 +403,6 @@ const openMessages = () => {
             </nav>
 
             <main class="flex-1 pt-16">
-
 
 
                 <slot />
