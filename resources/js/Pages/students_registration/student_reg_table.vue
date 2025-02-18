@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import { Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
 
@@ -142,13 +143,18 @@ const resetSearch = () => {
       <h3 class="text-yellow-400 font-bold text-lg">সার্চ উইযার্ড</h3>
       <h3 class="text-white text-lg text-center">৪৮তম কেন্দ্রীয় পরীক্ষা: নেগরান মুমতাহিন</h3>
       <div class="flex justify-end gap-3">
-        <router-link
-          to="OldStudentRagistration"
-          class="inline-flex items-center px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
-        >
-          <i class="ri-add-circle-line mr-2"></i>
-          নিবন্ধন করুন
-        </router-link>
+   <Link
+  :href="route('students_registration.old_stu_reg_Form')"
+  class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors duration-200 flex items-center gap-2"
+>
+  <span>নিবন্ধন করুন</span>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+  </svg>
+</Link>
+
         <button class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
           <i class="ri-folder-upload-line mr-2"></i>
           ইম্পোর্ট করুন
