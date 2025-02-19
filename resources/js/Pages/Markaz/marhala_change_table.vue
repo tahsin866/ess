@@ -30,68 +30,68 @@ import { Link } from '@inertiajs/vue3';
 
 
 <template>
- <AuthenticatedLayout>
+<AuthenticatedLayout>
     <div class="bg-white rounded-md shadow-lg overflow-hidden mx-5 mt-5">
-      <!-- Table Header -->
-      <div class="bg-gradient-to-r from-blue-800 to-blue-600 px-6 py-3">
-        <div class="flex justify-between items-center">
-  <h2 class="text-xl font-bold text-white">মারহালা আবেদন তালিকা</h2>
-  <Link
-    :href="route('Markaz.marhala_change')"
-    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors duration-200 flex items-center gap-2"
-  >
-    <span>মারহালা পরিবর্তন ফরম</span>
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-      <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-    </svg>
-  </Link>
-</div>
-
-</div>
+      <!-- Table Header with Islamic Pattern -->
+      <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 border-b-4 border-gold-500 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
+        <div class="flex justify-between items-center relative z-10">
+          <h2 class="text-2xl font-bold text-white font-arabic">মারহালা আবেদন তালিকা</h2>
+          <Link
+            :href="route('Markaz.marhala_change')"
+            class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-md transition-all duration-200 flex items-center gap-2 border border-amber-400"
+          >
+            <span class="font-arabic">মারহালা পরিবর্তন ফরম</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </Link>
+        </div>
+      </div>
 
       <!-- Table Container -->
-      <div class="p-6">
+      <div class="p-6 bg-[url('/images/subtle-pattern.png')] bg-opacity-5">
         <div class="overflow-x-auto">
-          <table class="w-full border border-gray-200 rounded-lg">
+          <table class="w-full border border-emerald-200 rounded-lg">
             <thead>
-              <tr class="bg-gradient-to-r from-[#141E30] to-[#243B55]">
-                <th class="px-6 py-4 text-white font-semibold">আবেদন নং</th>
-                <th class="px-6 py-4 text-white font-semibold">বর্তমান স্তর</th>
-                <th class="px-6 py-4 text-white font-semibold">বর্তমান মাদরাসা</th>
-                <th class="px-6 py-4 text-white font-semibold">তারিখ</th>
-                <th class="px-6 py-4 text-white font-semibold">জয়েনিং তারিক</th>
-                <th class="px-6 py-4 text-white font-semibold">স্টাটাস</th>
-                <th class="px-6 py-4 text-white font-semibold">একশন</th>
+              <tr class="bg-gradient-to-r from-emerald-900 to-emerald-800">
+                <th class="px-6 py-4 text-white font-arabic">আবেদন নং</th>
+                <th class="px-6 py-4 text-white font-arabic">বর্তমান স্তর</th>
+                <th class="px-6 py-4 text-white font-arabic">বর্তমান মাদরাসা</th>
+                <th class="px-6 py-4 text-white font-arabic">তারিখ</th>
+                <th class="px-6 py-4 text-white font-arabic">জয়েনিং তারিক</th>
+                <th class="px-6 py-4 text-white font-arabic">স্টাটাস</th>
+                <th class="px-6 py-4 text-white font-arabic">একশন</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in items" :key="item.id" class="border-b hover:bg-gray-50 transition-colors duration-200">
+              <tr v-for="item in items" :key="item.id" class="border-b hover:bg-emerald-50 transition-all duration-200">
                 <td class="px-6 py-4 text-center">{{ item.applicationNo }}</td>
                 <td class="px-6 py-4 text-center">{{ item.currentLevel }}</td>
                 <td class="px-6 py-4 text-center">{{ item.currentMadrasa }}</td>
                 <td class="px-6 py-4 text-center">{{ item.date }}</td>
                 <td class="px-6 py-4 text-center">{{ item.joiningDate }}</td>
                 <td class="px-6 py-4 text-center">
-                  <span class="px-3 py-1 text-sm font-medium rounded-full"
+                  <span class="px-4 py-1.5 text-sm font-medium rounded-full"
                         :class="{
-                          'bg-green-100 text-green-800': item.status === 'active',
+                          'bg-emerald-100 text-emerald-800': item.status === 'active',
                           'bg-red-100 text-red-800': item.status === 'inactive'
                         }">
                     {{ item.status }}
                   </span>
                 </td>
                 <td class="px-6 py-4">
-                  <div class="flex justify-center gap-2">
+                  <div class="flex justify-center gap-3">
                     <button @click="viewItem(item)"
-                            class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200">
+                            class="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-200">
                       <i class="fas fa-eye"></i>
                     </button>
                     <button @click="updateItem(item)"
-                            class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200">
+                            class="p-2 text-amber-600 hover:bg-amber-50 rounded-lg transition-all duration-200">
                       <i class="fas fa-edit"></i>
                     </button>
                     <button @click="deleteItem(item)"
-                            class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200">
+                            class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
                       <i class="fas fa-trash-alt"></i>
                     </button>
                   </div>
@@ -102,7 +102,8 @@ import { Link } from '@inertiajs/vue3';
         </div>
       </div>
     </div>
- </AuthenticatedLayout>
+</AuthenticatedLayout>
+
   </template>
 
 

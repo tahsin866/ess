@@ -33,192 +33,365 @@ const onSubmit = () => {
   <AuthenticatedLayout>
     <div class="space-y-6 mx-5 mt-5">
     <!-- Personal Information Card -->
-    <div class="bg-white rounded-lg shadow">
-      <div class="bg-[#243b55] px-6 py-4 rounded-t-md">
-        <h5 class="text-white text-lg font-medium">ব্যক্তিগত তথ্য</h5>
-      </div>
+    <div class="bg-white rounded-sm shadow-md border-r-4 border-emerald-600">
+        <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-md flex items-center gap-3">
+          <i class="fas fa-user-circle text-2xl text-white"></i>
+          <h5 class="text-white text-xl font-arabic">ব্যক্তিগত তথ্য</h5>
+        </div>
 
       <div class="p-6">
-        <form class="space-y-6">
-          <!-- Name Fields -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">নাম (বাংলা)</label>
-              <input
-                v-model="formData.nameBangla"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="নাম (বাংলা)"
-              >
-            </div>
+      <form class="space-y-6">
+  <!-- Name Fields -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">নাম (বাংলা)</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-user text-emerald-600"></i>
+        </span>
+        <input
+          v-model="formData.nameBangla"
+          type="text"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">নাম (ইংরেজি)</label>
-              <input
-                v-model="formData.nameEnglish"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="নাম (ইংরেজি)"
-              >
-            </div>
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">নাম (ইংরেজি)</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-user-edit text-emerald-600"></i>
+        </span>
+        <input
+          v-model="formData.nameEnglish"
+          type="text"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">নাম (আরবি)</label>
-              <input
-                v-model="formData.nameArabic"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="নাম (আরবি)"
-              >
-            </div>
-          </div>
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">নাম (আরবি)</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-pen-fancy text-emerald-600"></i>
+        </span>
+        <input
+          v-model="formData.nameArabic"
+          type="text"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
+  </div>
 
-          <!-- Mother's Name Fields -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">মাতার নাম (বাংলা)</label>
-              <input
-                v-model="formData.motherNameBangla"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="মাতার নাম (বাংলা)"
-              >
-            </div>
+  <!-- Mother's Name Fields -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">মাতার নাম (বাংলা)</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-female text-emerald-600"></i>
+        </span>
+        <input
+          v-model="formData.motherNameBangla"
+          type="text"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">মাতার নাম (ইংরেজি)</label>
-              <input
-                v-model="formData.motherNameEnglish"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="মাতার নাম (ইংরেজি)"
-              >
-            </div>
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">মাতার নাম (ইংরেজি)</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-female text-emerald-600"></i>
+        </span>
+        <input
+          v-model="formData.motherNameEnglish"
+          type="text"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">মাতার নাম (আরবি)</label>
-              <input
-                v-model="formData.motherNameArabic"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="মাতার নাম (আরবি)"
-              >
-            </div>
-          </div>
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">মাতার নাম (আরবি)</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-female text-emerald-600"></i>
+        </span>
+        <input
+          v-model="formData.motherNameArabic"
+          type="text"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
+  </div>
 
-          <!-- Date and Registration Fields -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
-              <input
-                v-model="selectedDate"
-                type="date"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
+  <!-- Date and Registration Fields -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">Date</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-calendar-alt text-emerald-600"></i>
+        </span>
+        <input
+          v-model="selectedDate"
+          type="date"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">জন্ম-নিবন্ধন নম্বর</label>
-              <input
-                v-model="formData.birthRegNo"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="জন্ম-নিবন্ধন নম্বর"
-              >
-            </div>
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">জন্ম-নিবন্ধন নম্বর</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-id-card text-emerald-600"></i>
+        </span>
+        <input
+          v-model="formData.birthRegNo"
+          type="text"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">জাতীয় পরিচয়পত্র নম্বর</label>
-              <input
-                v-model="formData.nidNo"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="জাতীয় পরিচয়পত্র নম্বর"
-              >
-            </div>
-          </div>
-        </form>
+    <div class="relative">
+      <label class="block text-sm font-medium text-gray-700 mb-1 font-arabic">জাতীয় পরিচয়পত্র নম্বর</label>
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-address-card text-emerald-600"></i>
+        </span>
+        <input
+          v-model="formData.nidNo"
+          type="text"
+          class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+      </div>
+    </div>
+  </div>
+</form>
+
       </div>
     </div>
 
     <!-- Required Information Card -->
-    <div class="bg-white rounded-lg shadow">
-      <div class="bg-[#243b55] px-6 py-4 rounded-t-lg">
-        <h5 class="text-white text-lg font-medium">প্রয়োজনীয় তথ্য</h5>
+   <div class="bg-white rounded-lg shadow-md border-r-4 border-emerald-600">
+  <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-lg relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
+    <div class="flex items-center gap-3 relative z-10">
+      <i class="fas fa-book-open text-2xl text-white"></i>
+      <h5 class="text-white text-xl font-arabic">প্রয়োজনীয় তথ্য</h5>
+    </div>
+  </div>
+
+  <div class="p-6 bg-[url('/images/subtle-pattern.png')] bg-opacity-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="relative">
+        <label class=" text-sm font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+          <i class="fas fa-user-graduate text-emerald-600"></i>
+          নিয়মিত
+        </label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-users text-emerald-600"></i>
+          </span>
+          <input
+            type="text"
+            disabled
+            class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800"
+            placeholder="মোট ছাত্র সংখ্যা"
+          >
+        </div>
       </div>
 
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">নিয়মিত</label>
-            <input
-              type="text"
-              disabled
-              class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
-              placeholder="মোট ছাত্র সংখ্যা"
-            >
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">বোর্ড</label>
-            <input
-              type="text"
-              disabled
-              class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
-              placeholder="মোট ছাত্র সংখ্যা"
-            >
-          </div>
-        </div>
-
-        <div class="mt-6">
-          <h4 class="text-yellow-600 font-medium mb-4">নির্বাচনি কিতাব সিলেক্ট করুন</h4>
-          <div class="flex space-x-6">
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" class="form-checkbox">
-              <span>হিদায়া ১ম খন্ড</span>
-            </label>
-
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" class="form-checkbox">
-              <span>হিদায়া ২য় খন্ড</span>
-            </label>
-          </div>
+      <div class="relative">
+        <label class=" text-sm font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+          <i class="fas fa-building text-emerald-600"></i>
+          বোর্ড
+        </label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-university text-emerald-600"></i>
+          </span>
+          <input
+            type="text"
+            disabled
+            class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800"
+            placeholder="মোট ছাত্র সংখ্যা"
+          >
         </div>
       </div>
     </div>
+
+    <div class="mt-6">
+      <h4 class="text-emerald-700 font-medium mb-4 flex items-center gap-2 font-arabic">
+        <i class="fas fa-books text-emerald-600"></i>
+        নির্বাচনি কিতাব সিলেক্ট করুন
+      </h4>
+      <div class="flex space-x-6">
+        <label class="flex items-center space-x-2 group cursor-pointer">
+          <div class="relative">
+            <input type="checkbox" class="form-checkbox text-emerald-600 border-emerald-300 rounded-md focus:ring-emerald-500">
+            <div class="absolute inset-0 bg-emerald-100 opacity-0 group-hover:opacity-20 rounded-md transition-opacity"></div>
+          </div>
+          <span class="text-emerald-800 group-hover:text-emerald-600 transition-colors font-arabic">হিদায়া ১ম খন্ড</span>
+        </label>
+
+        <label class="flex items-center space-x-2 group cursor-pointer">
+          <div class="relative">
+            <input type="checkbox" class="form-checkbox text-emerald-600 border-emerald-300 rounded-md focus:ring-emerald-500">
+            <div class="absolute inset-0 bg-emerald-100 opacity-0 group-hover:opacity-20 rounded-md transition-opacity"></div>
+          </div>
+          <span class="text-emerald-800 group-hover:text-emerald-600 transition-colors font-arabic">হিদায়া ২য় খন্ড</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <!-- Address Card -->
-    <div class="bg-white rounded-lg shadow">
-      <div class="bg-[#243b55] px-6 py-4 rounded-t-lg">
-        <h5 class="text-white text-lg font-medium">ঠিকানা</h5>
+  <div class="bg-white rounded-lg shadow-md border-r-4 border-emerald-600 mb-6">
+  <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-lg relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
+    <div class="flex items-center gap-3 relative z-10">
+      <i class="fas fa-map-marked-alt text-2xl text-white"></i>
+      <h5 class="text-white text-xl font-arabic">বর্তমান ঠিকানা</h5>
+    </div>
+  </div>
+
+  <div class="p-6 bg-[url('/images/subtle-pattern.png')] bg-opacity-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="relative">
+        <label class="text-sm font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+          <i class="fas fa-globe-asia text-emerald-600"></i>
+          বিভাগ
+        </label>
+        <div class="relative">
+          <select class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none">
+            <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
+          </select>
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-map text-emerald-600"></i>
+          </span>
+          <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <i class="fas fa-chevron-down text-emerald-600"></i>
+          </span>
+        </div>
       </div>
 
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">বিভাগ</label>
-            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
-            </select>
-          </div>
+      <div class="relative">
+        <label class=" text-sm font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+          <i class="fas fa-city text-emerald-600"></i>
+          জেলা
+        </label>
+        <div class="relative">
+          <select class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none">
+            <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
+          </select>
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-building text-emerald-600"></i>
+          </span>
+          <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <i class="fas fa-chevron-down text-emerald-600"></i>
+          </span>
+        </div>
+      </div>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">জেলা</label>
-            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">থানা/উপজেলা</label>
-            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
-            </select>
-          </div>
+      <div class="relative">
+        <label class=" text-sm font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+          <i class="fas fa-map-pin text-emerald-600"></i>
+          থানা/উপজেলা
+        </label>
+        <div class="relative">
+          <select class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none">
+            <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
+          </select>
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-landmark text-emerald-600"></i>
+          </span>
+          <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <i class="fas fa-chevron-down text-emerald-600"></i>
+          </span>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
+    <div class="bg-white rounded-lg shadow-md border-r-4 border-emerald-600 mb-6">
+  <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-lg relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
+    <div class="flex items-center gap-3 relative z-10">
+      <i class="fas fa-map-marked-alt text-2xl text-white"></i>
+      <h5 class="text-white text-xl font-arabic"> স্থায়ী ঠিকানা</h5>
+    </div>
+  </div>
+
+  <div class="p-6 bg-[url('/images/subtle-pattern.png')] bg-opacity-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="relative">
+        <label class="text-sm font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+          <i class="fas fa-globe-asia text-emerald-600"></i>
+          বিভাগ
+        </label>
+        <div class="relative">
+          <select class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none">
+            <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
+          </select>
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-map text-emerald-600"></i>
+          </span>
+          <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <i class="fas fa-chevron-down text-emerald-600"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="relative">
+        <label class="text-sm font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+          <i class="fas fa-city text-emerald-600"></i>
+          জেলা
+        </label>
+        <div class="relative">
+          <select class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none">
+            <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
+          </select>
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-building text-emerald-600"></i>
+          </span>
+          <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <i class="fas fa-chevron-down text-emerald-600"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="relative">
+        <label class="text-sm font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+          <i class="fas fa-map-pin text-emerald-600"></i>
+          থানা/উপজেলা
+        </label>
+        <div class="relative">
+          <select class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none">
+            <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
+          </select>
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-landmark text-emerald-600"></i>
+          </span>
+          <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <i class="fas fa-chevron-down text-emerald-600"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- Attachment Card -->
     <div class="bg-white rounded-lg shadow">
       <div class="bg-[#243b55] px-6 py-4 rounded-t-lg">

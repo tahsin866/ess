@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import markaz_apply_form from './markaz_apply_form.vue';
-import { router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
 
 const items = ref([
   { id: 1, details: "Example Details 1" },
@@ -52,20 +52,18 @@ const deleteItem = (item) => {
         <div class="bg-gradient-to-r from-emerald-900 to-emerald-800 text-white px-8 py-3 rounded-t-md flex justify-between items-center relative overflow-hidden">
           <div class="absolute inset-0 opacity-10 pattern-islamic"></div>
           <h2 class="text-2xl font-bold flex items-center gap-2">
-            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2L1 21h22L12 2zm0 3.83L19.17 19H4.83L12 5.83z"/>
-            </svg>
+          
             আবেদন তালিকা
           </h2>
-          <button
-          class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 flex items-center gap-2 shadow-md"
-          @click="toggleForm"
-        >
-          <svg class="w-5 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-          </svg>
-          আবেদন করুন
-        </button>
+        <Link
+    :href="route('Markaz.markaz_agreement_form')"
+    class="inline-flex items-center justify-center gap-2 px-6 py-2 text-base font-medium text-white bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-md hover:from-emerald-700 hover:to-emerald-800 transform hover:scale-105 transition-all duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+    @click="toggleForm"
+>
+    <i class="fas fa-plus-circle text-lg"></i>
+    <span style="font-family: 'SolaimanLipi', sans-serif;">আবেদন করুন</span>
+</Link>
+
         </div>
 
         <!-- Table Container -->
