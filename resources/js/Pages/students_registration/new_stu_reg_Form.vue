@@ -34,7 +34,7 @@ const onSubmit = () => {
     <div class="space-y-6 mx-5 mt-5">
     <!-- Personal Information Card -->
     <div class="bg-white rounded-lg shadow">
-      <div class="bg-[#243b55] px-6 py-4 rounded-t-lg">
+      <div class="bg-[#243b55] px-6 py-4 rounded-t-md">
         <h5 class="text-white text-lg font-medium">ব্যক্তিগত তথ্য</h5>
       </div>
 

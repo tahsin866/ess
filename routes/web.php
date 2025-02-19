@@ -69,4 +69,13 @@ Route::get('students_registration/old_stu_reg_Form', function () {
 Route::get('students_registration/new_stu_reg_Form', function () {
     return Inertia::render('students_registration/new_stu_reg_Form');
 })->name('students_registration.new_stu_reg_Form');
+
+Route::get('students_registration/stuedent_reg_list', function () {
+    return Inertia::render('students_registration/stuedent_reg_list');
+})->name('students_registration.stuedent_reg_list');
+
+
+
+
+
 require __DIR__ . '/auth.php';

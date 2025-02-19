@@ -48,18 +48,18 @@ const openMessages = () => {
 
     class="flex min-h-screen bg-gray-100 dark:bg-gray-900">
         <!-- Sidebar -->
-        <aside :class="{'hidden sm:block': !sidebarOpen}" class="bg-gray-800 text-white w-64 flex-shrink-0 fixed h-screen">
-            <div class="h-16 flex text-xl items-center justify-center bg-gray-900 font-semibold">
-             সনদ শাখা
+        <aside :class="{'hidden sm:block': !sidebarOpen}" class="bg-[#F7F7F7] text-black w-64 flex-shrink-0 fixed h-screen">
+            <div class="h-16 flex text-xl items-center justify-center bg-[#F7F7F7] font-semibold">
+          এক্সাম মেনেজমেন্ট সিস্টেম
             </div>
             <nav style=" font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="mt-4 space-y-2 overflow-y-auto">
-                <Link :href="route ('dashboard')" class="block text-xl px-4 py-2 hover:bg-gray-700">ড্যাশবোর্ড</Link>
+                <Link :href="route ('dashboard')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">ড্যাশবোর্ড</Link>
 
 <!-- তাকমিল -->
                 <div>
                     <button
                         @click="dropdownOpen.takmil = !dropdownOpen.takmil"
-                        class="w-full text-xl flex justify-between items-center  px-4 py-2 hover:bg-gray-700"
+                        class="w-full text-xl flex justify-between items-center  px-4 py-2 hover:bg-[#C4D9FF]"
                     >
                     আবেদন সংক্রান্ত
                         <svg
@@ -77,13 +77,13 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.takmil" class="pl-6">
-                        <Link :href="route('Markaz.Makaj_apply')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারকায আবেদন</Link>
+                        <Link :href="route('Markaz.Makaj_apply')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মারকায আবেদন</Link>
 
-                        <Link :href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারকায পরিবর্তন</Link>
+                        <Link :href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মারকায পরিবর্তন</Link>
 
 
-                        <Link :href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-gray-700">মারহালা পরিবর্তন</Link>
-                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-gray-700">মন্জুরী পত্র আবেদন</Link>
+                        <Link :href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মারহালা পরিবর্তন</Link>
+                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মন্জুরী পত্র আবেদন</Link>
 
                     </div>
                 </div>
@@ -93,7 +93,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.orders = !dropdownOpen.orders"
-                        class="w-full  text-xl flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full  text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]"
                     >
                 নিবন্ধন সংক্রান্ত
                         <svg
@@ -109,13 +109,14 @@ const openMessages = () => {
                                 clip-rule="evenodd"
                             />
                         </svg>
+
                     </button>
                     <div v-if="dropdownOpen.orders" class="pl-6">
-                        <Link :href="route('students_registration.student_registration')" class="block px-4 py-2 hover:bg-gray-700 text-xl ">পরীক্ষার্থী নিবন্ধন</Link>
-                        <Link href="#" class="block text-xl px-4 py-2 hover:bg-gray-700">নিবন্ধন তালিকা</Link>
-                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-gray-700">নিবন্ধন পত্র</Link>
-                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-gray-700">ড্রাফ্ট/সফ্ট ডিলিট</Link>
-                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl  py-2 hover:bg-gray-700">পেমেন্ট</Link>
+                        <Link :href="route('students_registration.student_registration')" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl ">পরীক্ষার্থী নিবন্ধন</Link>
+                        <Link :href="route('students_registration.stuedent_reg_list')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">নিবন্ধন তালিকা</Link>
+                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">নিবন্ধন পত্র</Link>
+                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">ড্রাফ্ট/সফ্ট ডিলিট</Link>
+                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl  py-2 hover:bg-[#C4D9FF]">পেমেন্ট</Link>
                     </div>
                 </div>
 <!--
@@ -123,7 +124,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.sanawia = !dropdownOpen.sanawia"
-                        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]"
                     >
                 অন্তর্ভুক্তি সংক্রান্ত
                         <svg
@@ -141,10 +142,10 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.sanawia" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-gray-700">অন্তর্ভূূূূূূূূূূক্তি তালিকা</Link>
-                        <Link href="" class="block px-4 text-xl py-2 hover:bg-gray-700">ড্রাফ্ট তালিকা</Link>
-                        <Link href="#" class="block px-4 text-xl py-2 hover:bg-gray-700">প্রবেশপত্র</Link>
-                                 <Link href="#" class="block px-4 text-xl py-2 hover:bg-gray-700">পেমেন্ট</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">অন্তর্ভূূূূূূূূূূক্তি তালিকা</Link>
+                        <Link href="" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">ড্রাফ্ট তালিকা</Link>
+                        <Link href="#" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">প্রবেশপত্র</Link>
+                                 <Link href="#" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">পেমেন্ট</Link>
                     </div>
                 </div>
 
@@ -154,7 +155,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.mutawassita = !dropdownOpen.mutawassita"
-                        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-gray-700"
+                        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]"
                     >
              নেগরান/মুমতাহিন
                         <svg
@@ -172,9 +173,9 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.mutawassita" class="pl-6">
-                        <Link href="route('mutawassitah.Mutawassitah')" class="block text-xl px-4 py-2 hover:bg-gray-700">নেগ:/মুম: আবেদন</Link>
-                        <Link href="" class="block px-4 py-2 text-xl hover:bg-gray-700">মুমতাহিন তালিকা</Link>
-                        <Link href="route('mutawassitah.mutawassitahcirtificate')" class="block px-4 py-2 text-xl hover:bg-gray-700">নিয়োগপত্র</Link>
+                        <Link href="route('mutawassitah.Mutawassitah')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">নেগ:/মুম: আবেদন</Link>
+                        <Link href="" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মুমতাহিন তালিকা</Link>
+                        <Link href="route('mutawassitah.mutawassitahcirtificate')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">নিয়োগপত্র</Link>
                     </div>
                 </div>
 
@@ -185,7 +186,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.ibtedaia = !dropdownOpen.ibtedaia"
-                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-gray-700"
+                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-[#C4D9FF]"
                     >
            মারকায সংক্রান্ত
                         <svg
@@ -203,12 +204,12 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.ibtedaia" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-gray-700">মাদরাসার তালিকা</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-gray-700 text-xl">নেগরান তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">প্রশ্নপত্র প্রিন্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">ভাউচার তৈরি</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">ছাত্রদের হাজিরা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">নেগরানদের হাজিরা</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">মাদরাসার তালিকা</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">নেগরান তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">প্রশ্নপত্র প্রিন্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">ভাউচার তৈরি</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">ছাত্রদের হাজিরা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">নেগরানদের হাজিরা</Link>
                     </div>
                 </div>
 
@@ -217,7 +218,7 @@ const openMessages = () => {
 <div>
                     <button
                         @click="dropdownOpen.HifzulQuran = !dropdownOpen.HifzulQuran"
-                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-gray-700"
+                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-[#C4D9FF]"
                     >
                    রিপোর্টস
                         <svg
@@ -235,9 +236,13 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.HifzulQuran" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 text-xl hover:bg-gray-700">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-gray-700 text-xl">আবেদন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">সনদ কর্যক্রম</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">নিবন্ধন রিপোর্ট</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">অন্তর্ভূক্তি রিপোর্ট</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">নেগ:/মুম রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">হাজিরা রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">পেমেন্ট রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">নিয়োগ রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">মাদরাসা রিপোর্ট</Link>
                     </div>
                 </div>
 
@@ -248,7 +253,7 @@ const openMessages = () => {
                 <div>
                     <button
                         @click="dropdownOpen.Qirat = !dropdownOpen.Qirat"
-                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-gray-700"
+                        class="w-full flex justify-between items-center text-xl px-4 py-2 hover:bg-[#C4D9FF]"
                     >
                 প্রয়োজনীয় ডকুমেন্টস
                         <svg
@@ -266,9 +271,9 @@ const openMessages = () => {
                         </svg>
                     </button>
                     <div v-if="dropdownOpen.Qirat" class="pl-6">
-                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-gray-700 text-xl">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-gray-700 text-xl">আবেদন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-gray-700 text-xl">সনদ কর্যক্রম</Link>
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">সকল ছাত্র</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">আবেদন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">সনদ কর্যক্রম</Link>
                     </div>
                 </div>
 
@@ -277,20 +282,20 @@ const openMessages = () => {
 
 
 
-                <Link href="#" class="block px-4 text-xl py-2 hover:bg-gray-700">মেসেজিং</Link>
-                <Link href="#" class="block px-4 text-xl py-2 hover:bg-gray-700">নোটিস</Link>
+                <Link href="#" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">মেসেজিং</Link>
+                <Link href="#" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">নোটিস</Link>
             </nav>
         </aside>
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col ml-64">
-            <nav class="bg-white dark:bg-gray-800 border-b dark:border-gray-700 fixed w-full z-10">
+            <nav class="bg-[#F7F7F7] dark:bg-gray-800 border-b dark:border-gray-700 fixed w-full z-10">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between items-center">
                         <!-- Mobile Menu Toggle -->
                         <button
                             @click="sidebarOpen = !sidebarOpen"
-                            class="sm:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded-md"
+                            class="sm:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#C4D9FF] p-2 rounded-md"
                         >
                             <svg
                                 class="h-6 w-6"
@@ -373,35 +378,49 @@ const openMessages = () => {
 
                             <!-- User Dropdown -->
                             <Dropdown align="right" width="48">
-                                <template #trigger>
-                                    <span class="inline-flex rounded-md">
-                                        <button
-                                            style=" font-family: 'Merriweather','SolaimanLipi',sans-serif;"
-                                            type="button"
-                                            class="inline-flex items-center px-3 py-2 bg-white dark:bg-gray-800 border border-transparent text-md font leading-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                                        >
-                                            {{ $page.props.auth.user.name }}
-                                            <svg
-                                                class="-me-0.5 ms-2 h-4 w-4"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clip-rule="evenodd"
-                                                />
-                                            </svg>
-                                        </button>
-                                    </span>
-                                </template>
-                                <template #content>
-                                    <DropdownLink :href="route('profile.edit')">Profile</DropdownLink>
-                                    <DropdownLink :href="route('logout')" method="post" as="button">Log Out</DropdownLink>
-                                </template>
-                            </Dropdown>
-                        </div>
+  <template #trigger>
+    <span class="inline-flex rounded-md">
+      <button
+        style="font-family: 'Merriweather', 'SolaimanLipi', sans-serif;"
+        type="button"
+        class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-md font-medium leading-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 transition duration-150 ease-in-out"
+      >
+        {{ $page.props.auth.user.name }}
+        <svg
+          class="-me-0.5 ms-2 h-5 w-5 text-gray-500 dark:text-gray-400 transition duration-150 ease-in-out"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </span>
+  </template>
+  <template #content>
+    <!-- Profile Link with Icon -->
+    <DropdownLink :href="route('profile.edit')" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
+      <svg class="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+      </svg>
+      Profile
+    </DropdownLink>
+
+    <!-- Log Out Link with Icon -->
+    <DropdownLink :href="route('logout')" method="post" as="button" class="flex items-center px-4 py-2 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
+      <svg class="w-5 h-5 mr-2 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+      </svg>
+      Log Out
+    </DropdownLink>
+  </template>
+</Dropdown>
+
+         </div>
                     </div>
                 </div>
             </nav>
