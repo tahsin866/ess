@@ -74,8 +74,12 @@ Route::get('students_registration/stuedent_reg_list', function () {
     return Inertia::render('students_registration/stuedent_reg_list');
 })->name('students_registration.stuedent_reg_list');
 
+Route::get('students_registration/student_reg_card', function () {
+    return Inertia::render('students_registration/student_reg_card');
+})->name('students_registration.student_reg_card');
 
-
-
+Route::get('students_registration/stu_reg_view', function () {
+    return Inertia::render('students_registration/stu_reg_view');
+})->name('students_registration.stu_reg_view');
 
 require __DIR__ . '/auth.php';

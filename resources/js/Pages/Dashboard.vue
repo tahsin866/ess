@@ -4,27 +4,15 @@ import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 // import { Chart } from 'chart.js/auto';
 
+import dashboard_card from './dashboard-component/dashboard_card.vue';
+import Notice_bord_and_upcomming_exam from './dashboard-component/notice_bord_and_upcomming_exam.vue';
+import Registrasion_update_dashboard from './dashboard-component/registrasion_update_dashboard.vue';
+
 // Enhanced statistics data
-const stats = ref([
-    { title: 'Active Students', value: '1,200', icon: '👨‍🎓', trend: '+5%', color: 'bg-blue-500' },
-    { title: 'Upcoming Exams', value: '15', icon: '📅', trend: '+2', color: 'bg-green-500' },
-    { title: 'Success Rate', value: '85%', icon: '📈', trend: '+3.2%', color: 'bg-purple-500' },
-    { title: 'Average Score', value: '78%', icon: '🎯', trend: '+1.5%', color: 'bg-orange-500' },
-]);
+
 
 // Enhanced exam schedule
-const upcomingExams = ref([
-    {
-        id: 1,
-        subject: 'Advanced Mathematics',
-        date: '2023-10-25',
-        time: '09:00 AM',
-        duration: '3 hours',
-        students: 45,
-        status: 'Upcoming'
-    },
-    // Add more exams...
-]);
+
 
 // Recent activities
 const activities = ref([
@@ -37,7 +25,14 @@ const activities = ref([
     },
     // Add more activities...
 ]);
+const selectedDaura = ref('1446'); // Default value
+const madrasaCode = ref('');
 
+const search = () => {
+  // Perform search logic here using selectedDaura and madrasaCode
+  console.log('Searching for:', selectedDaura.value, madrasaCode.value);
+  // You would typically make an API call or filter data here.
+};
 
 </script>
 
@@ -45,110 +40,119 @@ const activities = ref([
     <Head title="Islamic Education Dashboard" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <div class="flex justify-between items-center">
-                <h2 class="text-2xl font-bold text-emerald-800 dark:text-emerald-200 flex items-center gap-3">
-                    <i class="fas fa-mosque"></i>
-                    মাদরাসা ব্যবস্থাপনা ড্যাশবোর্ড
-                </h2>
-                <div class="flex space-x-4">
-                    <button class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg shadow-md transition-all duration-200 flex items-center gap-2">
-                        <i class="fas fa-plus-circle"></i>
-                        পরীক্ষা তৈরি করুন
-                    </button>
-                    <button class="px-4 py-2 bg-emerald-100 text-emerald-700 hover:bg-emerald-200 rounded-lg shadow-md transition-all duration-200 flex items-center gap-2">
-                        <i class="fas fa-file-alt"></i>
-                        রিপোর্ট জেনারেট করুন
-                    </button>
-                </div>
-            </div>
-        </template>
+
+
+
+
+
+
+
+
 
         <div class="py-6">
+
             <div class="mx-auto px-4 sm:px-6 lg:px-8">
+
+
+
+    <div class="bg-gradient-to-r mb-5 rounded-md from-[#0B4D2F] to-[#116D45] py-6 text-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <!-- Title Section -->
+        <div class="mb-4 md:mb-0 flex items-center gap-3">
+          <div class="p-2 rounded-full bg-white/10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+              <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-2xl font-bold">দাওরায়ে হাদীস পরীক্ষা</p>
+            <p class="text-white/80">১৪৪৬ হিজরী</p>
+          </div>
+        </div>
+
+        <!-- Search Controls -->
+        <div class="flex flex-col md:flex-row items-center gap-3">
+          <div class="relative">
+            <select
+              v-model="selectedDaura"
+              class="appearance-none bg-white/10 border border-white/20 rounded-md px-4 py-2 pr-10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 min-w-[200px]"
+            >
+              <option value="1446">দাওরায়ে হাদীস ১৪৪৬</option>
+            </select>
+            <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="relative">
+            <input
+              type="text"
+              v-model="madrasaCode"
+              placeholder="মাদরাসা কোড (ইংরেজিতে)"
+              class="bg-white/10 border border-white/20 rounded-md px-4 py-2 pl-10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 min-w-[250px]"
+            >
+            <div class="absolute left-3 top-1/2 -translate-y-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+          </div>
+
+          <button
+            @click="search"
+            class="bg-white text-[#116D45] hover:bg-white/90 font-bold py-2 px-6 rounded-md flex items-center gap-2 transition-all focus:outline-none focus:ring-2 focus:ring-white/30"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            অনুসন্ধান
+          </button>
+        </div>
+      </div>
+
+      <!-- Info Text -->
+      <div class="mt-4 text-sm text-white/80 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p>বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ বোর্ডের ২৫৩৪ টি মাদরাসার উপাত্ত</p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
                 <!-- Statistics Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div v-for="stat in stats"
-                         :key="stat.title"
-                         class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-emerald-100 dark:border-emerald-800 transition-all duration-300 hover:shadow-xl">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-emerald-600 dark:text-emerald-400">{{ stat.title }}</p>
-                                <p class="text-2xl font-bold mt-2 text-emerald-800 dark:text-emerald-200">{{ stat.value }}</p>
-                                <span class="inline-flex items-center text-sm text-emerald-500 mt-2">
-                                    {{ stat.trend }}
-                                    <i class="fas fa-arrow-up ml-1"></i>
-                                </span>
-                            </div>
-                            <div :class="`${stat.color} text-white p-3 rounded-xl`">
-                                <i :class="`fas fa-${stat.icon} text-2xl`"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <dashboard_card />
 
                 <!-- Main Content Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Performance Chart -->
-                    <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-emerald-100">
-                        <h3 class="text-lg font-bold text-emerald-800 dark:text-emerald-200 mb-4 flex items-center gap-2">
-                            <i class="fas fa-chart-line"></i>
-                            পারফরম্যান্স ওভারভিউ
-                        </h3>
-                        <!-- Chart Component Here -->
-                    </div>
-
-                    <!-- Upcoming Exams -->
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-emerald-100">
-                        <h3 class="text-lg font-bold text-emerald-800 dark:text-emerald-200 mb-4 flex items-center gap-2">
-                            <i class="fas fa-calendar-alt"></i>
-                            আসন্ন পরীক্ষাসমূহ
-                        </h3>
-                        <div class="space-y-4">
-                            <div v-for="exam in upcomingExams"
-                                 :key="exam.id"
-                                 class="p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all duration-200">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h4 class="font-medium text-emerald-800 dark:text-emerald-200">{{ exam.subject }}</h4>
-                                        <p class="text-sm text-emerald-600 dark:text-emerald-400">{{ exam.date }} at {{ exam.time }}</p>
-                                        <p class="text-sm text-emerald-600 dark:text-emerald-400">সময়কাল: {{ exam.duration }}</p>
-                                    </div>
-                                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800">
-                                        {{ exam.status }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <Notice_bord_and_upcomming_exam />
                 <!-- Recent Activities -->
-                <div class="mt-8 bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-emerald-100">
-                    <h3 class="text-lg font-bold text-emerald-800 dark:text-emerald-200 mb-4 flex items-center gap-2">
-                        <i class="fas fa-history"></i>
-                        সাম্প্রতিক কার্যক্রম
-                    </h3>
-                    <div class="flow-root">
-                        <ul class="-mb-8">
-                            <li v-for="activity in activities" :key="activity.id" class="relative pb-8">
-                                <div class="relative flex items-start space-x-3">
-                                    <div class="relative px-1">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600">
-                                            <i :class="`fas fa-${activity.icon}`"></i>
-                                        </div>
-                                    </div>
-                                    <div class="min-w-0 flex-1">
-                                        <p class="text-sm text-emerald-800 dark:text-emerald-200">{{ activity.description }}</p>
-                                        <p class="text-sm text-emerald-600 dark:text-emerald-400">{{ activity.time }}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <div class=" bg-[#F8F9FA] mt-5  mb-5">
+    <!-- Header Section -->
+    <Registrasion_update_dashboard />
+  </div>
+
+
+
+
+
+
+
+
             </div>
         </div>
+
     </AuthenticatedLayout>
 </template>
 

@@ -52,7 +52,7 @@ const deleteItem = (item) => {
         <div class="bg-gradient-to-r from-emerald-900 to-emerald-800 text-white px-8 py-3 rounded-t-md flex justify-between items-center relative overflow-hidden">
           <div class="absolute inset-0 opacity-10 pattern-islamic"></div>
           <h2 class="text-2xl font-bold flex items-center gap-2">
-          
+
             আবেদন তালিকা
           </h2>
         <Link
@@ -101,22 +101,22 @@ const deleteItem = (item) => {
                       মন্জুর হয়েছে
                     </span>
                   </td>
-                  <td class="px-6 py-4 text-center">
+                  <td class="px-6 py-2 text-center">
                     <div class="inline-flex rounded-md shadow-sm overflow-hidden">
                       <button
-                        class="p-2.5 text-white bg-emerald-700 hover:bg-emerald-600 transition duration-200"
+                        class="p-2 text-white bg-emerald-700 hover:bg-emerald-600 transition duration-200"
                         @click="editItem(item)"
                       >
                         <i class="fas fa-edit"></i>
                       </button>
                       <button
-                        class="p-2.5 text-white bg-emerald-600 hover:bg-emerald-500 transition duration-200"
+                        class="p-2 text-white bg-emerald-600 hover:bg-emerald-500 transition duration-200"
                         @click="viewItem(item)"
                       >
                         <i class="fas fa-eye"></i>
                       </button>
                       <button
-                        class="p-2.5 text-white bg-red-600 hover:bg-red-500 transition duration-200"
+                        class="p-2 text-white bg-red-600 hover:bg-red-500 transition duration-200"
                         @click="deleteItem(item)"
                       >
                         <i class="fas fa-trash-alt"></i>

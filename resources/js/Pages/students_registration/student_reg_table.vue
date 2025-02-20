@@ -328,9 +328,13 @@ const resetSearch = () => {
               <button class="p-2 bg-emerald-100 text-emerald-600 rounded hover:bg-emerald-200">
                 <i class="fas fa-paper-plane"></i>
               </button>
-              <button class="p-2 bg-amber-100 text-amber-600 rounded hover:bg-amber-200">
-                <i class="fas fa-download"></i>
-              </button>
+              <Link
+  :href="route('students_registration.stu_reg_view')"
+  class="p-2 bg-amber-100 text-amber-600 rounded hover:bg-amber-200 inline-flex items-center transition-colors duration-200"
+>
+  <i class="fas fa-pencil-alt"></i>
+</Link>
+
               <button class="p-2 bg-red-100 text-red-600 rounded hover:bg-red-200">
                 <i class="fas fa-trash-alt"></i>
               </button>
