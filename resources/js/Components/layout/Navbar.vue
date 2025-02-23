@@ -7,7 +7,7 @@
           <!-- Logo and Brand -->
           <div class="flex items-center">
             <div class="h-12 w-12 rounded-full bg-emerald-800 flex items-center justify-center mr-3">
-              <img src="/path/to/logo.png" alt="Logo" class="h-8 w-8"/>
+              <img src="/public/images/find.png" alt="Logo" class="h-8 w-8"/>
             </div>
             <div class="flex flex-col">
               <!-- <span class="text-white ">بسم الله الرحمن الرحيم</span> -->

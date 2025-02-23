@@ -29,15 +29,12 @@ const submit = () => {
     <GuestLayout>
         <Head title="Login to WEMS" />
 
-        <div class="min-h-screen flex items-center justify-center">
-            <div class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-xl w-full max-w-md">
-                <!-- Islamic Header -->
-                <div class="text-center mb-8">
-                    <h1 class="text-2xl font-bold text-emerald-800 dark:text-emerald-400 mb-2">بسم الله الرحمن الرحيم</h1>
-                    <h2 class="text-xl text-gray-700 dark:text-gray-300">Welcome to WEMS Portal</h2>
-                </div>
 
-                <div v-if="status" class="mb-4 p-4 bg-emerald-50 dark:bg-emerald-900 rounded-lg text-emerald-700 dark:text-emerald-300">
+
+                <!-- Islamic Header -->
+
+
+                <div v-if="status" class="mb-4 p-4 bg-emerald-50 dark:bg-emerald-900 rounded-md text-emerald-700 dark:text-emerald-300">
                     {{ status }}
                 </div>
 
@@ -47,7 +44,7 @@ const submit = () => {
                         <TextInput
                             id="email"
                             type="email"
-                            class="mt-1 block w-full rounded-lg border-emerald-300 dark:border-emerald-700 focus:border-emerald-500 focus:ring-emerald-500"
+                            class="mt-1 block w-full rounded-sm border-emerald-300 dark:border-emerald-700 focus:border-emerald-500 focus:ring-emerald-500"
                             v-model="form.email"
                             required
                             autofocus
@@ -61,7 +58,7 @@ const submit = () => {
                         <TextInput
                             id="password"
                             type="password"
-                            class="mt-1 block w-full rounded-lg border-emerald-300 dark:border-emerald-700 focus:border-emerald-500 focus:ring-emerald-500"
+                            class="mt-1 block w-full rounded-sm border-emerald-300 dark:border-emerald-700 focus:border-emerald-500 focus:ring-emerald-500"
                             v-model="form.password"
                             required
                             autocomplete="current-password"
@@ -104,12 +101,5 @@ const submit = () => {
                         </div>
                     </div>
                 </form>
-
-                <!-- Islamic Footer -->
-                <div class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-                    <p>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
-                </div>
-            </div>
-        </div>
     </GuestLayout>
 </template>

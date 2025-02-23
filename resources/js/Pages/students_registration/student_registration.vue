@@ -67,7 +67,7 @@ const toggleDialog = () => {
 
           <!-- Title with Islamic decoration -->
           <h2 class="text-white text-2xl font-bold text-center">
-            ☪️ ৪৮তম কেন্দ্রীয় পরীক্ষা: মারহালা তালিকা
+        ৪৮তম কেন্দ্রীয় পরীক্ষা: মারহালা তালিকা
           </h2>
 
           <!-- Settings Button -->
@@ -109,6 +109,7 @@ const toggleDialog = () => {
           <tr v-for="level in levels" :key="level.id">
             <td class="px-6 py-4">{{ level.marhala }}</td>
             <td class="px-6 py-4">{{ level.startDate }}</td>
+
             <td class="px-6 py-4">{{ level.endDate }}</td>
             <td class="px-6 py-4">
               <span class="font-semibold">{{ level.regLimit }}</span>

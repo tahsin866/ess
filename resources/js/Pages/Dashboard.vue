@@ -67,8 +67,7 @@ const search = () => {
             </svg>
           </div>
           <div>
-            <p class="text-2xl font-bold">দাওরায়ে হাদীস পরীক্ষা</p>
-            <p class="text-white/80">১৪৪৬ হিজরী</p>
+            <p class="text-2xl font-bold">৪৮ তম কেন্দ্রীয় পরীক্ষা- ১৪৪৬ হিজরি / ২০২৫ ঈসাব্দ</p>
           </div>
         </div>
 
@@ -119,7 +118,7 @@ const search = () => {
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        <p>বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ বোর্ডের ২৫৩৪ টি মাদরাসার উপাত্ত</p>
+        <p>আপনার অধিনস্ত ১৫ টি মাদরাসার উপাত্ত</p>
       </div>
     </div>
   </div>
@@ -158,11 +157,11 @@ const search = () => {
 
 
 <style scoped>
-.btn-primary {
+/* .btn-primary {
     @apply px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200;
 }
 
 .btn-secondary {
     @apply px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200;
-}
+} */
 </style>

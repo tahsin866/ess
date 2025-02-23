@@ -8,8 +8,8 @@ const selectedType = ref('')
 
 const levels = [
   { value: 'mutawassitah', label: 'মুতাওয়াসসিতা' },
-  { value: 'thanawiyyah', label: 'থানাবিয়্যা' },
-  { value: 'alimiyyah', label: 'আলিমিয়্যা' }
+  { value: 'thanawiyyah', label: 'সানাবিয়্যাহ' },
+  { value: 'alimiyyah', label: 'ইবতেদাইয়্যাহ' }
 ]
 
 const applicationTypes = [
@@ -193,8 +193,8 @@ const selected = ref({
           class="w-5 h-5 text-emerald-600 border-emerald-300 rounded focus:ring-emerald-500"
         >
         <label class="flex items-center gap-2 text-emerald-800">
-          <i class="fas fa-certificate text-emerald-600"></i>
-          হাইআতুল উল্যা দাফিল
+
+     বেফাকুল মাদারসিল আরাবিয়া
         </label>
       </div>
       <div class="flex items-center gap-3">
@@ -204,8 +204,19 @@ const selected = ref({
           class="w-5 h-5 text-emerald-600 border-emerald-300 rounded focus:ring-emerald-500"
         >
         <label class="flex items-center gap-2 text-emerald-800">
-          <i class="fas fa-check-circle text-emerald-600"></i>
-          হাইআতুল উল্যা অনুমোদিত
+
+      সংযুুক্তি
+        </label>
+      </div>
+      <div class="flex items-center gap-3">
+        <input
+          type="checkbox"
+          v-model="selected.onumodito"
+          class="w-5 h-5 text-emerald-600 border-emerald-300 rounded focus:ring-emerald-500"
+        >
+        <label class="flex items-center gap-2 text-emerald-800">
+
+পেমেন্ট
         </label>
       </div>
     </div>

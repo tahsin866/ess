@@ -83,3 +83,4 @@ Route::get('students_registration/stu_reg_view', function () {
 })->name('students_registration.stu_reg_view');
 
 require __DIR__ . '/auth.php';
+
