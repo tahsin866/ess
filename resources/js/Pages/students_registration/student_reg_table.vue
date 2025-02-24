@@ -17,7 +17,7 @@ const students = ref([
     totalStudents: '৩০০',
     paymentStatus: 'unpaid',
     applicationStatus: 'approved',
-    image: '/path-to-image.jpg',
+    image: '/public/images/find.png',
     fatherName: 'আব্দুল করিম',
     birthDate: '1995-05-15'
   }
@@ -300,7 +300,7 @@ const resetSearch = () => {
         </tr>
       </thead>
 
-      <tbody class="bg-white divide-y divide-emerald-100">
+      <tbody class="bg-white divide-y divide-emerald-100 ">
         <tr v-for="student in students" :key="student.id">
           <td class="px-6 py-4">{{ student.id }}</td>
           <td class="px-6 py-4">

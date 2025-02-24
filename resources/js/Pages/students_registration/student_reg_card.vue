@@ -216,7 +216,7 @@ const selected = ref({
         >
         <label class="flex items-center gap-2 text-emerald-800">
 
-পেমেন্ট
+পেমেন্ট    
         </label>
       </div>
     </div>
