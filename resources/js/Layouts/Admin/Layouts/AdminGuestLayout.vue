@@ -4,16 +4,6 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-<<<<<<< HEAD
-    <div
-        class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900"
-    >
-        <!-- <div>
-            <Link href="/">
-                <ApplicationLogo class="h-20 w-20 fill-current text-gray-500" />
-            </Link>
-        </div> -->
-=======
   <div
     style="font-family: 'Merriweather', 'SolaimanLipi', sans-serif;"
     class="flex mt-10  flex-col items-center islamic-pattern pt-8 sm:justify-center sm:pt-0 "
@@ -25,7 +15,6 @@ import { Link } from '@inertiajs/vue3';
             <h2 class="w-full text-4xl md:text-5xl font-extrabold text-emerald-900 tracking-wide">
                 বেফাকুল মাদারসিল আরাবিয়া বাংলাদেশ
             </h2>
->>>>>>> 76ecf4f6a0223ec2074707d7d8857971bab500cd
 
             <!-- English Title - Smaller -->
             <h3 class="text-lg md:text-2xl font-semibold text-emerald-700 mt-3 uppercase tracking-wider">

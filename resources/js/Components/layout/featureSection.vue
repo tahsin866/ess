@@ -19,7 +19,7 @@
             <div class="grid grid-cols-2 gap-6">
               <div v-for="stat in stats"
                    :key="stat.title"
-                   class="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border border-emerald-100 transform hover:translate-y-[-4px] transition-all duration-300">
+                   class="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-md border border-emerald-100 transform hover:translate-y-[-4px] transition-all duration-300">
                 <h4 class="text-lg font-semibold text-gray-700 mb-2">{{ stat.title }}</h4>
                 <p class="text-2xl font-bold text-emerald-600">{{ stat.value }}</p>
               </div>

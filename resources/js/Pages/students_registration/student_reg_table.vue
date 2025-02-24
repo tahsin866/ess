@@ -17,7 +17,7 @@ const students = ref([
     totalStudents: '৩০০',
     paymentStatus: 'unpaid',
     applicationStatus: 'approved',
-    image: '/path-to-image.jpg',
+    image: '/public/images/find.png',
     fatherName: 'আব্দুল করিম',
     birthDate: '1995-05-15'
   }
@@ -128,7 +128,7 @@ const resetSearch = () => {
       </h3>
 
       <h3 class="text-white text-lg text-center">
-        ☪️ ৪৮তম কেন্দ্রীয় পরীক্ষা: নেগরান মুমতাহিন
+         ৪৮তম কেন্দ্রীয় পরীক্ষা: নেগরান মুমতাহিন
       </h3>
 
       <div class="flex justify-end gap-3">
@@ -152,7 +152,7 @@ const resetSearch = () => {
   <div class="p-6 bg-emerald-50">
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
       <div class="relative">
-        <i class="fas fa-school absolute left-3 top-3 text-emerald-600"></i>
+
         <select class="w-full pl-10 pr-4 py-2 border-2 border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
           <option value="">মারহালা সিলেক্ট করুন</option>
           <option value="mutawassita">মুতাওয়াসসিতা</option>
@@ -162,7 +162,7 @@ const resetSearch = () => {
       </div>
 
       <div class="relative">
-        <i class="fas fa-toggle-on absolute left-3 top-3 text-emerald-600"></i>
+
         <select class="w-full pl-10 pr-4 py-2 border-2 border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
           <option value="">অবস্থা সিলেক্ট করুন</option>
           <option value="active">সক্রিয়</option>
@@ -171,7 +171,7 @@ const resetSearch = () => {
       </div>
 
       <div class="relative">
-        <i class="fas fa-file-alt absolute left-3 top-3 text-emerald-600"></i>
+
         <select class="w-full pl-10 pr-4 py-2 border-2 border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
           <option value="">আবেদনের ধরন</option>
           <option value="regular">নিয়মিত</option>
@@ -180,7 +180,7 @@ const resetSearch = () => {
       </div>
 
       <div class="relative">
-        <i class="fas fa-money-check-alt absolute left-3 top-3 text-emerald-600"></i>
+
         <select class="w-full pl-10 pr-4 py-2 border-2 border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
           <option value="">পেমেন্ট অবস্থা</option>
           <option value="paid">পরিশোধিত</option>
@@ -191,7 +191,7 @@ const resetSearch = () => {
 
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
       <div class="relative">
-        <i class="fas fa-clipboard-check absolute left-3 top-3 text-emerald-600"></i>
+
         <select class="w-full pl-10 pr-4 py-2 border-2 border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
           <option value="">বোর্ড দাখিল অবস্থা</option>
           <option value="submitted">দাখিল করা হয়েছে</option>
@@ -200,7 +200,7 @@ const resetSearch = () => {
       </div>
 
       <div class="relative">
-        <i class="fas fa-hashtag absolute left-3 top-3 text-emerald-600"></i>
+
         <input
           type="text"
           v-model="search"
@@ -210,7 +210,7 @@ const resetSearch = () => {
       </div>
 
       <div class="relative">
-        <i class="fas fa-mobile-alt absolute left-3 top-3 text-emerald-600"></i>
+
         <input
           type="text"
           v-model="searchMobile"
@@ -250,7 +250,7 @@ const resetSearch = () => {
       </h3>
 
       <h3 class="text-amber-300 text-lg text-center">
-        ☪️ ৪৮তম কেন্দ্রীয় পরীক্ষা: মুতাওয়াসসিতা
+    ৪৮তম কেন্দ্রীয় পরীক্ষা: মুতাওয়াসসিতা
       </h3>
 
       <div class="flex justify-end gap-3">
@@ -271,36 +271,36 @@ const resetSearch = () => {
       <thead class="bg-emerald-50">
         <tr>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-sort-numeric-down ml-2"></i> ক্রমিক নং
+           ক্রমিক নং
           </th>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-image ml-2"></i> ছবি
+           ছবি
           </th>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-user ml-2"></i> পিতার নাম
+        পিতার নাম
           </th>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-mosque ml-2"></i> মাদরাসার নাম
+          মাদরাসার নাম
           </th>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-calendar-alt ml-2"></i> জন্ম-তারিখ
+            জন্ম-তারিখ
           </th>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-layer-group ml-2"></i> আবেদনের ধরন
+         আবেদনের ধরন
           </th>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-money-check-alt ml-2"></i> পেমেন্ট স্ট্যাটাস
+             পেমেন্ট স্ট্যাটাস
           </th>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-check-circle ml-2"></i> আবেদন অবস্থা
+           আবেদন অবস্থা
           </th>
           <th class="px-6 py-3 text-right text-sm font-medium text-emerald-800 uppercase">
-            <i class="fas fa-cogs ml-2"></i> করনীয়
+            করনীয়
           </th>
         </tr>
       </thead>
 
-      <tbody class="bg-white divide-y divide-emerald-100">
+      <tbody class="bg-white divide-y divide-emerald-100 ">
         <tr v-for="student in students" :key="student.id">
           <td class="px-6 py-4">{{ student.id }}</td>
           <td class="px-6 py-4">

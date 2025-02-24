@@ -1,12 +1,12 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AdminAuthenticatedLayout from '@/Layouts/Admin/Layouts/AdminAuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 // import { Chart } from 'chart.js/auto';
 
-import dashboard_card from './dashboard-component/dashboard_card.vue';
-import Notice_bord_and_upcomming_exam from './dashboard-component/notice_bord_and_upcomming_exam.vue';
-import Registrasion_update_dashboard from './dashboard-component/registrasion_update_dashboard.vue';
+import dashboard_card from './Admin/dashboard-component/dashboard_card.vue';
+import Notice_bord_and_upcomming_exam from './Admin/dashboard-component/notice_bord_and_upcomming_exam.vue';
+import Registrasion_update_dashboard from './Admin/dashboard-component/registrasion_update_dashboard.vue';
 
 // Enhanced statistics data
 
@@ -39,7 +39,7 @@ const search = () => {
 <template>
     <Head title="Islamic Education Dashboard" />
 
-    <AuthenticatedLayout>
+    <AdminAuthenticatedLayout>
 
 
 
@@ -152,7 +152,7 @@ const search = () => {
             </div>
         </div>
 
-    </AuthenticatedLayout>
+    </AdminAuthenticatedLayout>
 </template>
 
 
