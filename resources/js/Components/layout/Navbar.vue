@@ -47,7 +47,7 @@
                 </Link>
               </template>
               <template v-else>
-                <Link :href="route('Admin.login')"
+                <Link :href="route('login')"
                       class="bg-emerald-700 text-white hover:bg-emerald-600 px-6 py-2 rounded-sm transition-colors duration-200">
                   Login
                 </Link>

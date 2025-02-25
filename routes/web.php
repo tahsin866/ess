@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
+use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,79 +26,16 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::prefix('Admin')->name('Admin.')->group(function () {
-
-    Route::get('/dashboard', function () {
-        return Inertia::render('admin_Dashboard');
-    })->middleware(['auth:admin', 'verified'])->name('dashboard');
-
-    Route::middleware('auth:admin')->group(function () {
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    });
-
-});
 
 
 
-Route::get('Markaz/Makaj_apply', function () {
-    return Inertia::render('Markaz/Makaj_apply');
-})->name('Markaz.Makaj_apply');
-
-Route::get('Markaz/markaz_change_table', function () {
-    return Inertia::render('Markaz/markaz_change_table');
-})->name('Markaz.markaz_change_table');
 
 
-Route::get('Markaz/Makaj_change', function () {
-    return Inertia::render('Markaz/Makaj_change');
-})->name('Markaz.Makaj_change');
-
-Route::get('Markaz/markaz_agreement_form', function () {
-    return Inertia::render('Markaz/markaz_agreement_form');
-})->name('Markaz.markaz_agreement_form');
 
 
-Route::get('Markaz/marhala_change_table', function () {
-    return Inertia::render('Markaz/marhala_change_table');
-})->name('Markaz.marhala_change_table');
 
-
-Route::get('Markaz/marhala_change', function () {
-    return Inertia::render('Markaz/marhala_change');
-})->name('Markaz.marhala_change');
-
-Route::get('students_registration/student_registration', function () {
-    return Inertia::render('students_registration/student_registration');
-})->name('students_registration.student_registration');
-
-Route::get('students_registration/student_reg_table', function () {
-    return Inertia::render('students_registration/student_reg_table');
-})->name('students_registration.student_reg_table');
-
-Route::get('students_registration/old_stu_reg_Form', function () {
-    return Inertia::render('students_registration/old_stu_reg_Form');
-})->name('students_registration.old_stu_reg_Form');
-
-
-Route::get('students_registration/new_stu_reg_Form', function () {
-    return Inertia::render('students_registration/new_stu_reg_Form');
-})->name('students_registration.new_stu_reg_Form');
-
-Route::get('students_registration/stuedent_reg_list', function () {
-    return Inertia::render('students_registration/stuedent_reg_list');
-})->name('students_registration.stuedent_reg_list');
-
-Route::get('students_registration/student_reg_card', function () {
-    return Inertia::render('students_registration/student_reg_card');
-})->name('students_registration.student_reg_card');
-
-Route::get('students_registration/stu_reg_view', function () {
-    return Inertia::render('students_registration/stu_reg_view');
-})->name('students_registration.stu_reg_view');
 
 require __DIR__ . '/auth.php';
 
-require __DIR__ . '/AdminAuth.php';
-require __DIR__ . '/Admin_routes.php';
+require __DIR__ . '/Madrasha.php';
+

@@ -10,9 +10,7 @@ const items = ref([
 ]);
 
 const showForm = ref(false);
-const toggleForm = () => {
-  showForm.value = !showForm.value;
-};
+
 
 const editItem = (item) => {
   console.log("Editing item:", item);
@@ -29,27 +27,13 @@ const deleteItem = (item) => {
 
 <template>
   <AuthenticatedLayout>
-    <div class="container-fluid mx-5 mt-8">
+    <div class="container-fluid mx-5 mt-8 overflow-x-auto max-w-full ">
       <!-- Form Section -->
-      <div v-if="showForm">
-        <markaz_apply_form />
-        <div class="bg-gradient-to-r from-emerald-900 to-emerald-800 text-white px-6 py-2 flex justify-end mb-3 rounded-b-md shadow-lg">
-          <button
-            class="px-4 py-2 bg-emerald-700 text-white rounded-md hover:bg-emerald-600 transition duration-200 flex items-center gap-2 shadow-md"
-            @click="toggleForm"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-            </svg>
-            পেছনে যাই
-          </button>
-        </div>
-      </div>
 
       <!-- Table Section -->
-      <div v-else class="bg-white rounded-md shadow-xl">
+      <div class="bg-white rounded-sm shadow-xl">
         <!-- Header with Islamic Pattern -->
-        <div class="bg-gradient-to-r from-emerald-900 to-emerald-800 text-white px-8 py-3 rounded-t-md flex justify-between items-center relative overflow-hidden">
+        <div class="bg-gradient-to-r from-emerald-900 to-emerald-800 text-white px-8 py-3 rounded-t-sm flex justify-between items-center relative overflow-hidden">
           <div class="absolute inset-0 opacity-10 pattern-islamic"></div>
           <h2 class="text-2xl font-bold flex items-center gap-2">
 
@@ -57,8 +41,8 @@ const deleteItem = (item) => {
           </h2>
         <Link
     :href="route('Markaz.markaz_agreement_form')"
-    class="inline-flex items-center justify-center gap-2 px-6 py-2 text-base font-medium text-white bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-md hover:from-emerald-700 hover:to-emerald-800 transform hover:scale-105 transition-all duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-    @click="toggleForm"
+    class="inline-flex items-center justify-center gap-2 px-6 py-2 text-base font-medium text-white bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-sm hover:from-emerald-700 hover:to-emerald-800 transform hover:scale-105 transition-all duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+
 >
     <i class="fas fa-plus-circle text-lg"></i>
     <span style="font-family: 'SolaimanLipi', sans-serif;">আবেদন করুন</span>
@@ -68,17 +52,17 @@ const deleteItem = (item) => {
 
         <!-- Table Container -->
         <div class="p-8">
-          <div class="overflow-hidden rounded-md border border-emerald-100 shadow-md">
+          <div class="overflow-hidden rounded-sm border border-emerald-100 shadow-md">
             <table class="w-full">
               <thead>
                 <tr class="bg-gradient-to-r from-emerald-900 to-emerald-800">
-                  <th class="px-6 py-4 text-white font-semibold">আবেদন নং</th>
-                  <th class="px-6 py-4 text-white font-semibold">আবেদনের তারিখ</th>
-                  <th class="px-6 py-4 text-white font-semibold">আবেদনের বিস্তারিত</th>
-                  <th class="px-6 py-4 text-white font-semibold">ছা্ত্র সংখ্যা</th>
-                  <th class="px-6 py-4 text-white font-semibold">মাদরাসা সংখ্যা</th>
-                  <th class="px-6 py-4 text-white font-semibold">স্ট্যাটাস</th>
-                  <th class="px-6 py-4 text-white font-semibold">করনীয়</th>
+                  <th class="px-6 py-4 text-white font-semibold whitespace-nowrap">আবেদন নং</th>
+                  <th class="px-6 py-4 text-white font-semibold whitespace-nowrap">আবেদনের তারিখ</th>
+                  <th class="px-6 py-4 text-white font-semibold whitespace-nowrap">আবেদনের বিস্তারিত</th>
+                  <th class="px-6 py-4 text-white font-semibold whitespace-nowrap">ছা্ত্র সংখ্যা</th>
+                  <th class="px-6 py-4 text-white font-semibold whitespace-nowrap">মাদরাসা সংখ্যা</th>
+                  <th class="px-6 py-4 text-white font-semibold whitespace-nowrap">স্ট্যাটাস</th>
+                  <th class="px-6 py-4 text-white font-semibold whitespace-nowrap">করনীয়</th>
                 </tr>
               </thead>
               <tbody class="bg-white">
@@ -102,7 +86,7 @@ const deleteItem = (item) => {
                     </span>
                   </td>
                   <td class="px-6 py-2 text-center">
-                    <div class="inline-flex rounded-md shadow-sm overflow-hidden">
+                    <div class="inline-flex rounded-sm shadow-sm overflow-hidden">
                       <button
                         class="p-2 text-white bg-emerald-700 hover:bg-emerald-600 transition duration-200"
                         @click="editItem(item)"

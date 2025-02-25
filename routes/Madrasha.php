@@ -1,7 +1,9 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+
+
 
 Route::get('Markaz/Makaj_apply', function () {
     return Inertia::render('Markaz/Makaj_apply');
@@ -58,3 +60,28 @@ Route::get('students_registration/student_reg_card', function () {
 Route::get('students_registration/stu_reg_view', function () {
     return Inertia::render('students_registration/stu_reg_view');
 })->name('students_registration.stu_reg_view');
+
+
+Route::get('students_registration/stu_reg_payment', function () {
+    return Inertia::render('students_registration/stu_reg_payment');
+})->name('students_registration.stu_reg_payment');
+
+
+Route::get('students_registration/stue_reg_draft_soft_delete', function () {
+    return Inertia::render('students_registration/stue_reg_draft_soft_delete');
+})->name('students_registration.stue_reg_draft_soft_delete');
+
+Route::get('OntorVukti/ontorvukti_table', function () {
+    return Inertia::render('OntorVukti/ontorvukti_table');
+})->name('OntorVukti.ontorvukti_table');
+
+
+Route::get('Negran_Mumtahin/negran_mumtahin', function () {
+    return Inertia::render('Negran_Mumtahin/negran_mumtahin');
+})->name('Negran_Mumtahin.negran_mumtahin');
+
+
+
+Route::get('Negran_Mumtahin/negran_mumtahin_appy', function () {
+    return Inertia::render('Negran_Mumtahin/negran_mumtahin_appy');
+})->name('Negran_Mumtahin.negran_mumtahin_appy');

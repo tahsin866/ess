@@ -1,26 +1,57 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { ref } from 'vue'
+import { ref , computed } from 'vue'
 
-const student = ref({
-  examName: "দাওরায়ে হাদীস",
-  examType: "নিয়মিত",
-  examYear: "১৪৪৬ হিজরী",
-  prevExam: {
-    name: "ফারীগাত",
-    studentName: "মৌনিন ইসলাম ফারিন",
-    gender: "ছাত্রী",
-    fatherName: "মোঃ চেলাল উদ্দিন",
-    rollNo: "১৪২২৩",
-    passYear: "১৪৪৫ হিজরী",
-    division: "মাকবুল",
-    madrasa: "দারুল নাজাত মহিলা মাদ্রাসা, ২৯/২ মাসকান্দা, ময়মনসিংহ সদর",
-    board: "বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ"
+
+const students = ref([
+  {
+    id: 1,
+    examName: "Final Exam",
+    examType: "Regular",
+    examYear: "2024",
+    prevExam: {
+      name: "Mid-Term",
+      studentName: "Tahsin Abdullah",
+      gender: "Male",
+      fatherName: "Mr. Abdullah",
+      rollNo: "2021101",
+      division: "A",
+      madrasa: "Al Madina",
+      board: "Dhaka Board",
+    },
   },
-  applicantInfo: {
-    regFormClick: "২১"
-  }
-})
+  {
+    id: 2,
+    examName: "Final Exam",
+    examType: "Irregular",
+    examYear: "2023",
+    prevExam: {
+      name: "Annual",
+      studentName: "Rahim Uddin",
+      gender: "Male",
+      fatherName: "Mr. Karim",
+      rollNo: "2022105",
+      division: "B",
+      madrasa: "Islamic Center",
+      board: "Chittagong Board",
+    },
+  },
+]);
+
+const currentIndex = ref(0);
+
+// Navigate between students
+const nextStudent = () => {
+  currentIndex.value = (currentIndex.value + 1) % students.value.length;
+};
+
+const prevStudent = () => {
+  currentIndex.value =
+    (currentIndex.value - 1 + students.value.length) % students.value.length;
+};
+
+// Get current student dynamically
+const student = computed(() => students.value[currentIndex.value]);
 
 const registrations = ref([
   {
@@ -66,7 +97,7 @@ const registrations = ref([
 <AuthenticatedLayout>
     <div class="p-6">
     <!-- Exam Title -->
-    <div class="bg-emerald-800 text-white p-4 rounded-md shadow-lg mb-6">
+    <div class="bg-emerald-800 text-white p-4 rounded-sm shadow-lg mb-6">
       <div class="flex items-center gap-3">
         <!-- <i class="fas fa-star-and-crescent text-2xl"></i> -->
         <h2 class="text-xl">
@@ -75,96 +106,83 @@ const registrations = ref([
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Exam Details -->
-      <div class="bg-white p-6 rounded-md shadow-md border-t-4 border-emerald-600">
-        <h3 class="text-lg font-semibold text-emerald-800 border-b border-emerald-100 pb-3 mb-4 flex items-center gap-2">
-          <i class="fas fa-file-alt text-emerald-600"></i>
-          আবেদনের ধরন
-        </h3>
-        <div class="space-y-3">
-          <p class="flex items-center gap-2">
-            <i class="fas fa-book-open text-emerald-600"></i>
-            <span class="font-medium">পরীক্ষার নাম:</span> {{ student.examName }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-user-graduate text-emerald-600"></i>
-            <span class="font-medium">পরীক্ষার্থী ধরন:</span> {{ student.examType }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-calendar-alt text-emerald-600"></i>
-            <span class="font-medium">পরীক্ষার সন:</span> {{ student.examYear }}
-          </p>
-        </div>
-      </div>
-
-      <!-- Previous Exam Details -->
-      <div class="bg-white p-6 rounded-md shadow-md border-t-4 border-emerald-600">
-        <h3 class="text-lg font-semibold text-emerald-800 border-b border-emerald-100 pb-3 mb-4 flex items-center gap-2">
-          <i class="fas fa-history text-emerald-600"></i>
-          বিগত পরীক্ষার তথ্য
-        </h3>
-        <div class="space-y-3">
-          <p class="flex items-center gap-2">
-            <i class="fas fa-scroll text-emerald-600"></i>
-            <span class="font-medium">পরীক্ষার নাম:</span> {{ student.prevExam.name }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-user text-emerald-600"></i>
-            <span class="font-medium">পরীক্ষার্থী নাম:</span> {{ student.prevExam.studentName }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-venus-mars text-emerald-600"></i>
-            <span class="font-medium">লিঙ্গ:</span> {{ student.prevExam.gender }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-male text-emerald-600"></i>
-            <span class="font-medium">পিতার নাম:</span> {{ student.prevExam.fatherName }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-id-card text-emerald-600"></i>
-            <span class="font-medium">রোল নং:</span> {{ student.prevExam.rollNo }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-award text-emerald-600"></i>
-            <span class="font-medium">প্রাপ্ত বিভাগ:</span> {{ student.prevExam.division }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-mosque text-emerald-600"></i>
-            <span class="font-medium">মাদ্রাসা:</span> {{ student.prevExam.madrasa }}
-          </p>
-          <p class="flex items-center gap-2">
-            <i class="fas fa-university text-emerald-600"></i>
-            <span class="font-medium">বোর্ড:</span> {{ student.prevExam.board }}
-          </p>
-        </div>
-      </div>
-
-      <!-- Image Section -->
-      <div class="bg-white p-6 rounded-md shadow-md border-t-4 border-emerald-600">
-        <h3 class="text-lg font-semibold text-emerald-800 border-b border-emerald-100 pb-3 mb-4 flex items-center gap-2">
-          <i class="fas fa-camera text-emerald-600"></i>
-          ছবি ও স্বাক্ষর
-        </h3>
-        <div class="flex flex-col items-center space-y-4">
-          <div class="w-40 h-40 bg-emerald-50 border-2 border-dashed border-emerald-200 flex items-center justify-center rounded-lg">
-            <div class="text-center">
-              <i class="fas fa-user-circle text-4xl text-emerald-300 mb-2"></i>
-              <span class="text-emerald-600 block">কোনো ছবি নেই</span>
-            </div>
-          </div>
-          <p class="text-red-600 text-sm flex items-center gap-2">
-            <i class="fas fa-info-circle"></i>
-            ছাত্রীদের ক্ষেত্রে ছবি প্রযোজ্য নয়
-          </p>
-          <div class="w-40 p-2 bg-emerald-50 rounded-lg">
-            <div class="border-2 border-dashed border-emerald-200 rounded p-2 text-center">
-              <i class="fas fa-signature text-emerald-400 text-2xl"></i>
-            </div>
-          </div>
-        </div>
+    <div class=" mx-auto mt-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- First Column -->
+    <div
+      class="bg-white p-6 rounded-md shadow-md border-t-4 border-emerald-600 transition-all duration-500"
+    >
+      <h3
+        class="text-lg font-semibold text-emerald-800 border-b border-emerald-100 pb-3 mb-4 flex items-center gap-2"
+      >
+        <i class="fas fa-file-alt text-emerald-600"></i>
+        আবেদনের ধরন
+      </h3>
+      <div class="space-y-3">
+        <p class="flex items-center gap-2">
+          <i class="fas fa-book-open text-emerald-600"></i>
+          <span class="font-medium">পরীক্ষার নাম:</span> {{ student.examName }}
+        </p>
+        <p class="flex items-center gap-2">
+          <i class="fas fa-user-graduate text-emerald-600"></i>
+          <span class="font-medium">পরীক্ষার্থী ধরন:</span> {{ student.examType }}
+        </p>
+        <p class="flex items-center gap-2">
+          <i class="fas fa-calendar-alt text-emerald-600"></i>
+          <span class="font-medium">পরীক্ষার সন:</span> {{ student.examYear }}
+        </p>
       </div>
     </div>
+
+    <!-- Second Column -->
+    <div
+      class="bg-white p-6 rounded-md shadow-md border-t-4 border-emerald-600 transition-all duration-500"
+    >
+      <h3
+        class="text-lg font-semibold text-emerald-800 border-b border-emerald-100 pb-3 mb-4 flex items-center gap-2"
+      >
+        <i class="fas fa-history text-emerald-600"></i>
+        বিগত পরীক্ষার তথ্য
+      </h3>
+      <div class="space-y-3">
+        <p class="flex items-center gap-2">
+          <i class="fas fa-scroll text-emerald-600"></i>
+          <span class="font-medium">পরীক্ষার নাম:</span> {{ student.prevExam.name }}
+        </p>
+        <p class="flex items-center gap-2">
+          <i class="fas fa-user text-emerald-600"></i>
+          <span class="font-medium">পরীক্ষার্থী নাম:</span> {{ student.prevExam.studentName }}
+        </p>
+        <p class="flex items-center gap-2">
+          <i class="fas fa-venus-mars text-emerald-600"></i>
+          <span class="font-medium">লিঙ্গ:</span> {{ student.prevExam.gender }}
+        </p>
+        <p class="flex items-center gap-2">
+          <i class="fas fa-id-card text-emerald-600"></i>
+          <span class="font-medium">রোল নং:</span> {{ student.prevExam.rollNo }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="flex justify-between mt-6">
+    <button
+      @click="prevStudent"
+      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition"
+    >
+      <i class="fas fa-arrow-left"></i> পূর্ববর্তী
+    </button>
+    <button
+      @click="nextStudent"
+      class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition"
+    >
+      পরবর্তী <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+</div>
+
+
 
     <!-- Applicant Info -->
     <div class="mt-6 bg-white p-6 rounded-md shadow-md border-t-4 border-emerald-600">

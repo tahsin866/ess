@@ -246,7 +246,7 @@ const resetSearch = () => {
   <div class="bg-emerald-900 p-3 rounded-t-sm islamic-pattern">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
       <h3 class="text-amber-300 font-bold text-lg">
-        <i class="fas fa-users-class ml-2"></i> মোট নিবন্ধিত ছাত্র সংখ্যা
+        <i class="fas fa-users-class ml-2"></i> মোট অন্তর্ভুক্তি ছাত্র সংখ্যা
       </h3>
 
       <h3 class="text-amber-300 text-lg text-center">

@@ -5,8 +5,11 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 // Sidebar state
-const sidebarOpen = ref(true); // Changed initial state to true
-const isMobile = ref(false);
+// const sidebarOpen = ref(true); // Changed initial state to true
+// const isMobile = ref(false);
+
+const showSidebar = ref(false);
+
 
 
 // Dropdown states
@@ -27,10 +30,10 @@ const showMessages = ref(false);
 
 // Check window width and set mobile state
 // Improved checkScreen function
-const checkScreen = () => {
-    isMobile.value = window.innerWidth < 768;
-    sidebarOpen.value = !isMobile.value;
-};
+// const checkScreen = () => {
+//     isMobile.value = window.innerWidth < 768;
+//     sidebarOpen.value = !isMobile.value;
+// };
 
 // Toggle sidebar for mobile
 const toggleSidebar = () => {
@@ -51,14 +54,14 @@ const openMessages = () => {
 };
 
 // Lifecycle hooks
-onMounted(() => {
-    checkScreen();
-    window.addEventListener('resize', checkScreen);
-});
+// onMounted(() => {
+//     checkScreen();
+//     window.addEventListener('resize', checkScreen);
+// });
 
-onBeforeUnmount(() => {
-    window.removeEventListener('resize', checkScreen);
-});
+// onBeforeUnmount(() => {
+//     window.removeEventListener('resize', checkScreen);
+// });
 </script>
 
 
@@ -74,12 +77,9 @@ onBeforeUnmount(() => {
     class="flex min-h-screen bg-gray-100 dark:bg-gray-900">
         <!-- Sidebar -->
         <aside
-            :class="[
-                'transition-all duration-300 ease-in-out',
-                'h-screen bg-white',
-                isMobile ? 'fixed z-50 w-64' : 'w-64 fixed',
-                sidebarOpen ? 'translate-x-0' : '-translate-x-full',
-                'md:translate-x-0'
+        :class="[
+                'fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 ease-in-out bg-[#004d40] text-white lg:translate-x-0',
+                showSidebar ? 'translate-x-0' : '-translate-x-full'
             ]"
         >
 
@@ -94,8 +94,8 @@ onBeforeUnmount(() => {
     </div>
 </div>
 
-            <nav style=" font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="mt-4 space-y-2 overflow-y-auto">
-               <Link :href="route('dashboard')" class="text-xl px-4 py-2 hover:bg-[#C4D9FF] flex items-center gap-2">
+            <nav style=" font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="mt-4 space-y-2 overflow-y-auto max-h-[calc(100vh-4rem)] scrollbar-hidden">
+               <Link :href="route('dashboard')" class="text-xl px-4 py-2 hover:bg-[#123524] flex items-center gap-2">
         <i class="fas fa-mosque w-6 h-6 text-sm"></i>
         ড্যাশবোর্ড
     </Link>
@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
 <!-- তাকমিল -->
 <div>
                     <button @click="dropdownOpen.takmil = !dropdownOpen.takmil"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]">
+                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-file-alt w-6 h-6 text-sm"></i>
                 আবেদন সংক্রান্ত
@@ -111,15 +111,15 @@ onBeforeUnmount(() => {
             <i :class="{'rotate-180': dropdownOpen.takmil}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
         <div v-if="dropdownOpen.takmil" class="pl-6">
-            <Link :href="route('Markaz.Makaj_apply')" class="px-4 py-2 text-xl hover:bg-[#C4D9FF] flex items-center gap-2">
+            <Link :href="route('Markaz.Makaj_apply')" class="px-4 py-2 text-xl hover:bg-[#123524] flex items-center gap-2">
                 <!-- <i class="fas fa-pen-fancy w-5 h-5"></i> -->
                 মারকায আবেদন
             </Link>
-                        <Link :href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মারকায পরিবর্তন</Link>
+                        <Link :href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মারকায পরিবর্তন</Link>
 
 
-                        <Link :href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মারহালা পরিবর্তন</Link>
-                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মন্জুরী পত্র আবেদন</Link>
+                        <Link :href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মারহালা পরিবর্তন</Link>
+                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মন্জুরী পত্র আবেদন</Link>
 
                     </div>
                 </div>
@@ -128,7 +128,7 @@ onBeforeUnmount(() => {
 
                 <div>
                      <button @click="dropdownOpen.orders = !dropdownOpen.orders"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]">
+                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-user-plus w-6 h-6 text-sm"></i>
                 নিবন্ধন সংক্রান্ত
@@ -137,21 +137,21 @@ onBeforeUnmount(() => {
         </button>
         <div v-if="dropdownOpen.orders" class="pl-6">
             <Link :href="route('students_registration.student_registration')"
-                  class=" px-4 py-2 text-xl hover:bg-[#C4D9FF] flex items-center gap-2">
+                  class=" px-4 py-2 text-xl hover:bg-[#123524] flex items-center gap-2">
                 <!-- <i class="fas fa-user-graduate w-5 h-5"></i> -->
                 পরীক্ষার্থী নিবন্ধন
             </Link>
-                        <Link :href="route('students_registration.stuedent_reg_list')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">নিবন্ধন তালিকা</Link>
-                        <Link :href="route('students_registration.student_reg_card')" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">নিবন্ধন পত্র</Link>
-                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">ড্রাফ্ট/সফ্ট ডিলিট</Link>
-                        <Link href="route('sanawia.sanawiacirtificateProvide')" class="block px-4 text-xl  py-2 hover:bg-[#C4D9FF]">পেমেন্ট</Link>
+                        <Link :href="route('students_registration.stuedent_reg_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">নিবন্ধন তালিকা</Link>
+                        <Link :href="route('students_registration.student_reg_card')" class="block px-4 text-xl py-2 hover:bg-[#123524]">নিবন্ধন পত্র</Link>
+                        <Link :href="route('students_registration.stue_reg_draft_soft_delete')" class="block px-4 text-xl py-2 hover:bg-[#123524]">ড্রাফ্ট/সফ্ট ডিলিট</Link>
+                        <Link :href="route('students_registration.stu_reg_payment')" class="block px-4 text-xl  py-2 hover:bg-[#123524]">পেমেন্ট</Link>
                     </div>
                 </div>
-<!--
-                সানাবিয়া -->
+
+
                 <div>
                     <button @click="dropdownOpen.sanawia = !dropdownOpen.sanawia"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]">
+                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-users w-6 h-6 text-sm"></i>
                 অন্তর্ভুক্তি সংক্রান্ত
@@ -159,10 +159,10 @@ onBeforeUnmount(() => {
             <i :class="{'rotate-180': dropdownOpen.sanawia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.sanawia" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">অন্তর্ভূূূূূূূূূূক্তি তালিকা</Link>
-                        <Link href="" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">ড্রাফ্ট তালিকা</Link>
-                        <Link href="#" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">প্রবেশপত্র</Link>
-                                 <Link href="#" class="block px-4 text-xl py-2 hover:bg-[#C4D9FF]">পেমেন্ট</Link>
+                        <Link :href="route('OntorVukti.ontorvukti_table')" class="block text-xl px-4 py-2 hover:bg-[#123524]">অন্তর্ভূূূূূূূূূূক্তি তালিকা</Link>
+                        <Link href="" class="block px-4 text-xl py-2 hover:bg-[#123524]">ড্রাফ্ট তালিকা</Link>
+                        <Link href="#" class="block px-4 text-xl py-2 hover:bg-[#123524]">প্রবেশপত্র</Link>
+                                 <Link href="#" class="block px-4 text-xl py-2 hover:bg-[#123524]">পেমেন্ট</Link>
                     </div>
                 </div>
 
@@ -171,7 +171,7 @@ onBeforeUnmount(() => {
 
                 <div>
                      <button @click="dropdownOpen.mutawassita = !dropdownOpen.mutawassita"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]">
+                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-user-shield w-6 h-6 text-sm"></i>
                 নেগরান/মুমতাহিন
@@ -179,19 +179,18 @@ onBeforeUnmount(() => {
             <i :class="{'rotate-180': dropdownOpen.mutawassita}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.mutawassita" class="pl-6">
-                        <Link href="route('mutawassitah.Mutawassitah')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">নেগ:/মুম: আবেদন</Link>
-                        <Link href="" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">মুমতাহিন তালিকা</Link>
-                        <Link href="route('mutawassitah.mutawassitahcirtificate')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">নিয়োগপত্র</Link>
+                        <Link :href="route('Negran_Mumtahin.negran_mumtahin')" class="block text-xl px-4 py-2 hover:bg-[#123524]">নেগ:/মুম: আবেদন</Link>
+                        <Link href="" class="block px-4 py-2 text-xl hover:bg-[#123524]">মুমতাহিন তালিকা</Link>
+                        <Link href="route('mutawassitah.mutawassitahcirtificate')" class="block px-4 py-2 text-xl hover:bg-[#123524]">নিয়োগপত্র</Link>
                     </div>
                 </div>
 
                 <!-- ইবতেদাইয়্যাহ -->
 
 
-
                 <div>
                    <button @click="dropdownOpen.ibtedaia = !dropdownOpen.ibtedaia"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]">
+                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-school w-6 h-6 text-sm"></i>
                 মারকায সংক্রান্ত
@@ -199,12 +198,12 @@ onBeforeUnmount(() => {
             <i :class="{'rotate-180': dropdownOpen.ibtedaia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.ibtedaia" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-[#C4D9FF]">মাদরাসার তালিকা</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">নেগরান তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">প্রশ্নপত্র প্রিন্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">ভাউচার তৈরি</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">ছাত্রদের হাজিরা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">নেগরানদের হাজিরা</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরান তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">প্রশ্নপত্র প্রিন্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ভাউচার তৈরি</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ছাত্রদের হাজিরা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরানদের হাজিরা</Link>
                     </div>
                 </div>
 
@@ -212,7 +211,7 @@ onBeforeUnmount(() => {
 
 <div>
                   <button @click="dropdownOpen.HifzulQuran = !dropdownOpen.HifzulQuran"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]">
+                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-chart-bar w-6 h-6 text-sm"></i>
                 রিপোর্টস
@@ -220,13 +219,13 @@ onBeforeUnmount(() => {
             <i :class="{'rotate-180': dropdownOpen.HifzulQuran}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.HifzulQuran" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 text-xl hover:bg-[#C4D9FF]">নিবন্ধন রিপোর্ট</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">অন্তর্ভূক্তি রিপোর্ট</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">নেগ:/মুম রিপোর্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">হাজিরা রিপোর্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">পেমেন্ট রিপোর্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">নিয়োগ রিপোর্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">মাদরাসা রিপোর্ট</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 text-xl hover:bg-[#123524]">নিবন্ধন রিপোর্ট</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">অন্তর্ভূক্তি রিপোর্ট</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগ:/মুম রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">হাজিরা রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">পেমেন্ট রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">নিয়োগ রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">মাদরাসা রিপোর্ট</Link>
                     </div>
                 </div>
 
@@ -236,7 +235,7 @@ onBeforeUnmount(() => {
 
                 <div>
                     <button @click="dropdownOpen.Qirat = !dropdownOpen.Qirat"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#C4D9FF]">
+                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-file-alt w-6 h-6 text-sm"></i>
                 প্রয়োজনীয় ডকুমেন্টস
@@ -244,9 +243,9 @@ onBeforeUnmount(() => {
             <i :class="{'rotate-180': dropdownOpen.Qirat}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.Qirat" class="pl-6">
-                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">আবেদন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#C4D9FF] text-xl">সনদ কর্যক্রম</Link>
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-xl">সকল ছাত্র</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">আবেদন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">সনদ কর্যক্রম</Link>
                     </div>
                 </div>
 
@@ -255,22 +254,14 @@ onBeforeUnmount(() => {
 
 
 
-             <Link href="#" class=" px-4 text-xl py-2 hover:bg-[#C4D9FF] flex items-center gap-2">
+             <Link href="#" class=" px-4 text-xl py-2 hover:bg-[#123524] flex items-center gap-2">
         <i class="fas fa-envelope w-6 h-6 text-sm"></i>
         মেসেজিং
     </Link>
-                <Link href="#" class="px-4 text-xl py-2 hover:bg-[#C4D9FF] flex items-center gap-2">
+                <Link href="#" class="px-4 text-xl py-2 hover:bg-[#123524] flex items-center gap-2">
         <i class="fas fa-bell w-6 h-6 text-sm"></i>
         নোটিস
     </Link>
-
-
-
-
-
-
-
-
 
 
 
@@ -294,12 +285,12 @@ onBeforeUnmount(() => {
         <nav class="bg-[#F7F7F7] dark:bg-gray-800 border-b border-emerald-100 dark:border-gray-700 fixed right-0 left-0 z-10 md:left-64">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between items-center">
-            <button
-                            @click="toggleSidebar"
-                            class="md:hidden text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-800 p-2 rounded-md"
-                        >
-                            <i class="fas fa-bars h-6 w-6"></i>
-                        </button>
+                        <button
+                        @click="showSidebar = !showSidebar"
+                        class="lg:hidden text-gray-600 hover:text-gray-900 focus:outline-none"
+                    >
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
 
             <!-- Logo -->
             <div class="flex items-center">
@@ -380,9 +371,9 @@ onBeforeUnmount(() => {
 
 
 <div
-            v-if="sidebarOpen && isMobile"
-            @click="toggleSidebar"
-            class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+            v-show="showSidebar"
+            @click="showSidebar = false"
+            class="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
         ></div>
 
 
