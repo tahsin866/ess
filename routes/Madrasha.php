@@ -71,10 +71,25 @@ Route::get('students_registration/stue_reg_draft_soft_delete', function () {
     return Inertia::render('students_registration/stue_reg_draft_soft_delete');
 })->name('students_registration.stue_reg_draft_soft_delete');
 
+// অন্তর্ভুক্তি রাউট
+
 Route::get('OntorVukti/ontorvukti_table', function () {
     return Inertia::render('OntorVukti/ontorvukti_table');
 })->name('OntorVukti.ontorvukti_table');
 
+Route::get('OntorVukti/softDelete_draft_list', function () {
+    return Inertia::render('OntorVukti/softDelete_draft_list');
+})->name('OntorVukti.softDelete_draft_list');
+
+Route::get('OntorVukti/stu_admit_card', function () {
+    return Inertia::render('OntorVukti/stu_admit_card');
+})->name('OntorVukti.stu_admit_card');
+
+Route::get('OntorVukti/stu_payment', function () {
+    return Inertia::render('OntorVukti/stu_payment');
+})->name('OntorVukti.stu_payment');
+
+// নেগরান/মুমতাহিন রাউট
 
 Route::get('Negran_Mumtahin/negran_mumtahin', function () {
     return Inertia::render('Negran_Mumtahin/negran_mumtahin');
@@ -85,3 +100,31 @@ Route::get('Negran_Mumtahin/negran_mumtahin', function () {
 Route::get('Negran_Mumtahin/negran_mumtahin_appy', function () {
     return Inertia::render('Negran_Mumtahin/negran_mumtahin_appy');
 })->name('Negran_Mumtahin.negran_mumtahin_appy');
+
+
+Route::get('Negran_Mumtahin/mumtahin_list', function () {
+    return Inertia::render('Negran_Mumtahin/mumtahin_list');
+})->name('Negran_Mumtahin.mumtahin_list');
+
+
+Route::get('Negran_Mumtahin/negran_apoint_list', function () {
+    return Inertia::render('Negran_Mumtahin/negran_apoint_list');
+})->name('Negran_Mumtahin.negran_apoint_list');
+
+
+// others
+
+Route::get('others/notice', function () {
+    return Inertia::render('others/notice');
+})->name('others.notice');
+
+Route::get('others/massaging', function () {
+    return Inertia::render('others/massaging');
+})->name('others.massaging');
+
+
+// About_markaj
+
+Route::get('About_markaj/madrasha_list', function () {
+    return Inertia::render('About_markaj/madrasha_list');
+})->name('About_markaj.madrasha_list');

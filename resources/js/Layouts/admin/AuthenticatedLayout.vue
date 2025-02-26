@@ -93,9 +93,9 @@ const toggleMobileMenu = () => {
 </div>
 
             <nav style=" font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="mt-4 space-y-2 overflow-y-auto max-h-[calc(100vh-4rem)] scrollbar-hidden">
-               <Link :href="route('dashboard')" class="text-xl px-4 py-2 hover:bg-[#123524] flex items-center gap-2">
+               <Link :href="route('admin.admin_Dashboard')" class="text-xl px-4 py-2 hover:bg-[#123524] flex items-center gap-2">
         <i class="fas fa-mosque w-6 h-6 text-sm"></i>
-        ড্যাশবোর্ড
+       ই এম ড্যাশবোর্ড
     </Link>
 
 <!-- তাকমিল -->
@@ -104,20 +104,21 @@ const toggleMobileMenu = () => {
                 class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-file-alt w-6 h-6 text-sm"></i>
-                আবেদন সংক্রান্ত
+                সেটাপ সংক্রান্ত
             </div>
             <i :class="{'rotate-180': dropdownOpen.takmil}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
         <div v-if="dropdownOpen.takmil" class="pl-6">
-            <Link :href="route('Markaz.Makaj_apply')" class="px-4 py-2 text-xl hover:bg-[#123524] flex items-center gap-2">
+            <Link href="route('Markaz.Makaj_apply')" class="px-4 py-2 text-xl hover:bg-[#123524] flex items-center gap-2">
                 <!-- <i class="fas fa-pen-fancy w-5 h-5"></i> -->
-                মারকায আবেদন
+        মারহালা সেটাপ
             </Link>
-                        <Link :href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মারকায পরিবর্তন</Link>
+                        <Link href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">বিষয় সেটাপ</Link>
 
 
-                        <Link :href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মারহালা পরিবর্তন</Link>
-                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মন্জুরী পত্র আবেদন</Link>
+                        <Link href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">কেন্দ্রীয় পরীক্ষা সেটাপ</Link>
+                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#123524]">ব্যবহারকারী সেটাপ</Link>
+                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#123524]">নির্দেশনা</Link>
 
                     </div>
                 </div>
@@ -129,7 +130,7 @@ const toggleMobileMenu = () => {
                 class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-user-plus w-6 h-6 text-sm"></i>
-                নিবন্ধন সংক্রান্ত
+                মাদরাসা সংক্রান্ত
             </div>
             <i :class="{'rotate-180': dropdownOpen.orders}" class="fas fa-chevron-down fa-xs fa-xstransition-transform"></i>
         </button>
@@ -137,12 +138,12 @@ const toggleMobileMenu = () => {
             <Link :href="route('students_registration.student_registration')"
                   class=" px-4 py-2 text-xl hover:bg-[#123524] flex items-center gap-2">
                 <!-- <i class="fas fa-user-graduate w-5 h-5"></i> -->
-                পরীক্ষার্থী নিবন্ধন
+             মাদরাসা তালিকা
             </Link>
-                        <Link :href="route('students_registration.stuedent_reg_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">নিবন্ধন তালিকা</Link>
-                        <Link :href="route('students_registration.student_reg_card')" class="block px-4 text-xl py-2 hover:bg-[#123524]">নিবন্ধন পত্র</Link>
-                        <Link :href="route('students_registration.stue_reg_draft_soft_delete')" class="block px-4 text-xl py-2 hover:bg-[#123524]">ড্রাফ্ট/সফ্ট ডিলিট</Link>
-                        <Link :href="route('students_registration.stu_reg_payment')" class="block px-4 text-xl  py-2 hover:bg-[#123524]">পেমেন্ট</Link>
+                        <Link href="route('students_registration.stuedent_reg_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">বিবিধ</Link>
+                        <Link href="route('students_registration.student_reg_card')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মাদরাসা এডমিন</Link>
+                        <Link href="route('students_registration.stue_reg_draft_soft_delete')" class="block px-4 text-xl py-2 hover:bg-[#123524]">ড্রাফ্ট/সফ্ট ডিলিট</Link>
+                        <Link href="route('students_registration.stu_reg_payment')" class="block px-4 text-xl  py-2 hover:bg-[#123524]">পেমেন্ট</Link>
                     </div>
                 </div>
 
@@ -152,15 +153,20 @@ const toggleMobileMenu = () => {
                 class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-users w-6 h-6 text-sm"></i>
-                অন্তর্ভুক্তি সংক্রান্ত
+                মারকায সংক্রান্ত
             </div>
             <i :class="{'rotate-180': dropdownOpen.sanawia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.sanawia" class="pl-6">
-                        <Link :href="route('OntorVukti.ontorvukti_table')" class="block text-xl px-4 py-2 hover:bg-[#123524]">অন্তর্ভূূূূূূূূূূক্তি তালিকা</Link>
-                        <Link :href="route('OntorVukti.softDelete_draft_list')" class="block px-4 text-xl py-2 hover:bg-[#123524]">ড্রাফ্ট তালিকা</Link>
-                        <Link :href="route('OntorVukti.stu_admit_card')" class="block px-4 text-xl py-2 hover:bg-[#123524]">প্রবেশপত্র</Link>
-                        <Link :href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">পেমেন্ট</Link>
+                        <Link href="route('OntorVukti.ontorvukti_table')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মারকায সেটাপ</Link>
+                        <Link href="route('OntorVukti.softDelete_draft_list')" class="block px-4 text-xl py-2 hover:bg-[#123524]">প্রস্তাবিত মারকায</Link>
+                        <Link href="route('OntorVukti.stu_admit_card')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায তালিকা</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায পরিবর্তনের আবেদন</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায এডমিন</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায এডমিন ট্রেনিং</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায গ্রুপ</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">উত্তরপ্রত্র গ্রুপ সেটাপ</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মুমতাহিন গ্রুপ</Link>
                     </div>
                 </div>
 
@@ -172,14 +178,14 @@ const toggleMobileMenu = () => {
                 class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-user-shield w-6 h-6 text-sm"></i>
-                নেগরান/মুমতাহিন
+                পরীক্ষার রুটিন
             </div>
             <i :class="{'rotate-180': dropdownOpen.mutawassita}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.mutawassita" class="pl-6">
-                        <Link :href="route('Negran_Mumtahin.negran_mumtahin')" class="block text-xl px-4 py-2 hover:bg-[#123524]">নেগ:/মুম: আবেদন</Link>
-                        <Link :href="route('Negran_Mumtahin.mumtahin_list')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মুমতাহিন তালিকা</Link>
-                        <Link :href="route('Negran_Mumtahin.negran_apoint_list')" class="block px-4 py-2 text-xl hover:bg-[#123524]">নিয়োগপত্র</Link>
+                        <Link href="route('Negran_Mumtahin.negran_mumtahin')" class="block text-xl px-4 py-2 hover:bg-[#123524]">পরীক্ষার রুটিন গ্রুপ</Link>
+                        <Link href="route('Negran_Mumtahin.mumtahin_list')" class="block px-4 py-2 text-xl hover:bg-[#123524]">পরীক্ষার রুটিন</Link>
+                        <Link href="route('Negran_Mumtahin.negran_apoint_list')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মৌখিক পরীক্ষার মুমতাহিন</Link>
                     </div>
                 </div>
 
@@ -191,17 +197,17 @@ const toggleMobileMenu = () => {
                 class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-school w-6 h-6 text-sm"></i>
-                মারকায সংক্রান্ত
+                নিবন্ধন সংক্রান্ত
             </div>
             <i :class="{'rotate-180': dropdownOpen.ibtedaia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.ibtedaia" class="pl-6">
-                        <Link :href="route('About_markaj.madrasha_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরান তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">প্রশ্নপত্র প্রিন্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ভাউচার তৈরি</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ছাত্রদের হাজিরা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরানদের হাজিরা</Link>
+                        <Link href="route('About_markaj.madrasha_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নিবন্ধন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">বাতিলকৃত নিবন্ধন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">পেমেন্ট তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">বোর্ড ফেরত তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">নিবন্ধন পত্র তৈরি</Link>
                     </div>
                 </div>
 
@@ -212,7 +218,7 @@ const toggleMobileMenu = () => {
                 class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-chart-bar w-6 h-6 text-sm"></i>
-                রিপোর্টস
+                অন্তর্ভুক্তি সংক্রান্ত
             </div>
             <i :class="{'rotate-180': dropdownOpen.HifzulQuran}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
@@ -339,7 +345,7 @@ const toggleMobileMenu = () => {
                             Profile
                         </DropdownLink>
 
-                        <DropdownLink :href="route('logout')" method="post" as="button"
+                        <DropdownLink :href="route('admin.logout')" method="post" as="button"
                             class="flex items-center px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900 rounded-lg transition">
                             <i class="fas fa-sign-out-alt mr-2"></i>
                             Log Out

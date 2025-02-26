@@ -41,12 +41,15 @@
               মাদরাসার যাবতীয় অনলাইন কার্যক্রম সম্পাদনের জন্য একাউন্ট তৈরি করুন
             </p>
 
-            <button class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-md transition-colors duration-300 flex items-center justify-center group">
+            <Link
+
+:href="route('login')"
+            class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-md transition-colors duration-300 flex items-center justify-center group">
               সাইন-আপ করুন
               <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
-            </button>
+            </Link >
           </div>
         </div>
       </div>
@@ -54,6 +57,9 @@
   </template>
 
   <script setup>
+import { Link } from '@inertiajs/vue3';
+
+
   const stats = [
     { title: 'পরীক্ষার্থীর সংখ্যা', value: '৫৩,৫৪৩ জন' },
     { title: 'মারকায সংখ্যা', value: '৩,০০০' },

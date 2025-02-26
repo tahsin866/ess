@@ -24,20 +24,10 @@ const desserts = [
       <div class="flex justify-between items-center">
         <div>
 
-          <h4 class="text-xl text-yellow-400">মোট নেগরান মুমতাহিন আবেদন সংখ্যা</h4>
+          <h4 class="text-xl text-yellow-400">নেগরান মুমতাহিন তালিকা</h4>
         </div>
 
-        <div class="flex gap-4">
-          <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm flex items-center transition-colors duration-200 shadow-md">
-            পুরাতন
-            <i class="ri-history-line ml-2"></i>
-          </button>
-          <Link :href="route('Negran_Mumtahin.negran_mumtahin_appy')"
-                class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-sm flex items-center transition-colors duration-200 shadow-md">
-            নতুন
-            <i class="ri-add-circle-line ml-2"></i>
-          </Link>
-        </div>
+
       </div>
     </div>
 

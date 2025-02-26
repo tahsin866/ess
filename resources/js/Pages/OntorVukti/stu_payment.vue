@@ -36,7 +36,7 @@ const confirmPayment = () => {
 
 
   <h2 class="text-lg font-bold text-gray-800 bg-yellow-500 text-center py-2 rounded-sm shadow-md">
-    ৪৮তম কেন্দ্রীয় পরীক্ষা: নিবন্ধন পেমেন্ট সিস্টেম
+    ৪৮তম কেন্দ্রীয় পরীক্ষা: অন্তর্ভুক্তি পেমেন্ট সিস্টেম
   </h2>
 
   <!-- Table -->

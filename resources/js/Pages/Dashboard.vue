@@ -49,13 +49,9 @@ const search = () => {
 
 
 
-        <div class="py-6">
-
-            <div class="mx-auto px-4 sm:px-6 lg:px-8">
-
-
-
-    <div class="bg-gradient-to-r mb-5 rounded-md from-[#0B4D2F] to-[#116D45] py-6 text-white">
+    <div class="py-6">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-gradient-to-r mb-5 rounded-sm from-[#0B4D2F] to-[#116D45] py-6 text-white">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row items-center justify-between">
         <!-- Title Section -->
