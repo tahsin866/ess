@@ -20,32 +20,49 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        // Get madrasha data from session
+        $madrasha_data = [
+            'madrasha_id' => session('madrasha_id'),
+            'madrasha_name' => session('madrasha_name'),
+            'thana' => session('thana'),
+            'post' => session('post'),
+            'custom_code' => session('custom_code')
+        ];
+
+        return Inertia::render('Auth/Register', $madrasha_data);
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'admin_Designation' => 'required|string|max:255',
+            'NID_no' => 'required|string|max:255|unique:users,NID_no',
+            'Mobile_no' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'admin_Designation' => $request->admin_Designation,
+            'NID_no' => $request->NID_no,
+            'Mobile_no' => $request->Mobile_no,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'madrasha_id' => session('madrasha_id'),
+            'custom_code' => session('custom_code'),
+            'madrasha_name' => session('madrasha_name'),
+            'thana' => session('thana'),
+            'post' => session('post'),
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Clear the session data
+        session()->forget(['madrasha_id', 'madrasha_name', 'thana', 'post', 'custom_code']);
+
+        return redirect()->route('dashboard');
     }
 }

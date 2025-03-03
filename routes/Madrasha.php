@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\MarhalaController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -128,3 +130,16 @@ Route::get('others/massaging', function () {
 Route::get('About_markaj/madrasha_list', function () {
     return Inertia::render('About_markaj/madrasha_list');
 })->name('About_markaj.madrasha_list');
+
+
+// Route::get('Auth/madrasha_check_for_user', function () {
+//     return Inertia::render('Auth/madrasha_check_for_user');
+// })->name('Auth.madrasha_check_for_user');
+
+    Route::get('/marhalas', [MarhalaController::class, 'index'])->name('marhalas.index');
+    Route::post('/marhalas', [MarhalaController::class, 'store'])->name('marhalas.store');
+
+    Route::get('/marhalas/{id}/edit', [MarhalaController::class, 'edit'])->name('marhalas.edit');
+    Route::put('/marhalas/{id}', [MarhalaController::class, 'update'])->name('marhalas.update');
+
+    Route::get('/marhala-list', [MarhalaController::class, 'marhalaList'])->name('marhalas.list');

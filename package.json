@@ -23,6 +23,7 @@
         "@heroicons/vue": "^2.2.0",
         "@primevue/themes": "^4.2.5",
         "chart.js": "^4.4.7",
+        "date-fns": "^4.1.0",
         "primevue": "^4.2.5"
     }
 }

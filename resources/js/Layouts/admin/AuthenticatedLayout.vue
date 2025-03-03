@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
+import Dropdown from '@/Components/admin/Dropdown.vue';
+import DropdownLink from '@/Components/admin/DropdownLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 // Sidebar state
@@ -21,7 +21,13 @@ const dropdownOpen = ref({
     mutawassita: false,
     ibtedaia: false,
     HifzulQuran: false,
-    Qirat: false
+    Qirat: false,
+    nigran: false,
+    mumtahin: false,
+    zone: false,
+    presentaion: false,
+    result: false,
+    bill: false,
 });
 
 // Notification & message states
@@ -60,6 +66,13 @@ const toggleMobileMenu = () => {
     mobileMenuOpen.value = !mobileMenuOpen.value
 }
 
+
+const selectedItem = ref('');
+
+// কোন লিংকে ক্লিক করা হয়েছে সেটার জন্য ফাংশন
+const setSelected = (item) => {
+    selectedItem.value = item;
+}
 </script>
 
 
@@ -82,7 +95,7 @@ const toggleMobileMenu = () => {
         >
 
           <!-- Replace the header div -->
-<div class="h-16 flex text-xl items-center justify-center bg-gradient-to-r from-emerald-600 to-emerald-800 text-white font-semibold">
+<div class="h-16 flex text-lg items-center justify-center bg-gradient-to-r from-emerald-600 to-emerald-800 text-white font-semibold">
     <div class="flex items-center gap-2">
         <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2L3 9V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V9L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -93,80 +106,136 @@ const toggleMobileMenu = () => {
 </div>
 
             <nav style=" font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="mt-4 space-y-2 overflow-y-auto max-h-[calc(100vh-4rem)] scrollbar-hidden">
-               <Link :href="route('admin.admin_Dashboard')" class="text-xl px-4 py-2 hover:bg-[#123524] flex items-center gap-2">
+               <Link :href="route('admin.admin_Dashboard')" class="text-lg px-4 py-2 hover:bg-[#123524] flex items-center gap-2">
         <i class="fas fa-mosque w-6 h-6 text-sm"></i>
        ই এম ড্যাশবোর্ড
     </Link>
 
 <!-- তাকমিল -->
 <div>
-                    <button @click="dropdownOpen.takmil = !dropdownOpen.takmil"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-file-alt w-6 h-6 text-sm"></i>
-                সেটাপ সংক্রান্ত
-            </div>
-            <i :class="{'rotate-180': dropdownOpen.takmil}" class="fas fa-chevron-down fa-xs transition-transform"></i>
+    <button @click="dropdownOpen.takmil = !dropdownOpen.takmil"
+        class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-cog w-6 h-6 text-sm"></i>
+            সেটাপ সংক্রান্ত
+        </div>
+        <i :class="{'rotate-180': dropdownOpen.takmil}" class="fas fa-chevron-down fa-xs transition-transform tex-sm"></i>
+    </button>
+
+    <div v-if="dropdownOpen.takmil" class="pl-6">
+
+        <Link :href="route('Mrahala_for_Admin.marhala_details_list')"
+            @click="setSelected('marhala')"
+            class="px-4 py-2 text-lg hover:bg-[#123524] flex items-center gap-2"
+            :class="{'bg-[#123524] text-white': selectedItem === 'marhala'}">
+            মারহালা সেটাপ
+        </Link>
+
+        <!-- subject_setup_list -->
+        <Link :href="route('subjects_for_Admin.subject_search_wizard')"
+            @click="setSelected('subject')"
+            class="block px-4 py-2 text-lg hover:bg-[#123524]"
+            :class="{'bg-[#123524] text-white': selectedItem === 'subject'}">
+            বিষয় সেটাপ
+        </Link>
+
+        <Link :href="route('central_Exam_setup.central_exam_mng')"
+            @click="setSelected('central_exam')"
+            class="block px-4 py-2 text-lg hover:bg-[#123524]"
+            :class="{'bg-[#123524] text-white': selectedItem === 'central_exam'}">
+            কেন্দ্রীয় পরীক্ষা সেটাপ
+        </Link>
+
+        <Link href="route('Takmil.cirtificateProvide')"
+            @click="setSelected('user_setup')"
+            class="block px-4 py-2 text-lg hover:bg-[#123524]"
+            :class="{'bg-[#123524] text-white': selectedItem === 'user_setup'}">
+            ব্যবহারকারী সেটাপ
+        </Link>
+
+        <Link href="route('Takmil.cirtificateProvide')"
+            @click="setSelected('instruction')"
+            class="block px-4 py-2 text-lg hover:bg-[#123524]"
+            :class="{'bg-[#123524] text-white': selectedItem === 'instruction'}">
+            নির্দেশনা
+        </Link>
+
+    </div>
+</div>
+
+
+
+
+
+                <div>
+                    <button @click="dropdownOpen.bill = !dropdownOpen.bill"
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-cog w-6 h-6 text-sm"></i>
+    ভাতা ও বিল
+</div>
+            <i :class="{'rotate-180': dropdownOpen.bill}" class="fas fa-chevron-down fa-xs transition-transform tex-sm"></i>
         </button>
-        <div v-if="dropdownOpen.takmil" class="pl-6">
-            <Link href="route('Markaz.Makaj_apply')" class="px-4 py-2 text-xl hover:bg-[#123524] flex items-center gap-2">
+        <div v-if="dropdownOpen.bill" class="pl-6">
+            <Link :href="route('Bill_setup_admin.negran_bill_setup')" class="px-4 py-2 text-lg hover:bg-[#123524] flex items-center gap-2">
                 <!-- <i class="fas fa-pen-fancy w-5 h-5"></i> -->
-        মারহালা সেটাপ
+     নেগরান ভাতা
             </Link>
-                        <Link href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">বিষয় সেটাপ</Link>
+                        <Link :href="route('Bill_setup_admin.mumtahin_bill')" class="block px-4 py-2 text-lg hover:bg-[#123524]">মুমতাহিন ভাতা</Link>
 
 
-                        <Link href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">কেন্দ্রীয় পরীক্ষা সেটাপ</Link>
-                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#123524]">ব্যবহারকারী সেটাপ</Link>
-                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#123524]">নির্দেশনা</Link>
+                        <Link :href="route('Bill_setup_admin.markaz_admin_bill')" class="block px-4 py-2 text-lg hover:bg-[#123524]">মারকায এডমিন ভাতা</Link>
+
+                        <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-lg hover:bg-[#123524]">জোনাল ভাতা</Link>
+
+
 
                     </div>
                 </div>
-
                 <!-- ফযিলত -->
 
                 <div>
                      <button @click="dropdownOpen.orders = !dropdownOpen.orders"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-user-plus w-6 h-6 text-sm"></i>
-                মাদরাসা সংক্রান্ত
-            </div>
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-university w-6 h-6 text-sm"></i>
+    মাদরাসা সংক্রান্ত
+</div>
             <i :class="{'rotate-180': dropdownOpen.orders}" class="fas fa-chevron-down fa-xs fa-xstransition-transform"></i>
         </button>
         <div v-if="dropdownOpen.orders" class="pl-6">
-            <Link :href="route('students_registration.student_registration')"
-                  class=" px-4 py-2 text-xl hover:bg-[#123524] flex items-center gap-2">
+            <Link :href="route('madrasha_data_for_admin.madrasha_list')"
+                  class=" px-4 py-2 text-lg hover:bg-[#123524] flex items-center gap-2">
                 <!-- <i class="fas fa-user-graduate w-5 h-5"></i> -->
              মাদরাসা তালিকা
             </Link>
-                        <Link href="route('students_registration.stuedent_reg_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">বিবিধ</Link>
-                        <Link href="route('students_registration.student_reg_card')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মাদরাসা এডমিন</Link>
-                        <Link href="route('students_registration.stue_reg_draft_soft_delete')" class="block px-4 text-xl py-2 hover:bg-[#123524]">ড্রাফ্ট/সফ্ট ডিলিট</Link>
-                        <Link href="route('students_registration.stu_reg_payment')" class="block px-4 text-xl  py-2 hover:bg-[#123524]">পেমেন্ট</Link>
+                        <Link href="route('students_registration.stuedent_reg_list')" class="block text-lg px-4 py-2 hover:bg-[#123524]">বিবিধ</Link>
+                        <Link href="route('students_registration.student_reg_card')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মাদরাসা এডমিন</Link>
+                        <Link href="route('students_registration.stue_reg_draft_soft_delete')" class="block px-4 text-lg py-2 hover:bg-[#123524]">ড্রাফ্ট/সফ্ট ডিলিট</Link>
+                        <Link href="route('students_registration.stu_reg_payment')" class="block px-4 text-lg  py-2 hover:bg-[#123524]">পেমেন্ট</Link>
                     </div>
                 </div>
 
 
                 <div>
                     <button @click="dropdownOpen.sanawia = !dropdownOpen.sanawia"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-users w-6 h-6 text-sm"></i>
-                মারকায সংক্রান্ত
-            </div>
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-mosque w-6 h-6 text-sm"></i>
+    মারকায সংক্রান্ত
+</div>
             <i :class="{'rotate-180': dropdownOpen.sanawia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.sanawia" class="pl-6">
-                        <Link href="route('OntorVukti.ontorvukti_table')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মারকায সেটাপ</Link>
-                        <Link href="route('OntorVukti.softDelete_draft_list')" class="block px-4 text-xl py-2 hover:bg-[#123524]">প্রস্তাবিত মারকায</Link>
-                        <Link href="route('OntorVukti.stu_admit_card')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায তালিকা</Link>
-                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায পরিবর্তনের আবেদন</Link>
-                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায এডমিন</Link>
-                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায এডমিন ট্রেনিং</Link>
-                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মারকায গ্রুপ</Link>
-                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">উত্তরপ্রত্র গ্রুপ সেটাপ</Link>
-                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-xl py-2 hover:bg-[#123524]">মুমতাহিন গ্রুপ</Link>
+                        <Link :href="route('markaz_for_admin.markaz_setup')" class="block text-lg px-4 py-2 hover:bg-[#123524]">মারকায সেটাপ</Link>
+                        <Link href="route('OntorVukti.softDelete_draft_list')" class="block px-4 text-lg py-2 hover:bg-[#123524]">প্রস্তাবিত মারকায</Link>
+                        <Link href="route('OntorVukti.stu_admit_card')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মারকায তালিকা</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মারকায পরিবর্তনের আবেদন</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মারকায এডমিন</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মারকায এডমিন ট্রেনিং</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মারকায গ্রুপ</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-lg py-2 hover:bg-[#123524]">উত্তরপ্রত্র গ্রুপ সেটাপ</Link>
+                        <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মুমতাহিন গ্রুপ</Link>
                     </div>
                 </div>
 
@@ -175,17 +244,17 @@ const toggleMobileMenu = () => {
 
                 <div>
                      <button @click="dropdownOpen.mutawassita = !dropdownOpen.mutawassita"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-user-shield w-6 h-6 text-sm"></i>
-                পরীক্ষার রুটিন
-            </div>
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-tasks w-6 h-6 text-sm"></i>
+    পরীক্ষার রুটিন
+</div>
             <i :class="{'rotate-180': dropdownOpen.mutawassita}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.mutawassita" class="pl-6">
-                        <Link href="route('Negran_Mumtahin.negran_mumtahin')" class="block text-xl px-4 py-2 hover:bg-[#123524]">পরীক্ষার রুটিন গ্রুপ</Link>
-                        <Link href="route('Negran_Mumtahin.mumtahin_list')" class="block px-4 py-2 text-xl hover:bg-[#123524]">পরীক্ষার রুটিন</Link>
-                        <Link href="route('Negran_Mumtahin.negran_apoint_list')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মৌখিক পরীক্ষার মুমতাহিন</Link>
+                        <Link href="route('Negran_Mumtahin.negran_mumtahin')" class="block text-lg px-4 py-2 hover:bg-[#123524]">পরীক্ষার রুটিন গ্রুপ</Link>
+                        <Link href="route('Negran_Mumtahin.mumtahin_list')" class="block px-4 py-2 text-lg hover:bg-[#123524]">পরীক্ষার রুটিন</Link>
+                        <Link href="route('Negran_Mumtahin.negran_apoint_list')" class="block px-4 py-2 text-lg hover:bg-[#123524]">মৌখিক পরীক্ষার মুমতাহিন</Link>
                     </div>
                 </div>
 
@@ -194,20 +263,20 @@ const toggleMobileMenu = () => {
 
                 <div>
                    <button @click="dropdownOpen.ibtedaia = !dropdownOpen.ibtedaia"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-school w-6 h-6 text-sm"></i>
-                নিবন্ধন সংক্রান্ত
-            </div>
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-user-plus w-6 h-6 text-sm"></i>
+    নিবন্ধন সংক্রান্ত
+</div>
             <i :class="{'rotate-180': dropdownOpen.ibtedaia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.ibtedaia" class="pl-6">
-                        <Link href="route('About_markaj.madrasha_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নিবন্ধন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">বাতিলকৃত নিবন্ধন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">পেমেন্ট তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">বোর্ড ফেরত তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">নিবন্ধন পত্র তৈরি</Link>
+                        <Link href="route('About_markaj.madrasha_list')" class="block text-lg px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
+                        <Link :href="route('nibondon_for_admin.nibondon_Markaz_list')" class="block px-4 py-2 hover:bg-[#123524] text-lg">নিবন্ধন তালিকা</Link>
+                        <Link :href="route('nibondon_for_admin.abandon_stu_list')" class="block px-4 py-2 hover:bg-[#123524] text-lg">বাতিলকৃত নিবন্ধন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">পেমেন্ট তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">বোর্ড ফেরত তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">নিবন্ধন পত্র তৈরি</Link>
                     </div>
                 </div>
 
@@ -215,21 +284,21 @@ const toggleMobileMenu = () => {
 
 <div>
                   <button @click="dropdownOpen.HifzulQuran = !dropdownOpen.HifzulQuran"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-chart-bar w-6 h-6 text-sm"></i>
-                অন্তর্ভুক্তি সংক্রান্ত
-            </div>
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-user-check w-6 h-6 text-sm"></i>
+    অন্তর্ভুক্তি সংক্রান্ত
+</div>
             <i :class="{'rotate-180': dropdownOpen.HifzulQuran}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.HifzulQuran" class="pl-6">
-                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 text-xl hover:bg-[#123524]">নিবন্ধন রিপোর্ট</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">অন্তর্ভূক্তি রিপোর্ট</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগ:/মুম রিপোর্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">হাজিরা রিপোর্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">পেমেন্ট রিপোর্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">নিয়োগ রিপোর্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">মাদরাসা রিপোর্ট</Link>
+                        <Link href="route('Fajilat.sanawaia')" class="block px-4 py-2 text-lg hover:bg-[#123524]">অন্তর্ভুক্তি তালিকা</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">রোল জেনারেট</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">প্রবেশপত্র তৈরি</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">পেমেন্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">বাতিলকৃত নিবন্ধন তালিকা</Link>
+                        <!-- <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">নিয়োগ রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">মাদরাসা রিপোর্ট</Link> -->
                     </div>
                 </div>
 
@@ -239,30 +308,145 @@ const toggleMobileMenu = () => {
 
                 <div>
                     <button @click="dropdownOpen.Qirat = !dropdownOpen.Qirat"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-book-open w-6 h-6 text-sm"></i>
+    খাতা ও লুজ
+</div>
+            <i :class="{'rotate-180': dropdownOpen.Qirat}" class="fas fa-chevron-down fa-xs transition-transform"></i>
+        </button>
+                    <div v-if="dropdownOpen.Qirat" class="pl-6">
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাতা ও লুজ সেটাপ</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাতা ও লুজ জেনারেট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাত ও লুজের হিসাব</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">অন্যান্য</Link>
+                    </div>
+                </div>
+
+
+                <div>
+                    <button @click="dropdownOpen.nigran = !dropdownOpen.nigran"
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-users-cog w-6 h-6 text-sm"></i>
+    নেগরান সংক্রান্ত
+</div>
+            <i :class="{'rotate-180': dropdownOpen.nigran}" class="fas fa-chevron-down fa-xs transition-transform"></i>
+        </button>
+                    <div v-if="dropdownOpen.nigran" class="pl-6">
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-lg">আবেদন তালিকা</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">প্রস্তাবিত তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">অপেক্ষমান তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">বাতিল তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">মুমতাহিন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">নেগরান রিপোর্ট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">নেগরান ভাতা</Link>
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <button @click="dropdownOpen.mumtahin = !dropdownOpen.mumtahin"
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-chalkboard-teacher w-6 h-6 text-sm"></i>
+    মুমতাহিন সংক্রান্ত
+</div>
+            <i :class="{'rotate-180': dropdownOpen.mumtahin}" class="fas fa-chevron-down fa-xs transition-transform"></i>
+        </button>
+                    <div v-if="dropdownOpen.mumtahin" class="pl-6">
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-lg">আবেদন তালিকা</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">প্রস্তাবিত তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">নিরিক্ষক সেটাপ</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">মুমতাহিন তালিকা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">দরসিয়াত মুমতাহিন ‍</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">হিফজ মুমতাহিন নির্বাচন ‍</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">কিরাত মুমতাহিন নির্বাচন ‍</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">মুমতাহিন ট্রেনিং ‍</Link>
+                    </div>
+                </div>
+
+                <div>
+                    <button @click="dropdownOpen.zone = !dropdownOpen.zone"
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-map-marked-alt w-6 h-6 text-sm"></i>
+    জেনা সংক্রান্ত
+</div>
+            <i :class="{'rotate-180': dropdownOpen.zone}" class="fas fa-chevron-down fa-xs transition-transform"></i>
+        </button>
+                    <div v-if="dropdownOpen.zone" class="pl-6">
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-lg">জোন সেটাপ</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">জোনাল নির্বাচন</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">সাব জোন সেটাপ</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">জোনওয়ারী মারকায সেটাপ</Link>
+                    </div>
+                </div>
+
+                <div>
+                    <button @click="dropdownOpen.presentaion = !dropdownOpen.presentaion"
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-clipboard-check w-6 h-6 text-sm"></i>
+    হজিরা সংক্রান্ত
+</div>
+            <i :class="{'rotate-180': dropdownOpen.presentaion}" class="fas fa-chevron-down fa-xs transition-transform"></i>
+        </button>
+                    <div v-if="dropdownOpen.presentaion" class="pl-6">
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-lg">পরীক্ষার্থী হাজিরা</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">নেগরান হাজিরা</Link>
+                        <!-- <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাত ও লুজের হিসাব</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">অন্যান্য</Link> -->
+                    </div>
+                </div>
+
+                <div>
+                    <button @click="dropdownOpen.result = !dropdownOpen.result"
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+                <div class="flex items-center gap-2">
+    <i class="fas fa-chart-line w-6 h-6 text-sm"></i>
+    ফলাফল সংক্রান্ত
+</div>
+            <i :class="{'rotate-180': dropdownOpen.result}" class="fas fa-chevron-down fa-xs transition-transform"></i>
+        </button>
+                    <div v-if="dropdownOpen.result" class="pl-6">
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-lg">ফলাফল কন্ডিশন</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">মেধা কন্ডিশন</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">নিরিক্ষন ফরমুলা</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">দরসিয়াত ফলাফল</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">মৌখিক ফলাফল</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg"> ফলাফল সংশোধন</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg"> নজরে সানী</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg"> নজরে সানী ফলাফল সংশোধন</Link>
+                    </div>
+                </div>
+
+                <div>
+                    <button @click="dropdownOpen.Qirat = !dropdownOpen.Qirat"
+                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
             <div class="flex items-center gap-2">
                 <i class="fas fa-file-alt w-6 h-6 text-sm"></i>
-                প্রয়োজনীয় ডকুমেন্টস
+              খাতা ও লুজ
             </div>
             <i :class="{'rotate-180': dropdownOpen.Qirat}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.Qirat" class="pl-6">
-                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-xl">সকল ছাত্র</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">আবেদন তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">সনদ কর্যক্রম</Link>
+                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাতা ও লুজ সেটাপ</Link>
+                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাতা ও লুজ জেনারেট</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাত ও লুজের হিসাব</Link>
+                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">অন্যান্য</Link>
                     </div>
                 </div>
 
 
 
 
-
-
-             <Link :href="route('others.massaging')" class=" px-4 text-xl py-2 hover:bg-[#123524] flex items-center gap-2">
+             <Link :href="route('others.massaging')" class=" px-4 text-lg py-2 hover:bg-[#123524] flex items-center gap-2">
         <i class="fas fa-envelope w-6 h-6 text-sm"></i>
         মেসেজিং
     </Link>
-                <Link :href="route('others.notice')" class="px-4 text-xl py-2 hover:bg-[#123524] flex items-center gap-2">
+                <Link :href="route('others.notice')" class="px-4 text-lg py-2 hover:bg-[#123524] flex items-center gap-2">
         <i class="fas fa-bell w-6 h-6 text-sm"></i>
         নোটিস
     </Link>
@@ -332,7 +516,7 @@ const toggleMobileMenu = () => {
                                 class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-emerald-200 dark:border-emerald-600 rounded-lg shadow-sm text-md font-medium leading-4 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-300 dark:focus:ring-emerald-500 transition duration-150 ease-in-out"
                             >
                                 <i class="fas fa-user-circle mr-2"></i>
-                                {{ $page.props.auth.user.name }}
+                                {{ $page.props.auth.admin.name }}
                                 <i class="fas fa-chevron-down ml-2"></i>
                             </button>
                         </span>
@@ -387,4 +571,8 @@ const toggleMobileMenu = () => {
 
 </template>
 
-<style scoped></style>
+<style scoped>
+
+
+
+</style>

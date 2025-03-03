@@ -110,7 +110,7 @@ const submit = () => {
                 <div class="text-center text-sm text-gray-600 dark:text-gray-400">
                     অ্যাকাউন্ট নেই?
                     <Link
-                        :href="route('register')"
+                        :href="route('admin.register')"
                         class="text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
                     >
                         নিবন্ধন করুন
