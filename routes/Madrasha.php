@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MarhalaController;
+use App\Http\Controllers\MarhalaListController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -142,4 +143,6 @@ Route::get('About_markaj/madrasha_list', function () {
     Route::get('/marhalas/{id}/edit', [MarhalaController::class, 'edit'])->name('marhalas.edit');
     Route::put('/marhalas/{id}', [MarhalaController::class, 'update'])->name('marhalas.update');
 
-    Route::get('/marhala-list', [MarhalaController::class, 'marhalaList'])->name('marhalas.list');
+    // Route::get('/Mrahala_for_Admin/marhala_details_list', [MarhalaListController::class, 'marhalaList'])
+    // ->name('Mrahala_for_Admin.marhala_details_list');
+    Route::get('/marhalas', [MarhalaController::class, 'getMarhalaList']);

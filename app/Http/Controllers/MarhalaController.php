@@ -6,6 +6,8 @@ use App\Models\admin\marhala_for_admin\Marhala;
 use App\Models\admin\marhala_for_admin\MarhalaSubject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class MarhalaController extends Controller
 {
@@ -46,77 +48,143 @@ class MarhalaController extends Controller
         return redirect()->back()->with('success', 'Marhala created successfully');
     }
 
-    public function edit($id)
-    {
-        // Fetch the marhala and its subjects
-        $marhala = Marhala::with('subjects')->findOrFail($id);
 
-        // Return the view with the data
-        return inertia('Mrahala_for_Admin/marhala_edit', [
-            'marhala' => $marhala,
-            'subjects' => $marhala->subjects
+    public function edit(Marhala $marhala)
+    {
+        $marhalaData = $marhala->load('subjects');
+
+        return Inertia::render('Mrahala_for_Admin/marhala_edit', [
+            'marhala' => $marhalaData
         ]);
     }
-
     public function update(Request $request, $id)
     {
-        // Validate the request data
         $request->validate([
             'marhalaNameBn' => 'required|string',
             'marhalaNameEn' => 'required|string',
             'marhalaNameAr' => 'required|string',
-            'subjects' => 'required|array',
+            'subjects' => 'required|array'
         ]);
 
         $marhala = Marhala::findOrFail($id);
 
-        // Update marhala
         $marhala->update([
             'marhala_name_bn' => $request->marhalaNameBn,
             'marhala_name_en' => $request->marhalaNameEn,
             'marhala_name_ar' => $request->marhalaNameAr,
         ]);
 
-        // Update subjects
-        foreach ($request->subjects as $subjectData) {
-            MarhalaSubject::updateOrCreate(
-                ['marhala_id' => $marhala->id, 'subject_code' => $subjectData['code']],
-                [
-                    'name_bangla' => $subjectData['nameBangla'],
-                    'name_english' => $subjectData['nameEnglish'],
-                    'name_arabic' => $subjectData['nameArabic'],
-                    'status' => $subjectData['status'],
-                ]
-            );
+        // পুরানো সব সাবজেক্ট ডিলিট করে নতুন করে ইনসার্ট করা হচ্ছে
+        $marhala->subjects()->delete();
+
+        foreach ($request->subjects as $subject) {
+            MarhalaSubject::create([
+                'marhala_id' => $marhala->id,
+                'subject_code' => $subject['code'],
+                'name_bangla' => $subject['nameBangla'],
+                'name_english' => $subject['nameEnglish'],
+                'name_arabic' => $subject['nameArabic'],
+                'status' => $subject['status']
+            ]);
         }
 
-        // Redirect to the edit page after update
-        return redirect()->route('marhalas.edit', $marhala->id)->with('success', 'Marhala updated successfully');
+        return response()->json(['message' => 'Marhala updated successfully']);
     }
 
 
+    // public function edit($id)
+    // {
+    //     try {
+    //         $marhala = Marhala::with('subjects')->findOrFail($id);
+    //         return response()->json([
+    //             'marhala' => $marhala,
+    //             'subjects' => $marhala->subjects
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => 'Marhala not found'], 404);
+    //     }
+    // }
+
+    // public function update(Request $request, $id)
+    // {
+    //     try {
+    //         $validated = $request->validate([
+    //             'marhalaNameBn' => 'required|string',
+    //             'marhalaNameEn' => 'required|string',
+    //             'marhalaNameAr' => 'required|string',
+    //             'subjects' => 'required|array'
+    //         ]);
+
+    //         $marhala = Marhala::findOrFail($id);
+
+    //         DB::beginTransaction();
+
+    //         $marhala->update([
+    //             'marhala_name_bn' => $validated['marhalaNameBn'],
+    //             'marhala_name_en' => $validated['marhalaNameEn'],
+    //             'marhala_name_ar' => $validated['marhalaNameAr'],
+    //         ]);
+
+    //         $marhala->subjects()->delete();
+
+    //         foreach ($request->subjects as $subject) {
+    //             MarhalaSubject::create([
+    //                 'marhala_id' => $marhala->id,
+    //                 'subject_code' => $subject['code'],
+    //                 'name_bangla' => $subject['nameBangla'],
+    //                 'name_english' => $subject['nameEnglish'],
+    //                 'name_arabic' => $subject['nameArabic'],
+    //                 'status' => $subject['status']
+    //             ]);
+    //         }
+
+    //         DB::commit();
+    //         return response()->json(['message' => 'Marhala updated successfully']);
+
+    //     } catch (ValidationException $e) {
+    //         return response()->json(['errors' => $e->errors()], 422);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         return response()->json(['error' => 'Failed to update Marhala'], 500);
+    //     }
+    // }
 
 
 
-    public function marhalaList()
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function getMarhalaList()
     {
-        $marhalas = Marhala::withCount([
-            'subjects as total_subjects',
-            'subjects as male_subjects' => function($q) {
-                $q->where('status', 'SRtype_1');
-            },
-            'subjects as female_subjects' => function($q) {
-                $q->where('status', 'SRtype_0');
-            },
-            'subjects as both_subjects' => function($q) {
-                $q->where('status', 'both');
-            }
-        ])->get();
-        dd($marhalas);
-        return Inertia::render('Marhala/List', [
-            'marhalas' => $marhalas
-        ]);
+        $marhalas = Marhala::select('id', 'marhala_name_bn')
+            ->withCount([
+                'subjects as total_subjects',
+                'subjects as male_subjects' => function ($query) {
+                    $query->where('status', 'SRtype_1');
+                },
+                'subjects as female_subjects' => function ($query) {
+                    $query->where('status', 'SRtype_0');
+                },
+                'subjects as both_subjects' => function ($query) {
+                    $query->where('status', 'both');
+                },
+            ])
+            ->get();
+
+        return response()->json($marhalas);
     }
+
+
 
 
 }

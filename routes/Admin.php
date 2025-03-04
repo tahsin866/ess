@@ -1,8 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
-
+use App\Models\admin\marhala_for_admin\Marhala;
 
 
 
@@ -17,9 +16,14 @@ Route::get('Mrahala_for_Admin/marhala_setup_list', function () {
     return Inertia::render('Mrahala_for_Admin/marhala_setup_list');
 })->name('Mrahala_for_Admin.marhala_setup_list');
 
-Route::get('Mrahala_for_Admin/marhala_edit', function () {
-    return Inertia::render('Mrahala_for_Admin/marhala_edit');
-})->name('Mrahala_for_Admin.marhala_edit');
+// Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', function ($marhala) {
+//     $marhalaData = Marhala::with('subjects')->findOrFail($marhala);
+
+//     return Inertia::render('Mrahala_for_Admin/marhala_edit', [
+//         'marhala' => $marhalaData
+//     ]);
+// })->name('Mrahala_for_Admin.marhala_edit');
+
 
 
 // সাবজেক্ট সেটাপ

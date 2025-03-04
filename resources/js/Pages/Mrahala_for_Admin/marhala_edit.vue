@@ -10,15 +10,15 @@
           <div class="grid grid-cols-5 gap-4 mb-6">
             <div>
               <label class="block text-emerald-800 font-semibold mb-2">মারহালা নাম (বাংলা)</label>
-              <input type="text" v-model="formData.marhalaNameBn" class="w-full px-2 py-1.5  border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-emerald-50">
+              <input type="text" v-model="form.marhalaNameBn" class="w-full px-2 py-1.5 border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-emerald-50">
             </div>
             <div>
               <label class="block text-emerald-800 font-semibold mb-2">মারহালা নাম (ইংরেজি)</label>
-              <input type="text" v-model="formData.marhalaNameEn" class="w-full px-2 py-1.5 border border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-emerald-50">
+              <input type="text" v-model="form.marhalaNameEn" class="w-full px-2 py-1.5 border border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-emerald-50">
             </div>
             <div>
               <label class="block text-emerald-800 font-semibold mb-2">মারহালা নাম (আরবি)</label>
-              <input type="text" v-model="formData.marhalaNameAr" class="w-full px-2 py-1.5 border border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-emerald-50">
+              <input type="text" v-model="form.marhalaNameAr" class="w-full px-2 py-1.5 border border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-emerald-50">
             </div>
 
             <div class="col-span-5">
@@ -42,7 +42,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(subject, index) in subjects" :key="index" class="hover:bg-emerald-50">
+                <tr v-for="(subject, index) in form.subjects" :key="index" class="hover:bg-emerald-50">
                   <td class="border p-2">
                     <input type="text" v-model="subject.code" class="w-full px-2 py-1 border rounded">
                   </td>
@@ -67,7 +67,7 @@
                       </label>
                       <label class="inline-flex items-center">
                         <input type="radio" v-model="subject.status" value="Both" class="text-emerald-600">
-                        <span class="ml-1">উভয়</span>
+                        <span class="ml-1">উভয়</span>
                       </label>
                     </div>
                   </td>
@@ -83,7 +83,7 @@
 
           <div class="flex justify-end mt-6">
             <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-md hover:bg-emerald-700 transition-colors duration-200 font-semibold shadow-md">
-              সংরক্ষণ করুন
+              সংশোধন করুন
             </button>
           </div>
         </form>
@@ -94,56 +94,57 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue'
 import { ref, onMounted } from 'vue'
+import axios from 'axios'
 import { router } from '@inertiajs/vue3'
 
-// Define props to receive data from the parent component
 const props = defineProps({
-  marhala: Object,
-  subjects: Array
+    marhala: {
+        type: Object,
+        required: true
+    }
 })
 
-const formData = ref({
-  marhalaNameBn: '',
-  marhalaNameEn: '',
-  marhalaNameAr: '',
+const marhalaId = props.marhala.id
+// URL থেকে id নেওয়া
+
+const form = ref({
+    marhalaNameBn: props.marhala.marhala_name_bn,
+    marhalaNameEn: props.marhala.marhala_name_en,
+    marhalaNameAr: props.marhala.marhala_name_ar,
+    subjects: props.marhala.subjects.map(subject => ({
+        code: subject.subject_code,
+        nameBangla: subject.name_bangla,
+        nameEnglish: subject.name_english,
+        nameArabic: subject.name_arabic,
+        status: subject.status || 'Both'
+    }))
 })
 
-const subjects = ref([])
-
-// Fetch existing data for editing
-onMounted(() => {
-  formData.value.marhalaNameBn = props.marhala.marhala_name_bn
-  formData.value.marhalaNameEn = props.marhala.marhala_name_en
-  formData.value.marhalaNameAr = props.marhala.marhala_name_ar
-  subjects.value = props.subjects
-})
-
+// নতুন সারি যোগ করা
 const addNewRow = () => {
-  subjects.value.push({
-    code: '',
-    nameBangla: '',
-    nameEnglish: '',
-    nameArabic: '',
-    status: 'both'
-  })
+    form.value.subjects.push({
+        code: '',
+        nameBangla: '',
+        nameEnglish: '',
+        nameArabic: '',
+        status: 'Both'
+    })
 }
 
+// সারি রিমুভ করা
 const removeRow = (index) => {
-  subjects.value.splice(index, 1)
+    form.value.subjects.splice(index, 1)
 }
 
+
+// ফর্ম সাবমিট
 const handleSubmit = () => {
-  router.put(route('marhalas.update', props.marhala.id), {
-    ...formData.value,
-    subjects: subjects.value
-  })
+    router.put(`/marhalas/${marhalaId}`, form.value)
 }
 </script>
 
-
-
   <style scoped>
   .arabic-font {
-    font-family: 'Amiri', 'Scheherazade New', serif;
+      font-family: 'Amiri', 'Scheherazade New', serif;
   }
   </style>

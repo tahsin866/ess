@@ -91,7 +91,7 @@
                 <th class="border border-emerald-200 p-3 text-sm font-semibold">মারহালা</th>
                 <th class="border border-emerald-200 p-3 text-sm font-semibold">মি’ইয়ারী/গায়রে মি’ইয়ারী</th>
                 <th class="border border-emerald-200 p-3 text-sm font-semibold">সিলেবাসের ধরন (বালক)</th>
-                <th class="border border-emerald-200 p-3 text-sm font-semibold">পিএসসির ধরন (বালিকা)</th>
+                <th class="border border-emerald-200 p-3 text-sm font-semibold">সিলেবাসের ধরন (বালিকা)</th>
                 <th class="border border-emerald-200 p-3 text-sm font-semibold">নৈর্বাচনিক গ্রুপ</th>
                 <th class="border border-emerald-200 p-3 text-sm font-semibold">মারকাযের ধরণ</th>
                 <th class="border border-emerald-200 p-3 text-sm font-semibold">বালক/বালিকা</th>

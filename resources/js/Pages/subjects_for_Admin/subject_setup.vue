@@ -21,7 +21,7 @@
 
         <!-- ছাত্র / ছাত্রী -->
         <div class="col-span-1">
-          <label class="block text-sm font-semibold text-emerald-800 mb-2">ছাত্র / ছাত্রী *</label>
+          <label class="block text-sm font-semibold text-emerald-800 mb-2">বিষয় নির্বাচন করুন *</label>
           <select v-model="form.gender"
                   class="w-full  border-emerald-200 rounded-sm py-2 px-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-emerald-50">
             <option value="male">ছাত্র</option>
