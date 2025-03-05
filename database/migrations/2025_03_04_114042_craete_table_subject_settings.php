@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreignId('marhala_id')->constrained('marhalas')->onDelete('cascade');
             $table->foreignId('subject_id')->constrained('marhala_subjects')->onDelete('cascade');
             $table->string('Marhala_type');
-            $table->string('Subject_type');
-            $table->enum('student_type', ['male', 'female']);
-            $table->enum('syllabus_type', ['compulsory', 'optional']);
-            $table->enum('markaz_type', ['darsiat', 'hifz', 'qirat']);
-            $table->enum('subject_type', ['miyari', 'gaire_miyari']);
+            $table->string('Subject_Names');
+            $table->string('student_type');
+            $table->string('syllabus_type');
+            $table->string('markaz_type');
+            $table->string('subject_type');
             $table->integer('total_marks');
             $table->integer('pass_marks');
             $table->enum('status', ['active', 'inactive'])->default('active');

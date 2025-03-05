@@ -2,6 +2,7 @@
 use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubjectSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,8 +30,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('api')->group(function () {
     Route::get('/marhalas', [MarhalaController::class, 'getMarhalaList']);
-    // Route::get('/marhalas/{id}/edit', [MarhalaController::class, 'edit']);
-    // Route::put('/marhalas/{id}', [MarhalaController::class, 'update']);
+
 });
 
 
@@ -43,6 +43,23 @@ Route::prefix('api')->group(function () {
 Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class, 'edit'])
     ->name('Mrahala_for_Admin.marhala_edit');
 
+    Route::post('/subject-settings', [SubjectSettingsController::class, 'store'])
+    ->name('subject-settings.store');
+
+
+    Route::post('subject-settings/store', [SubjectSettingsController::class, 'store'])
+    ->name('subject-settings.store');
+
+
+
+
+
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin_auth.php';
@@ -51,3 +68,4 @@ require __DIR__ . '/admin_auth.php';
 require __DIR__ . '/Madrasha.php';
 
 require __DIR__ . '/Admin.php';
+require __DIR__ . '/api.php';

@@ -20,10 +20,10 @@ class Marhala extends Model
         return $this->hasMany(MarhalaSubject::class);
     }
 
-    public function subjects_1()
-    {
-        return $this->hasMany(MarhalaSubject::class, 'marhala_id');
-    }
+    // public function subjects_1()
+    // {
+    //     return $this->hasMany(MarhalaSubject::class, 'marhala_id');
+    // }
 
 
 }

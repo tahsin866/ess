@@ -57,6 +57,9 @@ class MarhalaController extends Controller
             'marhala' => $marhalaData
         ]);
     }
+
+
+
     public function update(Request $request, $id)
     {
         $request->validate([
