@@ -20,5 +20,13 @@ class MarhalaSubject extends Model
     public function marhala()
     {
         return $this->belongsTo(Marhala::class);
+
+    }
+
+
+
+    public function subjectSetting()
+    {
+        return $this->hasOne(subject_settings::class, 'subject_id');
     }
 }

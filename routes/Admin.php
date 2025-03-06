@@ -2,8 +2,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
-
-
+use App\Http\Controllers\SubjectSettingsController;
+use App\Http\Controllers\ExamSetupController;
 
 // মারহালা সেটাপ
 
@@ -64,6 +64,17 @@ Route::get('central_Exam_setup/others_setup', function () {
     return Inertia::render('central_Exam_setup/others_setup');
 })->name('central_Exam_setup.others_setup');
 
+Route::get('central_Exam_setup/central_exam_name', function () {
+    return Inertia::render('central_Exam_setup/central_exam_name');
+})->name('central_Exam_setup.central_exam_name');
+
+Route::get('central_Exam_setup/central_exam_edit', function () {
+    return Inertia::render('central_Exam_setup/central_exam_edit');
+})->name('central_Exam_setup.central_exam_edit');
+
+
+// নেগরান বিল
+
 
 Route::get('Bill_setup_admin/negran_bill_setup', function () {
     return Inertia::render('Bill_setup_admin/negran_bill_setup');
@@ -121,4 +132,7 @@ Route::get('nibondon_for_admin/student_detiles_For_nibondon', function () {
 
 
 
+Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->name('subject-settings.index');
 
+Route::get('/central-exam-setup/{id}/edit', [ExamSetupController::class, 'edit'])->name('central_Exam_setup.central_exam_edit');
+Route::put('/central-exam-setup/{id}', [ExamSetupController::class, 'update'])->name('central_Exam_setup.update');

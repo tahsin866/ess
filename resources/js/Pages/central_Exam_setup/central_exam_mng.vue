@@ -1,8 +1,8 @@
 <template>
     <AuthenticatedLayout>
-        <div class="p-6 bg-[#f8f9fa] min-h-screen">
+        <div class="p-6 bg-gray-50 min-h-screen">
       <!-- Filter Section -->
-      <div class="bg-emerald-50 border border-emerald-100 p-6 rounded-sm mb-6 shadow-sm">
+      <div class="bg-gray-50 border border-emerald-100 p-6 rounded-sm mb-6 shadow-sm">
         <h2 class="font-bold text-xl mb-6 text-emerald-800 flex items-center">
           <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -11,27 +11,28 @@
         </h2>
 
         <div class="grid grid-cols-12 gap-6">
-          <div class="col-span-12 md:col-span-6">
-            <label class="block text-emerald-700 text-sm font-medium mb-2">কেন্দ্রীয় পরীক্ষার নাম</label>
-            <input
-              type="text"
-              v-model="filters.examName"
-              class="w-full  border-emerald-200 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-              placeholder="কেন্দ্রীয় পরীক্ষার নাম লিখুন"
-            />
-          </div>
+            <div class="col-span-12 md:col-span-6">
+    <label class="block text-emerald-700 text-sm font-medium mb-2">অনুসন্ধান করুন</label>
+    <input
+      v-model="filters.search"
+      type="text"
+      placeholder="পরীক্ষার নাম দিয়ে অনুসন্ধান করুন..."
+      class="w-full border-emerald-200 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+    >
+  </div>
 
-          <div class="col-span-12 md:col-span-6">
-            <label class="block text-emerald-700 text-sm font-medium mb-2">স্ট্যাটাস</label>
-            <select
-              v-model="filters.status"
-              class="w-full  border-emerald-200 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-            >
-              <option value="">সকল স্ট্যাটাস</option>
-              <option value="active">সক্রিয়</option>
-              <option value="inactive">নিষ্ক্রিয়</option>
-            </select>
-          </div>
+  <div class="col-span-12 md:col-span-6">
+    <label class="block text-emerald-700 text-sm font-medium mb-2">কেন্দ্রীয় পরীক্ষা</label>
+    <select
+      v-model="filters.status"
+      class="w-full border-emerald-200 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+    >
+      <option value="">সকল পরীক্ষা</option>
+      <option v-for="option in examOptions" :key="option.value" :value="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+  </div>
         </div>
 
         <div class="flex justify-end space-x-4 mt-6">
@@ -64,12 +65,14 @@
           </svg>
           কেন্দ্রীয় পরীক্ষা তালিকা
         </h2>
-        <button class="bg-emerald-600 text-white px-6 py-2 rounded-sm hover:bg-emerald-700 transition-colors duration-200 flex items-center gap-2">
+        <Link
+        :href="route('central_Exam_setup.central_exam_name')"
+        class="bg-emerald-600 text-white px-6 py-2 rounded-sm hover:bg-emerald-700 transition-colors duration-200 flex items-center gap-2">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
           নতুন কেন্দ্রীয় পরীক্ষা
-        </button>
+        </Link>
       </div>
 
       <!-- Exam Table -->
@@ -81,36 +84,34 @@
               <th class="px-6 py-3 text-left font-semibold">ক্রম</th>
               <th class="px-6 py-3 text-left font-semibold">ইয়ার</th>
               <th class="px-6 py-3 text-left font-semibold">হিজরি</th>
-              <th class="px-6 py-3 text-left font-semibold">স্ট্যাটাস</th>
+
               <th class="px-6 py-3 text-left font-semibold">করনীয়</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
             <tr v-for="exam in filteredExams" :key="exam.id" class="hover:bg-gray-50 transition-colors duration-200">
-              <td class="px-6 py-4">{{ exam.name }}</td>
-              <td class="px-6 py-4">{{ exam.serial }}</td>
-              <td class="px-6 py-4">{{ exam.year }}</td>
-              <td class="px-6 py-4">{{ exam.hijri }}</td>
-              <td class="px-6 py-4">
-                <span
-                  :class="exam.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'"
-                  class="px-3 py-1 rounded-full text-xs font-medium"
-                >
-                  {{ exam.status === 'active' ? 'সক্রিয়' : 'নিষ্ক্রিয়' }}
-                </span>
-              </td>
+              <td class="px-6 py-4 font-md font-semibold">{{ exam.name }}</td>
+              <td class="px-6 py-4 font-md font-semibold">{{ exam.serial }}</td>
+              <td class="px-6 py-4 font-md font-semibold">{{ exam.year }}</td>
+              <td class="px-6 py-4 font-md font-semibold">{{ exam.hijri }}</td>
+
               <td class="px-6 py-4 space-x-2">
-                <button class="bg-amber-500 text-white px-4 py-1.5 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-sm">সংশোধনী</button>
+                <Link
+    :href="route('central_Exam_setup.central_exam_edit',{ id: exam.id })"
+    class="bg-amber-500 text-white px-4 py-2 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-sm"
+>
+    সংশোধনী
+</Link>
                 <Link
                          :href="route('central_Exam_setup.nibondon_setup')"
-                class="bg-emerald-500 text-white px-4 py-1.5 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">নিবন্ধন সেটআপ</Link >
+                class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">নিবন্ধন সেটআপ</Link >
                 <Link
 
                     :href="route('central_Exam_setup.ontorvukti_setup')"
-                class="bg-blue-500 text-white px-4 py-1.5 rounded-sm hover:bg-blue-600 transition-colors duration-200 text-sm">অন্তর্ভুক্তি সেটআপ</Link>
+                class="bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600 transition-colors duration-200 text-sm">অন্তর্ভুক্তি সেটআপ</Link>
                 <Link
                   :href="route('central_Exam_setup.others_setup')"
-                class="bg-indigo-500 text-white px-4 py-1.5 rounded-sm hover:bg-indigo-600 transition-colors duration-200 text-sm">অন্যান্য সেটআপ</Link>
+                class="bg-indigo-500 text-white px-4 py-2 rounded-sm hover:bg-indigo-600 transition-colors duration-200 text-sm">অন্যান্য সেটআপ</Link>
               </td>
             </tr>
           </tbody>
@@ -131,40 +132,67 @@
   </template>
 <script setup>
 import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue'
+import { ref, onMounted, computed } from 'vue'
 import { Link } from '@inertiajs/vue3'
-import { ref, computed } from 'vue'
+import axios from 'axios'
 
-
-
+const exams = ref([])
 const filters = ref({
-  examName: '',
-  status: '',
+
+  search: ''
 })
 
-const exams = ref([
-  { id: 1, name: '৪৩তম কেন্দ্রীয় পরীক্ষা', serial: 1431, year: 2025, hijri: 1446, status: 'active' },
-  { id: 2, name: '৪২তম কেন্দ্রীয় পরীক্ষা', serial: 1430, year: 2024, hijri: 1445, status: 'active' },
-  { id: 3, name: '৪১তম কেন্দ্রীয় পরীক্ষা', serial: 1429, year: 2023, hijri: 1444, status: 'active' },
-  { id: 4, name: '৪০তম কেন্দ্রীয় পরীক্ষা', serial: 1428, year: 2022, hijri: 1443, status: 'active' },
-  { id: 5, name: '৩৯তম কেন্দ্রীয় পরীক্ষা', serial: 1427, year: 2027, hijri: 1442, status: 'active' },
-])
+// Fetch exam setups
+const fetchExamSetups = async () => {
+  try {
+    const response = await axios.get('/api/exam-setups_1')
+    exams.value = response.data.map(exam => ({
+      id: exam.id,
+      name: `${exam.exam_name} ${exam.arabic_year} হিজরি/${exam.bangla_year} বঙ্গাব্দ/${exam.english_year} ইসাব্দ`,
+      serial: exam.id,
+      year: exam.english_year,
+      hijri: exam.arabic_year,
+      bangla: exam.bangla_year,
 
+    }))
+    console.log('Fetched data:', exams.value) // For debugging
+  } catch (error) {
+    console.error('API Error:', error)
+  }
+}
+
+// Computed property for filtered exams
 const filteredExams = computed(() => {
-  return exams.value.filter((exam) => {
-    return (
-      (filters.value.examName === '' || exam.name.includes(filters.value.examName)) &&
-      (filters.value.status === '' || exam.status === filters.value.status)
-    )
+  return exams.value.filter(exam => {
+    const matchesSearch = exam.name.toLowerCase().includes(filters.value.search.toLowerCase())
+    const matchesStatus = !filters.value.status || exam.status === filters.value.status
+    return matchesSearch && matchesStatus
   })
 })
 
-function resetFilters() {
-  filters.value.examName = ''
-  filters.value.status = ''
+// Reset filters
+const resetFilters = () => {
+  filters.value = {
+    status: '',
+    search: ''
+  }
 }
 
-function searchExams() {
-  // In real project, you can trigger an API call here if needed.
-  console.log('Filters:', filters.value)
+// Search exams
+const searchExams = () => {
+  fetchExamSetups()
 }
+
+// Get unique exam names for dropdown
+const examOptions = computed(() => {
+  const uniqueExams = [...new Set(exams.value.map(exam => exam.name))]
+  return uniqueExams.map(name => ({
+    value: name,
+    label: name
+  }))
+})
+
+onMounted(() => {
+  fetchExamSetups()
+})
 </script>

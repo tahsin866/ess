@@ -1,6 +1,6 @@
 <template>
   <AuthenticatedLayout>
-    <div class=" bg-emerald-50 p-8 mx-5 mt-5">
+    <div class=" bg-gray-50 p-8 mx-5 mt-5">
       <!-- Header Section -->
       <div class="bg-white rounded-sm shadow-sm p-6 mb-6">
         <div class="flex items-center gap-3">

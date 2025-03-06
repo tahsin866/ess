@@ -38,4 +38,11 @@ class subject_settings extends Model
         return $this->belongsTo(MarhalaSubject::class, 'subject_id');
     }
 
+
+    public function MarhalaSubject()
+    {
+        return $this->belongsTo(MarhalaSubject::class, 'subject_id', 'id');
+    }
+
+
 }

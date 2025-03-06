@@ -7,7 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
-
+use App\Http\Controllers\ExamSetupController;
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -52,11 +52,11 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
 
 
 
+    // Route::get('/central-exam-setup/{id}', [ExamSetupController::class, 'getExam']);
 
-
-
-
-
+    Route::prefix('api')->group(function () {
+        Route::get('/central-exam-setup/{id}', [ExamSetupController::class, 'getExam']);
+    });
 
 
 

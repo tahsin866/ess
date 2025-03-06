@@ -109,45 +109,30 @@
     </AuthenticatedLayout>
    </template>
 
-  <script setup>
+<script setup>
+import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import axios from 'axios'
+import { useForm } from '@inertiajs/vue3'
 
- import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue'
- import { ref, computed,onMounted,watch  } from 'vue'
- import axios from 'axios'
- import { useForm } from '@inertiajs/vue3'
+const marhala = ref({})
+const subjects = ref([])
+const loading = ref(true)
 
+const marhalaName = computed(() => marhala.value?.marhala_name_bn || '')
 
- const marhala = ref({})
- const subjects = ref([])
- const loading = ref(true)
-
- // Define marhalaName as computed property
- const marhalaName = computed(() => marhala.value?.marhala_name_bn || '')
-
- const fetchData = async (marhalaId) => {
+const fetchData = async (marhalaId) => {
     try {
         const response = await axios.get(`/api/marhala/${marhalaId}/subjects`);
         marhala.value = response.data.marhala;
         subjects.value = response.data.subjects;
         form.Marhala_type = response.data.marhala.marhala_name_bn;
-
-        // Set student type directly from response
-        form.student_type = response.data.studentType;
-
-        console.log('Student Type:', response.data.studentType); // For debugging
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 };
 
-
-
-
-
-
-
-
- const form = useForm({
+const form = useForm({
     marhala_id: route().params.marhala,
     subject_id: '',
     Marhala_type: '',
@@ -162,19 +147,27 @@
     status: 'active'
 });
 
-const submit = () => {
-    form.post(route('subject-settings.store'), {
-        preserveScroll: true,
-        onSuccess: () => {
+const submit = async () => {
+    try {
+        const response = await axios.post(route('subject-settings.store'), form);
+        if (response.data.success) {
             const marhalaId = form.marhala_id;
-            const studentType = form.student_type;
             form.reset();
             form.marhala_id = marhalaId;
-            form.student_type = studentType;
+            // Optional: Show success message
+            alert(response.data.message);
+            // Refresh data
+            await fetchData(marhalaId);
         }
-    });
+    } catch (error) {
+        if (error.response?.data?.errors) {
+            // Handle validation errors
+            console.error('Validation errors:', error.response.data.errors);
+        } else {
+            console.error('Error saving data:', error);
+        }
+    }
 };
-
 watch(() => form.subject_id, (newValue) => {
     if (newValue) {
         const selectedSubject = subjects.value.find(subject => subject.id === parseInt(newValue));
@@ -186,12 +179,11 @@ watch(() => form.subject_id, (newValue) => {
     }
 });
 
- onMounted(() => {
-     const marhalaId = route().params.marhala
-     fetchData(marhalaId)
- })
-
- </script>
+onMounted(() => {
+    const marhalaId = route().params.marhala
+    fetchData(marhalaId)
+})
+</script>
 
 
 
