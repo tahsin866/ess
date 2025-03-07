@@ -211,12 +211,7 @@ public function store_1(Request $request)
 
 
 
-public function index_2()
-{
-    return ExamSetup::orderBy('id', 'desc')
-        ->select('id', 'exam_name', 'arabic_year', 'bangla_year', 'english_year', 'status')
-        ->get();
-}
+
 
 }
 

@@ -24,16 +24,18 @@ class ExamSetupController extends Controller
 
     public function edit($id)
     {
-        $examFee = ExamFee::findOrFail($id);
-        $examSetup = ExamSetup::select('exam_name', 'arabic_year', 'bangla_year', 'english_year')
-            ->where('id', $examFee->exam_setup_id)
-            ->first();
+        $examFees = ExamFee::where('exam_setup_id', $id)->get();
+        $examSetup = ExamSetup::findOrFail($id);
 
         return Inertia::render('central_Exam_setup/central_exam_edit', [
-            'examFee' => $examFee,
+            'examFees' => $examFees,
             'examSetup' => $examSetup
         ]);
     }
+
+
+
+
 
     public function update(Request $request, $id)
     {
@@ -55,8 +57,10 @@ class ExamSetupController extends Controller
         $examFee = ExamFee::findOrFail($id);
         $examFee->update($validated);
 
-        return redirect()->route('central-exam-setup.index')
-            ->with('message', 'পরীক্ষার ফি সফলভাবে আপডেট করা হয়েছে');
+        return response()->json([
+            'success' => true,
+            'message' => 'পরীক্ষার ফি সফলভাবে আপডেট করা হয়েছে',
+            'data' => $examFee
+        ]);
     }
-
 }

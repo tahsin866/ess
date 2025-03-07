@@ -51,12 +51,9 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
     ->name('subject-settings.store');
 
 
+    Route::get('/central-exam-setup/nibondon-setup/{id}', [ExamSetupController::class, 'nibondonSetup'])
+    ->name('central_Exam_setup.nibondon_setup');
 
-    // Route::get('/central-exam-setup/{id}', [ExamSetupController::class, 'getExam']);
-
-    Route::prefix('api')->group(function () {
-        Route::get('/central-exam-setup/{id}', [ExamSetupController::class, 'getExam']);
-    });
 
 
 

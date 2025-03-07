@@ -68,9 +68,9 @@ Route::get('central_Exam_setup/central_exam_name', function () {
     return Inertia::render('central_Exam_setup/central_exam_name');
 })->name('central_Exam_setup.central_exam_name');
 
-Route::get('central_Exam_setup/central_exam_edit', function () {
-    return Inertia::render('central_Exam_setup/central_exam_edit');
-})->name('central_Exam_setup.central_exam_edit');
+// Route::get('central_Exam_setup/central_exam_edit', function () {
+//     return Inertia::render('central_Exam_setup/central_exam_edit');
+// })->name('central_Exam_setup.central_exam_edit');
 
 
 // নেগরান বিল
@@ -134,5 +134,17 @@ Route::get('nibondon_for_admin/student_detiles_For_nibondon', function () {
 
 Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->name('subject-settings.index');
 
-Route::get('/central-exam-setup/{id}/edit', [ExamSetupController::class, 'edit'])->name('central_Exam_setup.central_exam_edit');
-Route::put('/central-exam-setup/{id}', [ExamSetupController::class, 'update'])->name('central_Exam_setup.update');
+
+
+// Route::get('/central-exam-setup/{id}/edit', [ExamSetupController::class, 'edit'])->name('central_Exam_setup.central_exam_edit');
+// Route::put('/central-exam-setup/{id}', [ExamSetupController::class, 'update'])->name('central_Exam_setup.index');
+
+    Route::get('/central-exam-setup/{id}/edit', [ExamSetupController::class, 'edit'])
+        ->name('central_Exam_setup.central_exam_edit');
+
+    Route::put('/central-exam-setup/{id}', [ExamSetupController::class, 'update'])
+        ->name('central_Exam_setup.update');
+
+    Route::get('/central-exam-setup', [ExamSetupController::class, 'index'])
+        ->name('central_Exam_setup.index');
+

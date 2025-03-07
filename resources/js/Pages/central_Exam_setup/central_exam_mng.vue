@@ -96,15 +96,28 @@
               <td class="px-6 py-4 font-md font-semibold">{{ exam.hijri }}</td>
 
               <td class="px-6 py-4 space-x-2">
-                <Link
-    :href="route('central_Exam_setup.central_exam_edit',{ id: exam.id })"
+
+<Link
+    :href="route('central_Exam_setup.central_exam_edit', exam.exam_setup_id)"
     class="bg-amber-500 text-white px-4 py-2 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-sm"
 >
     সংশোধনী
 </Link>
+
+<!--
                 <Link
                          :href="route('central_Exam_setup.nibondon_setup')"
-                class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">নিবন্ধন সেটআপ</Link >
+                class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">নিবন্ধন সেটআপ</Link > -->
+
+                <Link
+    :href="route('central_Exam_setup.nibondon_setup', exam.id)"
+    class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm"
+>
+    নিবন্ধন সেটআপ
+</Link>
+
+
+
                 <Link
 
                     :href="route('central_Exam_setup.ontorvukti_setup')"
@@ -148,14 +161,13 @@ const fetchExamSetups = async () => {
     const response = await axios.get('/api/exam-setups_1')
     exams.value = response.data.map(exam => ({
       id: exam.id,
+      exam_setup_id: exam.id,  // Added this line
       name: `${exam.exam_name} ${exam.arabic_year} হিজরি/${exam.bangla_year} বঙ্গাব্দ/${exam.english_year} ইসাব্দ`,
       serial: exam.id,
       year: exam.english_year,
       hijri: exam.arabic_year,
       bangla: exam.bangla_year,
-
     }))
-    console.log('Fetched data:', exams.value) // For debugging
   } catch (error) {
     console.error('API Error:', error)
   }
