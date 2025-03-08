@@ -4,7 +4,7 @@ use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\SubjectSettingsController;
 use App\Http\Controllers\ExamSetupController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MarkazAgreementController;
 
 
 Route::get('/marhalas/{id}/edit', [MarhalaController::class, 'edit']);
@@ -31,6 +31,10 @@ Route::prefix('api')->group(function () {
 
     Route::get('/central-exam-setup', [ExamSetupController::class, 'index'])
         ->name('central_Exam_setup.index');
+
+
+        Route::get('/madrashas/list', [MarkazAgreementController::class, 'getMadrashas'])->name('madrashas.list');
+
 });
 
 

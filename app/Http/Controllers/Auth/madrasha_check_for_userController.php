@@ -64,6 +64,7 @@ class madrasha_check_for_userController extends Controller
                 'madrasha_name' => $madrasha->MName_uni,
                 'thana' => $madrasha->Thana_uni,
                 'post' => $madrasha->Post_uni,
+                'markaz_serial' => $madrasha->markaz_serial,
                 'custom_code' => $customCode
             ]);
 

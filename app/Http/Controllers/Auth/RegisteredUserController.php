@@ -55,13 +55,14 @@ class RegisteredUserController extends Controller
             'madrasha_name' => session('madrasha_name'),
             'thana' => session('thana'),
             'post' => session('post'),
+            'markaz_serial' => session('markaz_serial'),
         ]);
 
         event(new Registered($user));
         Auth::login($user);
 
         // Clear the session data
-        session()->forget(['madrasha_id', 'madrasha_name', 'thana', 'post', 'custom_code']);
+        session()->forget(['madrasha_id', 'madrasha_name', 'thana', 'post', 'custom_code', 'markaz_serial']);
 
         return redirect()->route('dashboard');
     }

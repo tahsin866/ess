@@ -1,9 +1,9 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import { Link } from '@inertiajs/vue3';
-
+ import { usePage } from '@inertiajs/vue3';
 // Sidebar state
 // const sidebarOpen = ref(true); // Changed initial state to true
 // const isMobile = ref(false);
@@ -59,6 +59,11 @@ const mobileMenuOpen = ref(false)
 const toggleMobileMenu = () => {
     mobileMenuOpen.value = !mobileMenuOpen.value
 }
+
+
+const page = usePage()
+
+
 
 </script>
 
@@ -291,9 +296,11 @@ const toggleMobileMenu = () => {
                     </button>
 
             <!-- Logo -->
-            <div class="flex items-center">
-                <!-- <i class="fas fa-mosque text-2xl text-emerald-600 dark:text-emerald-400"></i> -->
-            </div>
+            <div class="flex items-center flex-grow justify-center">
+    <h1 class="text-2xl font-semibold text-center">
+      {{ page.props.auth.user.madrasha_name }} {{ page.props.auth.user.thana }} ({{ page.props.auth.user.custom_code }})
+    </h1>
+  </div>
 
             <!-- Notification and User Dropdown -->
             <div class="hidden sm:flex items-center space-x-4">

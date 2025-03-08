@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\MarhalaListController;
+use App\Http\Controllers\MarkazAgreementController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -145,4 +146,7 @@ Route::get('About_markaj/madrasha_list', function () {
 
     // Route::get('/Mrahala_for_Admin/marhala_details_list', [MarhalaListController::class, 'marhalaList'])
     // ->name('Mrahala_for_Admin.marhala_details_list');
-    Route::get('/marhalas', [MarhalaController::class, 'getMarhalaList']);
+
+
+    Route::resource('markaz-agreements', MarkazAgreementController::class);
+    Route::get('/markaz-agreements', [MarkazAgreementController::class, 'getTableData'])->name('markaz-agreements.index');

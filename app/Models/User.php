@@ -28,7 +28,8 @@ class User extends Authenticatable
         'custom_code',
         'madrasha_name',
         'thana',
-        'post'
+        'post',
+        'markaz_serial'
     ];
 
     /**

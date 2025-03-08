@@ -58,12 +58,7 @@ const toggleDialog = () => {
     <div class="container mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
         <!-- Stats Card -->
-        <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4 border-r border-white/30">
-          <h3 class="text-amber-300 text-lg font-medium mb-2">
-            <i class="fas fa-users-class ml-2"></i> মোট নিবন্ধিত ছাত্র সংখ্যা
-          </h3>
-          <span class="text-white text-3xl font-bold">{{ totalApplications }}</span>
-        </div>
+
 
         <!-- Title with Islamic decoration -->
         <h2 class="text-white text-2xl font-bold text-center md:text-3xl">
@@ -91,7 +86,7 @@ const toggleDialog = () => {
           <th class="px-6 py-3 text-xl font-medium text-left">মারহালা</th>
           <th class="px-6 py-3 text-xl font-medium text-left">শুরুর তারিখ</th>
           <th class="px-6 py-3 text-xl font-medium text-left">শেষের তারিখ</th>
-          <th class="px-6 py-3 text-xl font-medium text-left">রেজি লিমিট</th>
+          <th class="px-6 py-3 text-xl font-medium text-left">মোট নিবন্ধিত ছাত্র সংখ্যা</th>
           <th class="px-6 py-3 text-xl font-medium text-left">একশন</th>
         </tr>
       </thead>
@@ -109,13 +104,13 @@ const toggleDialog = () => {
                 :href="route('students_registration.student_reg_table')"
                 class="bg-emerald-600 hover:bg-emerald-700 text-white p-3 rounded-sm transition-all"
               >
-                <i class="fas fa-plus-circle"></i>
+              নিবন্ধন করুন
               </Link>
               <Link
                 :href="route('Markaz.Makaj_change')"
                 class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-sm transition-all"
               >
-                <i class="fas fa-file-alt"></i>
+   নিবন্ধিত তালিকা
               </Link>
             </div>
           </td>
