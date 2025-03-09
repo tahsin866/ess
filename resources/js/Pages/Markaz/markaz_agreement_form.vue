@@ -12,6 +12,10 @@ const form = useForm({
     category: '',
     // Main Madrasa Data
     user_id: usePage().props.auth.user.id,
+    user_name: usePage().props.auth.user.madrasha_name, // Add this
+    exam_id: '', // Add this
+    exam_name: '', // Add this
+    markaz_type: "",
     markaz_type: "",
     fazilat: '',
     sanabiya_ulya: '',
@@ -111,19 +115,7 @@ const removeFile = (type, index) => {
     }
 }
 
-// Static file handling functions
-// const handleFileUploadForMadrahsa = (event, type) => {
-//     const file = event.target.files[0]
-//     if (!file) return
 
-//     if (type === 'noc') {
-//         nocFileForMadrahsa.value = file
-//         nocPreviewForMadrahsa.value = URL.createObjectURL(file)
-//     } else {
-//         resolutionFileForMadrahsa.value = file
-//         resolutionPreviewForMadrahsa.value = URL.createObjectURL(file)
-//     }
-// }
 
 const removeFileForMadrahsa = (type) => {
     if (type === 'noc') {
@@ -188,15 +180,6 @@ const removeFileMumtahin = (type) => {
     }
 }
 
-const searchQuery = ref('')
-const isOpen = ref(false)
-const selectedValue = ref('')
-
-const madrasaOptions = [
-    { value: 'mad1', label: 'Madrasa 1' },
-    { value: 'mad2', label: 'Madrasa 2' },
-    { value: 'mad3', label: 'Madrasa 3' },
-]
 
 
 
@@ -307,6 +290,9 @@ const madrashas = ref([])
 onMounted(async () => {
     const { data } = await axios.get(route('madrashas.list'))
     madrashas.value = data
+    const response = await axios.get(route('exam-setups.latest'))
+    form.exam_id = response.data.id
+    form.exam_name = response.data.exam_name
 })
 
 const filteredOptions = computed(() => (row) => {
@@ -452,7 +438,7 @@ onMounted(() => {
                         <!-- NOC Upload -->
                         <div class="p-3 border-2 border-dashed border-emerald-300 rounded-lg">
                             <div class="flex items-center justify-between mb-4">
-                                <label class="text-lg font-medium text-emerald-700">অনাপত্তিপত্র</label>
+                                <label class="text-lg font-medium text-emerald-700">পূর্বের মাদরাসার অনাপত্তিপত্র</label>
                                 <div v-if="nocFileForMadrahsa" class="flex items-center space-x-4">
                                     <a :href="nocPreviewForMadrahsa" target="_blank"
                                         class="text-emerald-600 hover:text-emerald-800 flex items-center">
@@ -477,7 +463,7 @@ onMounted(() => {
                         <!-- Resolution Upload -->
                         <div class="p-4 border-2 border-dashed border-emerald-300 rounded-lg">
                             <div class="flex items-center justify-between mb-4">
-                                <label class="text-lg font-medium text-emerald-700">কমিটির রেজুলেশন</label>
+                                <label class="text-lg font-medium text-emerald-700">সম্মতিপত্র</label>
                                 <div v-if="resolutionPreviewForMadrahsa" class="flex items-center space-x-4">
                                     <a :href="resolutionPreviewForMadrahsa" target="_blank"
                                         class="text-emerald-600 hover:text-emerald-800 flex items-center">
@@ -595,7 +581,7 @@ onMounted(() => {
                                 <!-- NOC Upload -->
                                 <div class="p-3 border-2 border-dashed border-emerald-300 rounded-lg">
                                     <div class="flex items-center justify-between mb-4">
-                                        <label class="text-lg font-medium text-emerald-700">মাদরাসার NOC</label>
+                                        <label class="text-lg font-medium text-emerald-700">পূর্বের মাদরাসার অনাপত্তিপত্র</label>
                                         <div v-if="row.files.nocPreview" class="flex items-center space-x-4">
                                             <a :href="row.files.nocPreview" target="_blank"
                                                 class="text-emerald-600 hover:text-emerald-800 flex items-center">
@@ -615,7 +601,7 @@ onMounted(() => {
                                 <!-- Resolution Upload -->
                                 <div class="p-4 border-2 border-dashed border-emerald-300 rounded-lg">
                                     <div class="flex items-center justify-between mb-4">
-                                        <label class="text-lg font-medium text-emerald-700">কমিটির রেজুলেশন</label>
+                                        <label class="text-lg font-medium text-emerald-700">বর্তমান মাদরাসার সম্মতিপত্র</label>
                                         <div v-if="row.files.resolutionPreview" class="flex items-center space-x-4">
                                             <a :href="row.files.resolutionPreview" target="_blank"
                                                 class="text-emerald-600 hover:text-emerald-800 flex items-center">

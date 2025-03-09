@@ -24,12 +24,12 @@ const selectedMadrasa = ref("");
         </div>
 
         <!-- Madrasa Selection -->
-        <div class="bg-emerald-50 p-6 border-b border-emerald-100">
+        <div class="p-6 border-b ">
           <div class="bg-white p-4 rounded-md shadow-md">
             <label class="text-emerald-800 font-semibold block mb-2">মারকাযের স্তর নির্বাচন করুন</label>
             <select
               v-model="selectedMadrasa"
-              class="w-full px-4 py-3 border border-emerald-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+              class="w-full px-4 py-3 border  rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
             >
               <option value="">মাদরাসা সিলেক্ট করুন</option>
               <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
@@ -38,9 +38,9 @@ const selectedMadrasa = ref("");
         </div>
 
         <!-- Content Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-emerald-50">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 ">
           <!-- মারকাযের ধরন -->
-          <div class="bg-white p-5 rounded-md shadow-md border border-emerald-100 hover:shadow-lg transition-shadow duration-300">
+          <div class="bg-white p-5 rounded-md shadow-md border  hover:shadow-lg transition-shadow duration-300">
             <label class="text-emerald-800 font-semibold block mb-3">
               <i class="fas fa-mosque mr-2"></i>মারকাযের ধরন
             </label>
@@ -48,7 +48,7 @@ const selectedMadrasa = ref("");
           </div>
 
           <!-- বর্তমান মারকায -->
-          <div class="bg-white p-5 rounded-md shadow-md border border-emerald-100 hover:shadow-lg transition-shadow duration-300">
+          <div class="bg-white p-5 rounded-md shadow-md border  hover:shadow-lg transition-shadow duration-300">
             <label class="text-emerald-800 font-semibold block mb-3">
               <i class="fas fa-map-marker-alt mr-2"></i>বর্তমান মারকায
             </label>
@@ -56,7 +56,7 @@ const selectedMadrasa = ref("");
           </div>
 
           <!-- কাঙ্খিত মারকায -->
-          <div class="bg-white p-5 rounded-md shadow-md border border-emerald-100 hover:shadow-lg transition-shadow duration-300">
+          <div class="bg-white p-5 rounded-md shadow-md border  hover:shadow-lg transition-shadow duration-300">
             <label class="text-emerald-800 font-semibold block mb-3">
               <i class="fas fa-star-and-crescent mr-2"></i>কাঙ্খিত মারকায
             </label>
@@ -71,7 +71,7 @@ const selectedMadrasa = ref("");
         </div>
 
         <!-- File Uploads -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-emerald-50">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 ">
           <!-- অনাপত্তি পত্র -->
           <div class="space-y-3">
             <label class="text-emerald-800 font-semibold block">

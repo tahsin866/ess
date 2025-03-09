@@ -79,51 +79,60 @@
           </div>
 
           <div class="p-6 overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead>
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead>
                 <tr>
-                  <th v-for="header in tableHeaders" :key="header.id"
-                      class="px-6 py-3 bg-gray-50 text-left text-md font-semibold text-gray-500 uppercase tracking-wider">
-                    {{ header.label }}
-                  </th>
+                    <th v-for="header in tableHeaders" :key="header.id"
+                        class="px-6 py-3 bg-gray-50 text-left text-md font-semibold text-gray-500 uppercase tracking-wider">
+                        {{ header.label }}
+                    </th>
                 </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="(application, index) in applications" :key="index"
                     class="hover:bg-gray-50 transition-colors">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ index + 1 }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.number }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.name }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.class }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.code }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.studentNumber }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.applicantType }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasahNumber }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span :class="getStatusClass(application.boardStatus)">
-                      {{ application.boardStatus }}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <div class="flex gap-2">
-                      <button @click="viewApplication(application)"
-                              class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button @click="editApplication(application)"
-                              class="text-green-600 hover:text-green-800">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button @click="deleteApplication(application)"
-                              class="text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ index + 1 }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.number }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.Elhaq_no }}</td>
+
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasha_code }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.studentNumber }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.markaz_type }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasahNumber }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+    <span
+        :class="{
+            'bg-yellow-300 text-black px-3 py-1 rounded': application.status === 'সাবমিটেড',
+            'bg-yellow-500 text-white px-3 py-1 rounded': application.status === 'Pending',
+            'bg-green-600 text-white px-3 py-1 rounded': application.status === 'অনুমোদন'
+        }"
+    >
+        {{ application.status }}
+    </span>
+</td>
+
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <div class="flex gap-2">
+                            <button @click="router.get(route('Markaz.view', application.id))"
+        class="text-blue-600 hover:text-blue-800">
+    <i class="fas fa-eye"></i>
+</button>
+
+                            <button @click="editApplication(application)"
+                                    class="text-green-600 hover:text-green-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button @click="deleteApplication(application)"
+                                    class="text-red-600 hover:text-red-800">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
+            </tbody>
+        </table>
+    </div>
 
           <!-- Pagination -->
           <div class="bg-gray-50 px-6 py-4 flex items-center justify-between">
@@ -158,8 +167,9 @@
 
   <script setup>
   import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue';
-import { ref, reactive } from 'vue';
-
+import { ref, reactive,onMounted } from 'vue';
+import axios from 'axios';
+import { Link , router } from '@inertiajs/vue3';
   const filterFields = [
     {
       id: 'madrasahName',
@@ -254,6 +264,8 @@ import { ref, reactive } from 'vue';
     { id: 'actions', label: 'একশন' }
   ];
 
+
+
   const filters = reactive({
     madrasahName: '',
     type: '',
@@ -267,18 +279,50 @@ import { ref, reactive } from 'vue';
   });
 
   // Sample applications data
-  const applications = ref([
-    // Add your applications data here
-  ]);
+const applications = ref([]);
 
-  const getStatusClass = (status) => {
-    return {
-      'px-2 py-1 text-xs font-medium rounded-full': true,
-      'bg-yellow-100 text-yellow-800': status === 'pending',
-      'bg-green-100 text-green-800': status === 'approved',
-      'bg-red-100 text-red-800': status === 'rejected'
-    };
-  };
+//   const getStatusClass = (status) => {
+//     return {
+//       'px-2 py-1 text-xs font-medium rounded-full': true,
+//       'bg-yellow-100 text-yellow-800': status === 'pending',
+//       'bg-green-100 text-green-800': status === 'approved',
+//       'bg-red-100 text-red-800': status === 'rejected'
+//     };
+//   };
+
+  const fetchApplications = async () => {
+    try {
+        const response = await axios.get('/api/markaz-agreements');
+        applications.value = response.data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+};
+
+
+
+
+onMounted(fetchApplications);
+
+const getStatusClass = (status) => {
+    return status === 'সাবমিটেড' ? 'text-green-600' : 'text-yellow-600';
+};
+
+const viewApplication = (application) => {
+    alert(`Viewing application: ${application.name}`);
+};
+
+const editApplication = (application) => {
+    alert(`Editing application: ${application.name}`);
+};
+
+const deleteApplication = (application) => {
+    if (confirm(`Are you sure you want to delete ${application.name}?`)) {
+        applications.value = applications.value.filter(app => app.id !== application.id);
+    }
+};
+
+
 
   const search = () => {
     // Implement search logic
@@ -288,21 +332,25 @@ import { ref, reactive } from 'vue';
     Object.keys(filters).forEach(key => filters[key] = '');
   };
 
+
+
+
+
   const exportData = () => {
     // Implement export logic
   };
 
-  const viewApplication = (application) => {
-    // Implement view logic
-  };
+//   const viewApplication = (application) => {
+//     // Implement view logic
+//   };
 
-  const editApplication = (application) => {
-    // Implement edit logic
-  };
+//   const editApplication = (application) => {
+//     // Implement edit logic
+//   };
 
-  const deleteApplication = (application) => {
-    // Implement delete logic
-  };
+//   const deleteApplication = (application) => {
+//     // Implement delete logic
+//   };
   </script>
 
   <style scoped>

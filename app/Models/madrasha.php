@@ -15,4 +15,11 @@ protected $fillable = [
     'ElhaqNo'
 ];
 
+
+public function users()
+{
+    return $this->hasMany(User::class, 'madrasha_id');
+}
+
+
 }

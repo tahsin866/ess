@@ -54,4 +54,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function madrasha()
+    {
+        return $this->belongsTo(Madrasha::class, 'madrasha_id', 'id');
+    }
+
+
 }

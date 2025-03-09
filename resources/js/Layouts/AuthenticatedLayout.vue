@@ -118,7 +118,13 @@ const page = usePage()
                 <!-- <i class="fas fa-pen-fancy w-5 h-5"></i> -->
                 মারকায আবেদন
             </Link>
-                        <Link :href="route('Markaz.markaz_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মারকায পরিবর্তন</Link>
+            <Link
+    v-if="!$page.props.auth.user.markaz_serial"
+    :href="route('Markaz.markaz_change_table')"
+    class="block px-4 py-2 text-xl hover:bg-[#123524]"
+>
+    মারকায পরিবর্তন
+</Link>
 
 
                         <Link :href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মারহালা পরিবর্তন</Link>
@@ -191,24 +197,24 @@ const page = usePage()
                 <!-- ইবতেদাইয়্যাহ -->
 
 
-                <div>
-                   <button @click="dropdownOpen.ibtedaia = !dropdownOpen.ibtedaia"
-                class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-school w-6 h-6 text-sm"></i>
-                মারকায সংক্রান্ত
-            </div>
-            <i :class="{'rotate-180': dropdownOpen.ibtedaia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
-        </button>
-                    <div v-if="dropdownOpen.ibtedaia" class="pl-6">
-                        <Link :href="route('About_markaj.madrasha_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরান তালিকা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">প্রশ্নপত্র প্রিন্ট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ভাউচার তৈরি</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ছাত্রদের হাজিরা</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরানদের হাজিরা</Link>
-                    </div>
-                </div>
+                <div v-if="$page.props.auth.user.markaz_serial">
+    <button @click="dropdownOpen.ibtedaia = !dropdownOpen.ibtedaia"
+        class="w-full text-xl flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-school w-6 h-6 text-sm"></i>
+            মারকায সংক্রান্ত
+        </div>
+        <i :class="{'rotate-180': dropdownOpen.ibtedaia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
+    </button>
+    <div v-if="dropdownOpen.ibtedaia" class="pl-6">
+        <Link :href="route('About_markaj.madrasha_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
+        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরান তালিকা</Link>
+        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">প্রশ্নপত্র প্রিন্ট</Link>
+        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ভাউচার তৈরি</Link>
+        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ছাত্রদের হাজিরা</Link>
+        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরানদের হাজিরা</Link>
+    </div>
+</div>
 
 <!-- হিফজুল কোরান -->
 

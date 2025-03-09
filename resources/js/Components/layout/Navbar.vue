@@ -21,7 +21,7 @@
 
               বেফাক ইয়ারপি
             </a>
-            <a href="#" class="text-white text-lg hover:bg-emerald-800 px-4 py-2 rounded-md transition-colors duration-200 flex items-center">
+            <a :href="route('login')" class="text-white text-lg hover:bg-emerald-800 px-4 py-2 rounded-md transition-colors duration-200 flex items-center">
 
               মাদরাসা পেনেল
             </a>
@@ -51,10 +51,10 @@
                       class="bg-emerald-700 text-white hover:bg-emerald-600 px-6 py-2 rounded-sm transition-colors duration-200">
                   Login
                 </Link>
-                    <Link :href="route('madrasha')"
+                    <!-- <Link :href="route('madrasha')"
                         class="border-2 border-emerald-600 text-emerald-100 hover:bg-emerald-700 px-6 py-2 rounded-sm transition-colors duration-200">
                     Register
-                    </Link>
+                    </Link> -->
               </template>
             </div>
           </div>

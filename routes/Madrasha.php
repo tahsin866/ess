@@ -149,4 +149,12 @@ Route::get('About_markaj/madrasha_list', function () {
 
 
     Route::resource('markaz-agreements', MarkazAgreementController::class);
-    Route::get('/markaz-agreements', [MarkazAgreementController::class, 'getTableData'])->name('markaz-agreements.index');
+    Route::get('/markaz/makaj-apply', [MarkazAgreementController::class, 'getTableData'])
+    ->name('markaz.makaj_apply.index');
+
+    // Route::get('/markaz-agreements', [MarkazAgreementController::class, 'index'])
+    // ->name('markaz-agreements.index');
+    Route::get('/Markaz/marjaz_detailes_view/{id}', [MarkazAgreementController::class, 'viewDetails'])->name('Markaz.view');
+
+    Route::post('/markaz/submit/{id}', [MarkazAgreementController::class, 'submitApplication'])->name('markaz.submit');
+

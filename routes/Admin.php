@@ -4,7 +4,7 @@ use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
 use App\Http\Controllers\SubjectSettingsController;
 use App\Http\Controllers\ExamSetupController;
-
+use App\Http\Controllers\MarkazAgreementController;
 // মারহালা সেটাপ
 
 Route::get('Mrahala_for_Admin/marhala_details_list', function () {
@@ -142,9 +142,10 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
     Route::get('/central-exam-setup/{id}/edit', [ExamSetupController::class, 'edit'])
         ->name('central_Exam_setup.central_exam_edit');
 
-    Route::put('/central-exam-setup/{id}', [ExamSetupController::class, 'update'])
-        ->name('central_Exam_setup.update');
+    // Route::put('/central-exam-setup/{id}', [ExamSetupController::class, 'update'])
+    //     ->name('central_Exam_setup.update');
 
-    Route::get('/central-exam-setup', [ExamSetupController::class, 'index'])
-        ->name('central_Exam_setup.index');
+    // Route::get('/central-exam-setup', [ExamSetupController::class, 'index'])
+    //     ->name('central_Exam_setup.index');
 
+    Route::get('/markaz_for_admin/markaz_apply_details_view/{id}', [MarkazAgreementController::class, 'viewDetails_for_admin'])->name('Markaz.view');

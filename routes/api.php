@@ -24,8 +24,6 @@ Route::prefix('api')->group(function () {
 
     Route::get('/exam-setups_1', [ExamSetupController::class, 'index_2']);
 
-
-
     Route::put('/central-exam-setup/{id}', [ExamSetupController::class, 'update'])
         ->name('central_Exam_setup.update');
 
@@ -33,12 +31,20 @@ Route::prefix('api')->group(function () {
         ->name('central_Exam_setup.index');
 
 
-        Route::get('/madrashas/list', [MarkazAgreementController::class, 'getMadrashas'])->name('madrashas.list');
 
+
+    Route::get('/madrashas/list', [MarkazAgreementController::class, 'getMadrashas'])->name('madrashas.list');
+    // Route::get('/exam-setups/latest', [MarkazAgreementController::class, 'getLatest'])->name('exam-setups.latest');
+    Route::get('/markaz/get-table-data', [MarkazAgreementController::class, 'getTableData']);
+
+
+
+    Route::get('/markaz-agreements', [MarkazAgreementController::class, 'fatch']);
+// Route::get('/markaz-agreement-madrasas/counts', [MarkazAgreementController::class, 'getMadrasaCounts']);
 });
 
 
 // Route::prefix('api')->group(function () {
-//     Route::get('/central-exam-setup/{id}', [ExamSetupController::class, 'getExamDetails']);
-//     Route::put('/central-exam-setup/{id}', [ExamSetupController::class, 'updateExamDetails']);
+
+
 // });
