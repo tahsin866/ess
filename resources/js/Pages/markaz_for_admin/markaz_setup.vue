@@ -93,7 +93,7 @@
                     class="hover:bg-gray-50 transition-colors">
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ index + 1 }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.number }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasha_Name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.Elhaq_no }}</td>
 
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasha_code }}</td>
@@ -103,8 +103,8 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
     <span
         :class="{
-            'bg-yellow-300 text-black px-3 py-1 rounded': application.status === 'সাবমিটেড',
-            'bg-yellow-500 text-white px-3 py-1 rounded': application.status === 'Pending',
+            'bg-yellow-300 text-black px-3 py-1 rounded': application.status === 'বোর্ড দাখিল',
+         'bg-red-100 text-red-700 px-3 py-1 rounded': application.status === 'বোর্ড ফেরত',
             'bg-green-600 text-white px-3 py-1 rounded': application.status === 'অনুমোদন'
         }"
     >
@@ -114,15 +114,12 @@
 
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <div class="flex gap-2">
-                            <button @click="router.get(route('Markaz.view', application.id))"
+                            <button @click="router.get(route('AdminMarkaz.view', application.id))"
         class="text-blue-600 hover:text-blue-800">
     <i class="fas fa-eye"></i>
 </button>
 
-                            <button @click="editApplication(application)"
-                                    class="text-green-600 hover:text-green-800">
-                                <i class="fas fa-edit"></i>
-                            </button>
+
                             <button @click="deleteApplication(application)"
                                     class="text-red-600 hover:text-red-800">
                                 <i class="fas fa-trash-alt"></i>
@@ -305,7 +302,7 @@ const applications = ref([]);
 onMounted(fetchApplications);
 
 const getStatusClass = (status) => {
-    return status === 'সাবমিটেড' ? 'text-green-600' : 'text-yellow-600';
+    return status === 'বোর্ড দাখিল' ? 'text-green-600' : 'text-yellow-600';
 };
 
 const viewApplication = (application) => {
@@ -354,7 +351,5 @@ const deleteApplication = (application) => {
   </script>
 
   <style scoped>
-  .btn-pagination {
-    @apply relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50;
-  }
+
   </style>

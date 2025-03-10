@@ -5,6 +5,7 @@ use App\Models\MarkazAgreement;
 use App\Models\MarkazAgreementMadrasa;
 use App\Models\admin\marhala_for_admin\ExamSetup;
 use App\Models\Madrasha;
+use App\Models\activity_log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -38,21 +39,22 @@ class MarkazAgreementController extends Controller
 
         // User and Exam related data
         $markazAgreement->user_id = $user->id;
-        $markazAgreement->user_name = $user->madrasha_name;
+        $markazAgreement->madrasha_Name = $user->madrasha_name;
+        // $markazAgreement->user_name = $user->name;
         $markazAgreement->madrasha_code = $user->custom_code;
         $markazAgreement->exam_id = $examSetup->id;
         $markazAgreement->exam_name = $examSetup->exam_name;
 
         // Madrasha related data
-        $markazAgreement->division = $madrashaData->division;
-        $markazAgreement->division_id = $madrashaData->division_id;
-        $markazAgreement->district = $madrashaData->district;
-        $markazAgreement->district_id = $madrashaData->district_Id;
-        $markazAgreement->mtype = $madrashaData->MType;
-        $markazAgreement->Stage = $madrashaData->Stage;
-        $markazAgreement->thana_uni = $madrashaData->Thana_uni;
-        $markazAgreement->tid = $madrashaData->TID;
-        $markazAgreement->Elhaq_no = $madrashaData->ElhaqNo;
+        $markazAgreement->division = $madrashaData?->division ?? '';
+        $markazAgreement->division_id = $madrashaData?->division_id ?? 0;
+        $markazAgreement->district = $madrashaData?->district ?? '';
+        $markazAgreement->district_id = $madrashaData?->district_Id ?? 0;
+        $markazAgreement->mtype = $madrashaData?->MType ?? 0;
+        $markazAgreement->Stage = $madrashaData?->Stage ?? 0;  // Set default to 0 for Stage column
+        $markazAgreement->thana_uni = $madrashaData?->Thana_uni ?? '';
+        $markazAgreement->tid = $madrashaData?->TID ?? 0;
+        $markazAgreement->Elhaq_no = $madrashaData?->ElhaqNo ?? '';
 
         // Student counts
         $markazAgreement->markaz_type = $request->markaz_type;
@@ -139,7 +141,7 @@ class MarkazAgreementController extends Controller
 
     public function getTableData()
     {
-        $agreements = MarkazAgreement::with(['associatedMadrasas'])
+        $agreements = MarkazAgreement::with(['associatedMadrasas', 'activityLogs'])
             ->where('user_id', Auth::id())
             ->select('markaz_agreements.*')
             ->selectRaw('(fazilat + sanabiya_ulya + sanabiya + mutawassita + ibtedaiyyah + hifzul_quran) as total_students')
@@ -148,22 +150,25 @@ class MarkazAgreementController extends Controller
             ->map(function ($agreement) {
                 $associatedMadrasasTotal = $agreement->associatedMadrasas->sum(function ($madrasa) {
                     return $madrasa->fazilat +
-                           $madrasa->sanabiya_ulya +
-                           $madrasa->sanabiya +
-                           $madrasa->mutawassita +
-                           $madrasa->ibtedaiyyah +
-                           $madrasa->hifzul_quran;
+                        $madrasa->sanabiya_ulya +
+                        $madrasa->sanabiya +
+                        $madrasa->mutawassita +
+                        $madrasa->ibtedaiyyah +
+                        $madrasa->hifzul_quran;
                 });
+
+                // Get the latest activity log status
+                $latestActivityLog = $agreement->activityLogs->sortByDesc('created_at')->first();
 
                 return [
                     'id' => $agreement->id,
                     'application_date' => $agreement->created_at->format('d/m/Y'),
-                    'main_madrasa' => $agreement->user_name,
+                    'main_madrasa' => $agreement->madrasha_Name,
                     'exam_name' => $agreement->exam_name,
                     'associated_madrasas' => $agreement->associatedMadrasas->pluck('madrasa_Name'),
                     'main_total_students' => $agreement->total_students,
                     'associated_total_students' => $associatedMadrasasTotal,
-                    'status' => $agreement->status ?? 'পেন্ডিং'
+                    'status' => $latestActivityLog ? $latestActivityLog->status : 'পেন্ডিং' // Using activity log status
                 ];
             });
 
@@ -174,35 +179,53 @@ class MarkazAgreementController extends Controller
 
 
 
+
+
     public function viewDetails($id)
     {
-        $markazDetails = MarkazAgreement::with('associatedMadrasas')
-            ->select(
+        $markazDetails = MarkazAgreement::with([
+            'associatedMadrasas',
+          'activityLogs' => function ($query) {
+            $query->select(
                 'id',
-                'markaz_type',
+                'markaz_agreement_id',
                 'user_name',
-                'created_at',
-                'fazilat',
-                'sanabiya_ulya',
-                'sanabiya',
-                'mutawassita',
-                'ibtedaiyyah',
-                'hifzul_quran',
-                'noc_file',
-                'resolution_file',
-                'requirements',
-                'muhtamim_consent',
-                'president_consent',
-                'committee_resolution',
-                'user_id',
-                'exam_id',
-                'exam_name'
-            )
-            ->findOrFail($id);
+                'admin_name',
+                'user_position',
+                // 'admin_name',
+                'admin_message',
+                'status',      // Add this
+                'created_at'   // Add this if needed
+            );
+        }
+        ])->select(
+            'id',
+            'madrasha_Name',
+            'markaz_type',
+            'created_at',
+            'fazilat',
+            'sanabiya_ulya',
+            'sanabiya',
+            'mutawassita',
+            'ibtedaiyyah',
+            'hifzul_quran',
+            'noc_file',
+            'resolution_file',
+            'requirements',
+            'muhtamim_consent',
+            'president_consent',
+            'committee_resolution',
+            'user_id',
+            'exam_id',
+            'exam_name'
+        )->findOrFail($id);
 
+        // Format dates and set URLs for files
         $markazDetails->created_at = $markazDetails->created_at->format('d/m/Y');
         $markazDetails->president_consent = $markazDetails->president_consent ? Storage::url($markazDetails->president_consent) : null;
         $markazDetails->resolution_file = $markazDetails->resolution_file ? Storage::url($markazDetails->resolution_file) : null;
+
+
 
         return inertia('Markaz/marjaz_detailes_view', [
             'markazDetails' => $markazDetails
@@ -213,56 +236,63 @@ class MarkazAgreementController extends Controller
 
 
 
-    public function submitToBoard($id)
-    {
-        $markaz = MarkazAgreement::findOrFail($id);
-        $markaz->update([
-            'status' => 'submitted',
-            'submitted_at' => now()
-        ]);
-
-        return redirect()->back()->with('success', 'আবেদনটি বোর্ডে জমা দেওয়া হয়েছে');
-    }
-
-    public function processApplication(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'status' => 'required|in:approved,rejected,returned',
-            'feedback' => 'required|string'
-        ]);
-
-        $markaz = MarkazAgreement::findOrFail($id);
-        $markaz->update([
-            'status' => $validated['status'],
-            'admin_feedback' => $validated['feedback'],
-            'processed_at' => now()
-        ]);
-
-        return redirect()->back()->with('success', 'আবেদনটি প্রক্রিয়া করা হয়েছে');
-    }
 
 
+    // public function submitToBoard($id)
+    // {
+    //     $markaz = MarkazAgreement::findOrFail($id);
+    //     $markaz->update([
+    //         'status' => 'submitted',
+    //         'submitted_at' => now()
+    //     ]);
 
+    //     return redirect()->back()->with('success', 'আবেদনটি বোর্ডে জমা দেওয়া হয়েছে');
+    // }
 
+    // public function processApplication(Request $request, $id)
+    // {
+    //     $validated = $request->validate([
+    //         'status' => 'required|in:approved,rejected,returned',
+    //         'feedback' => 'required|string'
+    //     ]);
+
+    //     $markaz = MarkazAgreement::findOrFail($id);
+    //     $markaz->update([
+    //         'status' => $validated['status'],
+    //         'admin_feedback' => $validated['feedback'],
+    //         'processed_at' => now()
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'আবেদনটি প্রক্রিয়া করা হয়েছে');
+    // }
 
 
 
 
+
+// এডমিন ডাটা  ফেচ
 
 
     public function fatch()
     {
-        $agreements = MarkazAgreement::with('associatedMadrasas')
-            ->where('status', 'সাবমিটেড') // শুধুমাত্র 'সাবমিটেড' থাকা ডাটা ফিল্টার করলাম
+        $agreements = MarkazAgreement::with(['associatedMadrasas', 'activityLogs'])  // Add activityLogs relation
+            ->whereHas('activityLogs', function ($query) {  // Ensure activity log exists with 'সাবমিটেড' status
+                $query->where('status', 'বোর্ড দাখিল');
+            })
+            ->latest()
             ->get()
             ->map(function ($agreement) {
+                // Get the latest activity log status
+                $latestActivityLog = $agreement->activityLogs->sortByDesc('created_at')->first();
+
                 return [
                     'id' => $agreement->id,
                     'number' => $agreement->id,
-                    'name' => $agreement->user_name,
+                    // 'name' => $agreement->user_name,
                     'Elhaq_no' => $agreement->Elhaq_no,
                     'markaz_type' => $agreement->markaz_type,
-                    'status' => $agreement->status,
+                    'madrasha_Name' => $agreement->madrasha_Name,
+                    'status' => $latestActivityLog ? $latestActivityLog->status : 'পেন্ডিং', // Use status from activity_log
                     'madrasha_code' => $agreement->madrasha_code,
                     'studentNumber' => $agreement->fazilat +
                                        $agreement->sanabiya_ulya +
@@ -287,22 +317,40 @@ class MarkazAgreementController extends Controller
 
 
 
-
-
-
-
     public function submitApplication($id)
-{
-    $agreement = MarkazAgreement::find($id);
-    if (!$agreement) {
-        return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
+    {
+        $agreement = MarkazAgreement::find($id);
+
+        if (!$agreement) {
+            return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
+        }
+
+        // Update agreement status
+        // $agreement->update([
+        //     'status' => 'সাবমিটেড',
+        //     'submitted_at' => now()
+        // ]);
+
+        // Create activity log with all required fields
+        activity_log::create([
+            'markaz_agreement_id' => $agreement->id,  // Ensure this value is correctly passed
+            'user_id' => Auth::user()->id,
+            'status' => 'বোর্ড দাখিল',
+            'actor_type' => 'user',
+            'user_name' => Auth::user()->name,
+            'user_position' => Auth::user()->admin_Designation,
+            'admin_position' => null,  // You can set null or a default value
+            'admin_message' => null,
+            'admin_feedback_image' => null,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        return back()->with('success', 'আবেদন সফলভাবে সাবমিট হয়েছে!');
     }
 
-    $agreement->update(['status' => 'সাবমিটেড']);
 
 
-    return back()->with('success', 'আবেদন সফলভাবে সাবমিট হয়েছে!');
-}
 
 
 
@@ -318,7 +366,7 @@ public function viewDetails_for_admin($id)
         ->select(
             'id',
             'markaz_type',
-            'user_name',
+
             'created_at',
             'fazilat',
             'sanabiya_ulya',
@@ -346,6 +394,72 @@ public function viewDetails_for_admin($id)
         'markazDetails' => $markazDetails
     ]);
 }
+
+
+
+
+
+
+
+
+
+
+public function approveApplication($id)
+{
+    $agreement = MarkazAgreement::find($id);
+    if (!$agreement) {
+        return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
+    }
+
+    $agreement->update(['status' => 'অনুমোদিত']);
+
+    return back()->with('success', 'আবেদন অনুমোদন করা হয়েছে!');
+}
+
+
+
+public function rejectApplication(Request $request, $id)
+{
+    // Find the agreement by ID
+    $agreement = MarkazAgreement::find($id);
+
+    // If the agreement is not found, return error
+    if (!$agreement) {
+        return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
+    }
+
+    $adminId = Auth::guard('admin')->id();
+    $adminName = Auth::guard('admin')->user()->name;
+
+    // Initialize feedback data
+    $feedbackData = [
+        'admin_id' => $adminId,
+        'admin_name' => $adminName,
+        'markaz_agreement_id' => $agreement->id,
+        'status' => 'বোর্ড ফেরত', // Update status
+        'admin_message' => $request->message, // Insert the admin's message
+        'processed_at' => now(),
+    ];
+
+    // Check if an image is uploaded and store it
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('images/feedback', 'public');
+        $feedbackData['admin_feedback_image'] = $imagePath; // Store the image path
+    }
+
+    // Insert the feedback into the activity_logs table
+    $inserted = activity_log::create($feedbackData);
+
+    // If the insert was successful, return success message
+    if ($inserted) {
+        return back()->with('success', 'আবেদন সফলভাবে ফেরত পাঠানো হয়েছে!');
+    } else {
+        return back()->withErrors(['error' => 'আপডেট করতে সমস্যা হয়েছে!']);
+    }
+}
+
+
+
 
 
 

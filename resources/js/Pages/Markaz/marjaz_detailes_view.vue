@@ -39,7 +39,7 @@ defineProps({
                       <div class="text-xl font-medium text-gray-900">মাদরাসার নাম</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-md font-semibold text-gray-900">{{ markazDetails.user_name }}</div>
+                      <div class="text-md font-semibold text-gray-900">{{ markazDetails.madrasha_Name }}</div>
                     </td>
                   </tr>
                   <tr>
@@ -62,59 +62,42 @@ defineProps({
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
-                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">শ্রেণি</th>
-                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">ছাত্র সংখ্যা</th>
+                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">ফাযীলাত</th>
+                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">সানাবিয়া উলইয়া</th>
+                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">সানাবিয়া</th>
+                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">মুতাওয়াসসিতা</th>
+                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">ইবতেদাইয়্যাহু</th>
+                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">তাহফিজুল কোরআন</th>
+
+
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                   <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-xl text-gray-900">ফাযীলাত</div>
-                    </td>
+
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm text-gray-900">{{ markazDetails.fazilat }}</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-xl text-gray-900">সানাবিয়া উলইয়া</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm text-gray-900">{{ markazDetails.sanabiya_ulya }}</div>
                     </td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-xl text-gray-900">সানাবিয়া</div>
-                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm text-gray-900">{{ markazDetails.sanabiya }}</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-xl text-gray-900">মুতাওয়াসসিতা</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm text-gray-900">{{ markazDetails.mutawassita }}</div>
                     </td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-xl text-gray-900">ইবতেদাইয়্যাহু</div>
-                    </td>
+
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm text-gray-900">{{ markazDetails.ibtedaiyyah }}</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-xl text-gray-900">তাহফিজুল কোরআন</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm text-gray-900">{{ markazDetails.hifzul_quran }}</div>
                     </td>
                   </tr>
+
+
+
                   <tr>
     <td class="px-6 py-4 whitespace-nowrap bg-gray-50">
         <div class="text-xl font-medium text-gray-900">মারকায টাইপ</div>
@@ -348,6 +331,109 @@ defineProps({
                 </tbody>
               </table>
             </div>
+
+
+
+
+
+            <div class="mt-6 bg-white p-6 rounded-md shadow-md">
+    <h3 class="text-lg font-semibold text-emerald-800 border-b border-emerald-100 pb-3 mb-4 flex items-center gap-2">
+        <i class="fas fa-user-edit text-emerald-600"></i>
+        আবেদনকারীর তথ্য
+    </h3>
+
+    <div class="p-6 bg-emerald-50">
+        <div class="bg-emerald-800 text-white p-4 rounded-md shadow-lg mb-6">
+            <h2 class="text-lg flex items-center gap-2">
+                নিবন্ধন অবস্থা পর্যবেক্ষণ
+            </h2>
+        </div>
+
+        <div class="bg-white rounded-md shadow-md overflow-hidden border border-emerald-100">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-emerald-700 text-white">
+                    <tr>
+                        <th class="p-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-user-circle"></i>
+                                সিদ্ধান্ত গ্রহণকারী
+                            </div>
+                        </th>
+                        <th class="p-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-id-badge"></i>
+                                পদবি
+                            </div>
+                        </th>
+                        <th class="p-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-calendar-alt"></i>
+                                তারিখ ও সময়
+                            </div>
+                        </th>
+                        <th class="p-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-info-circle"></i>
+                                অবস্থা
+                            </div>
+                        </th>
+                        <th class="p-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-comment-alt"></i>
+                                মন্তব্য
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- User Row -->
+                    <tr v-for="activity in markazDetails.activityLogs"
+        :key="activity.id"
+        class="hover:bg-emerald-100 transition-colors duration-150">
+        <td class="p-4 border-b border-emerald-100">
+            <div class="flex items-center gap-2">
+                <i :class="[activity.admin_name ? 'fas fa-user-shield' : 'fas fa-user']"
+                   class="text-emerald-600"></i>
+                {{ activity.admin_name || activity.user_name }}
+            </div>
+        </td>
+        <td class="p-4 border-b border-emerald-100">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-user-tie text-emerald-600"></i>
+                {{ activity.user_position }}
+            </div>
+        </td>
+        <td class="p-4 border-b border-emerald-100">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-clock text-emerald-600"></i>
+                {{ formatDate(activity.created_at) }}
+            </div>
+        </td>
+        <td class="p-4 border-b border-emerald-100">
+            <span class="px-3 py-1 rounded-md font-medium flex items-center gap-2 w-fit">
+                {{ activity.status }}
+            </span>
+        </td>
+        <td class="p-4 border-b border-emerald-100">
+            <div v-if="activity.admin_message" class="flex items-center gap-2">
+                <i class="fas fa-pen text-emerald-600"></i>
+                {{ activity.admin_message }}
+            </div>
+        </td>
+    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
           </div>
         </div>
       </div>

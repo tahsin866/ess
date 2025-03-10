@@ -5,9 +5,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubjectSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MarkazAgreementController;
 use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
 use App\Http\Controllers\ExamSetupController;
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

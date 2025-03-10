@@ -24,7 +24,12 @@ class MarkazAgreement extends Model
         'muhtamim_consent',
         'president_consent',
         'committee_resolution',
-        'status'
+        'status',
+        'admin_feedback',
+        'processed_at',
+        'feedback_image',
+        'submitted_at',
+        'admin_name',
     ];
 
     // public function associatedMadrasas()
@@ -44,6 +49,11 @@ class MarkazAgreement extends Model
         return $this->belongsTo(User::class);
     }
 
+
+    public function activityLogs()
+    {
+        return $this->hasMany(activity_log::class, 'markaz_agreement_id'); // Assuming the foreign key is 'markaz_agreement_id'
+    }
 
 
 

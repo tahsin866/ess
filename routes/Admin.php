@@ -148,4 +148,9 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
     // Route::get('/central-exam-setup', [ExamSetupController::class, 'index'])
     //     ->name('central_Exam_setup.index');
 
-    Route::get('/markaz_for_admin/markaz_apply_details_view/{id}', [MarkazAgreementController::class, 'viewDetails_for_admin'])->name('Markaz.view');
+    Route::get('/markaz_for_admin/markaz_apply_details_view/{id}', [MarkazAgreementController::class, 'viewDetails_for_admin'])->name('AdminMarkaz.view');
+
+
+    Route::post('/markaz/approve/{id}', [MarkazAgreementController::class, 'approveApplication'])->name('markaz.approve');
+    Route::post('/markaz/reject/{id}', [MarkazAgreementController::class, 'rejectApplication'])->name('markaz.reject');
+
