@@ -56,6 +56,10 @@ class MarkazAgreement extends Model
     }
 
 
+    public function schedule_setups()
+    {
+        return $this->belongsTo(schedule_setups::class, 'exam_setup_id'); // Assuming the foreign key is 'markaz_agreement_id'
+    }
 
 
 }

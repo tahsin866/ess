@@ -45,11 +45,19 @@
 
             <!-- নিবন্ধন ফি - সময় সীমা -->
             <td class="border border-emerald-300 p-3">
-                <td class="border border-emerald-200 p-3">
-    <div class="flex items-center gap-1">
-        <input type="date" v-model="row.dateFrom1" class="w-28 border border-emerald-200 p-2 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
-        <span class="whitespace-nowrap">থেকে</span>
-        <input type="date" v-model="row.dateTo1" class="w-28 border border-emerald-200 p-2 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                <td class="border border-emerald-300 p-3">
+    <div class="flex items-center gap-3">
+        <input
+            type="date"
+            v-model="row.dateFrom1"
+            class="w-40 border border-emerald-200 p-2.5 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+        >
+        <span class="whitespace-nowrap font-medium">থেকে</span>
+        <input
+            type="date"
+            v-model="row.dateTo1"
+            class="w-40 border border-emerald-200 p-2.5 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+        >
     </div>
 </td>
             </td>
@@ -76,11 +84,25 @@
 
             <!-- বিলম্ব ফি - সময় সীমা -->
             <td class="border border-emerald-300 p-3">
-                <td class="border border-gray-300 p-2">
-    <div class="flex items-center gap-1">
-        <input type="date" v-model="row.dateFrom2" class="w-28 border border-emerald-200 p-2 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
-        <span class="whitespace-nowrap">থেকে</span>
-        <input type="date" v-model="row.dateTo2" class="w-28 border border-emerald-200 p-2 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                <td class="border border-emerald-300 p-3">
+    <div class="flex items-center gap-3">
+        <div class="relative">
+
+            <input
+                type="date"
+                v-model="row.dateFrom2"
+                class="w-44 border-2 border-emerald-200 p-3 rounded focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+            >
+        </div>
+        <span class="whitespace-nowrap font-medium text-emerald-700">থেকে</span>
+        <div class="relative">
+
+            <input
+                type="date"
+                v-model="row.dateTo2"
+                class="w-44 border-2 border-emerald-200 p-3 rounded focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+            >
+        </div>
     </div>
 </td>
             </td>

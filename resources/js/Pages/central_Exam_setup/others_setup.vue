@@ -56,8 +56,8 @@
           <label class="text-sm text-emerald-600 mb-1">শুরুর তারিখ</label>
           <input
             type="date"
-            v-model="item.startDate"
-            :disabled="!item.isActive"
+            v-model="formItems[index].startDate"
+
             class="border border-emerald-200 rounded-sm px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
           />
         </div>
@@ -66,8 +66,8 @@
           <label class="text-sm text-emerald-600 mb-1">শেষ তারিখ</label>
           <input
             type="date"
-            v-model="item.endDate"
-            :disabled="!item.isActive"
+            v-model="formItems[index].endDate"
+
             class="border border-emerald-200 rounded-sm px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
           />
         </div>
@@ -102,45 +102,66 @@
   </AuthenticatedLayout>
   </template>
 
-  <script setup>
-  import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue';
-import { ref } from 'vue'
+<script setup>
+import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
-  const formItems = ref([
-    { label: 'নেগরান/মুমতাহিন', startDate: '2024-02-01', endDate: '2024-02-01' },
-    { label: 'নেগরান/মুমতাহিন অনুমোদন', startDate: '2024-02-01', endDate: '2024-02-01' },
-    { label: 'নিবন্ধন পেমেন্ট', startDate: '2024-02-01', endDate: '2025-03-01' },
-    { label: 'অন্তর্ভুক্তি পেমেন্ট', startDate: '2024-02-01', endDate: '2024-02-01' },
-    { label: 'হাজিরা গ্রহণ', startDate: '2024-01-30', endDate: '2024-02-29' },
-    { label: 'মৌখিক মার্ক এন্ট্রি', startDate: '2024-02-01', endDate: '2024-02-29' },
-    { label: 'দরসিয়াত মার্ক এন্ট্রি', startDate: '2024-02-01', endDate: '2024-02-29' },
-    {
-    label: 'Item 1',
-    startDate: '',
-    endDate: '',
-    isActive: true
-  },
-  {
-    label: 'Item 2',
-    startDate: '',
-    endDate: '',
-    isActive: true
-  }
-  ])
+const props = defineProps({
+    examInfo: Object,
+    schedules: Array
+});
 
-  const resetForm = () => {
+const formItems = ref([
+    { label: 'নেগরান/মুমতাহিন', startDate: '', endDate: '', isActive: false },
+    { label: 'মারকায আবেদন', startDate: '', endDate: '', isActive: false },
+]);
+
+// Initialize form with existing data
+onMounted(() => {
+    if (props.schedules) {
+        props.schedules.forEach(schedule => {
+            const index = formItems.value.findIndex(item => item.label === schedule.schedule_type);
+            if (index !== -1) {
+                formItems.value[index] = {
+                    label: schedule.schedule_type,
+                    startDate: schedule.start_date,
+                    endDate: schedule.end_date,
+                    isActive: schedule.is_active
+                };
+            }
+        });
+    }
+});
+
+const resetForm = () => {
     formItems.value = formItems.value.map(item => ({
-      ...item,
-      startDate: '',
-      endDate: ''
-    }))
-  }
+        ...item,
+        startDate: '',
+        endDate: '',
+        isActive: false
+    }));
+};
 
-  const submitForm = () => {
-    console.log('Form submitted:', formItems.value)
-  }
+const submitForm = async () => {
+    try {
+        const response = await axios.post('/api/schedule-setups', {
+            formItems: formItems.value
+        });
 
-  const toggleStatus = (index) => {
-  formItems.value[index].isActive = !formItems.value[index].isActive
-}
-  </script>
+        if(response.data.status === 'success') {
+            // Show success message
+            alert('Data saved successfully');
+            // Optional: Refresh data
+            window.location.reload();
+        }
+    } catch (error) {
+        alert('Error saving data');
+        console.error('Error:', error);
+    }
+};
+
+const toggleStatus = (index) => {
+    formItems.value[index].isActive = !formItems.value[index].isActive;
+};
+</script>

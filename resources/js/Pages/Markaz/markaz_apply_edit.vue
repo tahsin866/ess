@@ -6,61 +6,21 @@ import { usePage } from '@inertiajs/vue3'
 
 const selectedCategory = ref('')
 
-
-
-const form = useForm({
-    category: '',
-    // Main Madrasa Data
-    user_id: usePage().props.auth.user.id,
-    user_name: usePage().props.auth.user.madrasha_name, // Add this
-    exam_id: '', // Add this
-    exam_name: '', // Add this
-    markaz_type: "",
-    markaz_type: "",
-    fazilat: '',
-    sanabiya_ulya: '',
-    sanabiya: '',
-    mutawassita: '',
-    ibtedaiyyah: '',
-    hifzul_quran: '',
-    noc_file: null,
-    resolution_file: null,
-
-    // Requirements
-    requirements: '',
-
-    // Main Attachments
-    muhtamim_consent: null,
-    president_consent: null,
-    committee_resolution: null,
-
-    // Associated Madrasas
-    associated_madrasas: []
-})
+const resolutionFileForMadrahsa = ref(null)
+// const resolutionPreviewForMadrahsa = ref(null)
 
 
 
 
 
+const muhtamimFile = ref(null)
+// const muhtamimPreview = ref(null)
+const presidentFile = ref(null)
+// const presidentPreview = ref(null)
+const committeeFile = ref(null)
+// const committeePreview = ref(null)
 
-// Main rows data with files
-const rows = ref([{
-    fazilat: "",
-    sanabiya_ulya: "",
-    sanabiya: "",
-    mutawassita: "",
-    ibtedaiyyah: "",
-    hifzul_quran: "",
-    madrasa_Name: "",
-    searchQuery: "",
-    isOpen: false,
-    files: {
-        noc: null,
-        nocPreview: null,
-        resolution: null,
-        resolutionPreview: null
-    }
-}])
+
 
 
 
@@ -133,15 +93,7 @@ const removeFileForMadrahsa = (type) => {
 
 
 const nocFileForMadrahsa = ref(null)
-const nocPreviewForMadrahsa = ref(null)
-const resolutionFileForMadrahsa = ref(null)
-const resolutionPreviewForMadrahsa = ref(null)
-const muhtamimFile = ref(null)
-const muhtamimPreview = ref(null)
-const presidentFile = ref(null)
-const presidentPreview = ref(null)
-const committeeFile = ref(null)
-const committeePreview = ref(null)
+
 
 const handleFileUploadMumtahin = (event, type) => {
     const file = event.target.files[0]
@@ -200,32 +152,6 @@ const handleClickOutside = (event) => {
 
 
 
-const submitForm = () => {
-    form.category = selectedCategory.value
-
-    // Map rows data to associated_madrasas
-    form.associated_madrasas = rows.value.map(row => ({
-        madrasa_Name: row.madrasa_Name, // Use the stored madrasa name
-        fazilat: row.fazilat,
-        sanabiya_ulya: row.sanabiya_ulya,
-        sanabiya: row.sanabiya,
-        mutawassita: row.mutawassita,
-        ibtedaiyyah: row.ibtedaiyyah,
-        hifzul_quran: row.hifzul_quran,
-        noc_file: row.files.noc,
-        resolution_file: row.files.resolution
-    }))
-
-    // Add main attachments
-    form.muhtamim_consent = muhtamimFile.value
-    form.president_consent = presidentFile.value
-    form.committee_resolution = committeeFile.value
-
-    form.post(route('markaz-agreements.store'))
-}
-
-
-
 
 
 
@@ -260,11 +186,11 @@ onUnmounted(() => {
 const madrashas = ref([])
 
 onMounted(async () => {
-    const { data } = await axios.get(route('madrashas.list'))
+    const { data } = await axios.get(route('markaz.madrashas.list'))
     madrashas.value = data
-    const response = await axios.get(route('exam-setups.latest'))
-    form.exam_id = response.data.id
-    form.exam_name = response.data.exam_name
+    // const response = await axios.get(route('exam-setups.latest'))
+    // form.exam_id = response.data.id
+    // form.exam_name = response.data.exam_name
 })
 
 const filteredOptions = computed(() => (row) => {
@@ -306,6 +232,112 @@ onMounted(() => {
         }
     });
 });
+
+
+
+
+
+
+const props = defineProps({
+    markazData: Object,
+    associatedMadrasas: Array
+});
+
+// Initialize form with existing data
+const form = useForm({
+
+    markaz_type: props.markazData.markaz_type || "",
+    fazilat: props.markazData.fazilat || '',
+    sanabiya_ulya: props.markazData.sanabiya_ulya || '',
+    sanabiya: props.markazData.sanabiya || '',
+    mutawassita: props.markazData.mutawassita || '',
+    ibtedaiyyah: props.markazData.ibtedaiyyah || '',
+    hifzul_quran: props.markazData.hifzul_quran || '',
+    requirements: props.markazData.requirements || '',
+    noc_file: null,
+    resolution_file: null,
+    muhtamim_consent: null,
+    president_consent: null,
+    committee_resolution: null,
+    associated_madrasas: []
+});
+
+// Initialize rows with existing associated madrasas data
+const rows = ref(
+    props.associatedMadrasas.map(madrasa => ({
+        id: madrasa.id, // Add this line to track existing records
+        fazilat: madrasa.fazilat || "",
+        sanabiya_ulya: madrasa.sanabiya_ulya || "",
+        sanabiya: madrasa.sanabiya || "",
+        mutawassita: madrasa.mutawassita || "",
+        ibtedaiyyah: madrasa.ibtedaiyyah || "",
+        hifzul_quran: madrasa.hifzul_quran || "",
+        madrasa_Name: madrasa.madrasa_Name || "",
+        searchQuery: madrasa.madrasa_Name || "",
+        isOpen: false,
+        files: {
+            noc: null,
+            nocPreview: madrasa.noc_file ? `/storage/${madrasa.noc_file}` : null,
+            resolution: null,
+            resolutionPreview: madrasa.resolution_file ? `/storage/${madrasa.resolution_file}` : null
+        }
+    }))
+);
+
+// Initialize file previews for main madrasa
+const nocPreviewForMadrahsa = ref(props.markazData.noc_file ? `/storage/${props.markazData.noc_file}` : null);
+const resolutionPreviewForMadrahsa = ref(props.markazData.resolution_file ? `/storage/${props.markazData.resolution_file}` : null);
+const muhtamimPreview = ref(props.markazData.muhtamim_consent ? `/storage/${props.markazData.muhtamim_consent}` : null);
+const presidentPreview = ref(props.markazData.president_consent ? `/storage/${props.markazData.president_consent}` : null);
+const committeePreview = ref(props.markazData.committee_resolution ? `/storage/${props.markazData.committee_resolution}` : null);
+
+// Submit function for updating
+const submitForm = () => {
+    form.associated_madrasas = rows.value.map(row => ({
+        // Include the ID if it exists (for existing records)
+        id: row.id || null,
+        madrasa_Name: row.madrasa_Name,
+        fazilat: row.fazilat,
+        sanabiya_ulya: row.sanabiya_ulya,
+        sanabiya: row.sanabiya,
+        mutawassita: row.mutawassita,
+        ibtedaiyyah: row.ibtedaiyyah,
+        hifzul_quran: row.hifzul_quran,
+        noc_file: row.files.noc,
+        resolution_file: row.files.resolution
+    }));
+
+    // File assignments for main agreement
+    if (nocFileForMadrahsa.value) {
+        form.noc_file = nocFileForMadrahsa.value;
+    }
+    if (resolutionFileForMadrahsa.value) {
+        form.resolution_file = resolutionFileForMadrahsa.value;
+    }
+    if (muhtamimFile.value) {
+        form.muhtamim_consent = muhtamimFile.value;
+    }
+    if (presidentFile.value) {
+        form.president_consent = presidentFile.value;
+    }
+    if (committeeFile.value) {
+        form.committee_resolution = committeeFile.value;
+    }
+
+    form.post(route('markaz-agreements.update', props.markazData.id), {
+        preserveScroll: true,
+        onSuccess: () => {
+            // Optional: Show success message or redirect
+        }
+    });
+};
+
+
+
+
+
+
+
 
 </script>
 
@@ -610,7 +642,7 @@ onMounted(() => {
                 <label class="block text-xl text-emerald-800 font-bold mb-4 arabic-font">মারকায প্রাপ্তির
                     প্রয়োজনীয়তা</label>
                 <textarea v-model="form.requirements"
-                    class="w-full px-4 py-2 border border-emerald-300 text-xl rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white shadow-sm"
+                    class="w-full px-4 py-2 border border-emerald-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white shadow-sm"
                     rows="4">
     </textarea>
             </div>

@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
+use App\Http\Controllers\ScheduleSetupController;
 use App\Http\Controllers\SubjectSettingsController;
 use App\Http\Controllers\ExamSetupController;
 use App\Http\Controllers\MarkazAgreementController;
@@ -154,3 +155,7 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
     Route::post('/markaz/approve/{id}', [MarkazAgreementController::class, 'approveApplication'])->name('markaz.approve');
     Route::post('/markaz/reject/{id}', [MarkazAgreementController::class, 'rejectApplication'])->name('markaz.reject');
 
+
+
+    Route::get('/schedule-setups', [ScheduleSetupController::class, 'index'])->name('schedule-setups.index');
+    Route::post('/schedule-setups', [ScheduleSetupController::class, 'store'])->name('schedule-setups.store');

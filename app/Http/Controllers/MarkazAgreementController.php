@@ -5,10 +5,13 @@ use App\Models\MarkazAgreement;
 use App\Models\MarkazAgreementMadrasa;
 use App\Models\admin\marhala_for_admin\ExamSetup;
 use App\Models\Madrasha;
+use App\Models\schedule_setups;
 use App\Models\activity_log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
+use Inertia\Inertia;
 
 class MarkazAgreementController extends Controller
 {
@@ -18,7 +21,7 @@ class MarkazAgreementController extends Controller
     {
         $agreements = MarkazAgreement::with('associatedMadrasas')->latest()->paginate(10);
 
-        return inertia('MarkazAgreement/Index', [
+        return inertia('Markaz/markaz_agreement_form', [
             'agreements' => $agreements
         ]);
     }
@@ -137,6 +140,7 @@ class MarkazAgreementController extends Controller
 
         return response()->json($madrashas);
     }
+
 
 
     public function getTableData()
@@ -317,29 +321,88 @@ class MarkazAgreementController extends Controller
 
 
 
+    // public function submitApplication($id)
+    // {
+    //     $agreement = MarkazAgreement::find($id);
+
+    //     if (!$agreement) {
+    //         return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
+    //     }
+
+    //     // Update agreement status
+    //     // $agreement->update([
+    //     //     'status' => 'সাবমিটেড',
+    //     //     'submitted_at' => now()
+    //     // ]);
+
+    //     // Create activity log with all required fields
+    //     activity_log::create([
+    //         'markaz_agreement_id' => $agreement->id,  // Ensure this value is correctly passed
+    //         'user_id' => Auth::user()->id,
+    //         'status' => 'বোর্ড দাখিল',
+    //         'actor_type' => 'user',
+    //         'user_name' => Auth::user()->name,
+    //         'user_position' => Auth::user()->admin_Designation,
+    //         'admin_position' => null,  // You can set null or a default value
+    //         'admin_message' => null,
+    //         'admin_feedback_image' => null,
+    //         'created_at' => now(),
+    //         'updated_at' => now()
+    //     ]);
+
+    //     return back()->with('success', 'আবেদন সফলভাবে সাবমিট হয়েছে!');
+    // }
+
+
+
     public function submitApplication($id)
     {
+        // 1️⃣ First check markaz_agreements table
         $agreement = MarkazAgreement::find($id);
-
         if (!$agreement) {
             return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
         }
 
-        // Update agreement status
-        // $agreement->update([
-        //     'status' => 'সাবমিটেড',
-        //     'submitted_at' => now()
-        // ]);
+        // 2️⃣ Now check schedule timing before anything else
+        $schedule = schedule_setups::where('exam_setup_id', $agreement->exam_id)
+            ->where('schedule_type', 'মারকায আবেদন')
+            ->where('is_active', true)
+            ->first();
 
-        // Create activity log with all required fields
+        if (!$schedule) {
+            return back()->withErrors(['error' => 'সময়সূচী পাওয়া যায়নি!']);
+        }
+
+        $currentDate = now();
+        $startDate = \Carbon\Carbon::parse($schedule->start_date);
+        $endDate = \Carbon\Carbon::parse($schedule->end_date);
+
+        if ($currentDate->lt($startDate)) {
+            return back()->withErrors(['error' => 'আবেদনের সময় শুরু হয়নি! ' . $startDate->format('d-m-Y') . ' তারিখে আবার চেষ্টা করুন।']);
+        }
+
+        if ($currentDate->gt($endDate)) {
+            return back()->withErrors(['error' => 'আবেদনের সময় শেষ! আগামী বছর আবার চেষ্টা করুন।']);
+        }
+
+        // 3️⃣ Then check if this agreement is already in activity_log
+        $existingLog = activity_log::where('markaz_agreement_id', $id)
+            ->where('status', 'বোর্ড দাখিল')
+            ->first();
+
+        if ($existingLog) {
+            return back()->withErrors(['error' => 'এই আবেদনটি ইতিমধ্যে বোর্ড দাখিল করা হয়েছে!']);
+        }
+
+        // 4️⃣ If all checks pass, then create activity log
         activity_log::create([
-            'markaz_agreement_id' => $agreement->id,  // Ensure this value is correctly passed
+            'markaz_agreement_id' => $agreement->id,
             'user_id' => Auth::user()->id,
             'status' => 'বোর্ড দাখিল',
             'actor_type' => 'user',
             'user_name' => Auth::user()->name,
             'user_position' => Auth::user()->admin_Designation,
-            'admin_position' => null,  // You can set null or a default value
+            'admin_position' => null,
             'admin_message' => null,
             'admin_feedback_image' => null,
             'created_at' => now(),
@@ -348,6 +411,8 @@ class MarkazAgreementController extends Controller
 
         return back()->with('success', 'আবেদন সফলভাবে সাবমিট হয়েছে!');
     }
+
+
 
 
 
@@ -461,6 +526,119 @@ public function rejectApplication(Request $request, $id)
 
 
 
+
+
+
+
+
+
+public function Edit($id)
+{
+    // Get the main agreement with associated madrasas
+    $markazAgreement = MarkazAgreement::with('associatedMadrasas')->findOrFail($id);
+
+    return Inertia::render('Markaz/markaz_apply_edit', [
+        'markazData' => $markazAgreement,
+        'associatedMadrasas' => $markazAgreement->associatedMadrasas
+    ]);
+}
+
+
+
+
+
+
+
+public function update(Request $request, $id)
+{
+    $markazAgreement = MarkazAgreement::findOrFail($id);
+
+    // Update main agreement data
+    $markazAgreement->update([
+        'madrasa_Name' => $request->madrasa_Name,
+        'markaz_type' => $request->markaz_type,
+        'markaz_type' => $request->markaz_type,
+        'fazilat' => $request->fazilat,
+        'sanabiya_ulya' => $request->sanabiya_ulya,
+        'sanabiya' => $request->sanabiya,
+        'mutawassita' => $request->mutawassita,
+        'ibtedaiyyah' => $request->ibtedaiyyah,
+        'hifzul_quran' => $request->hifzul_quran,
+        'requirements' => $request->requirements,
+    ]);
+
+    // Handle main agreement files
+    $fileFields = [
+        'noc_file' => 'markaz/noc',
+        'resolution_file' => 'markaz/resolution',
+        'muhtamim_consent' => 'markaz/consent',
+        'president_consent' => 'markaz/consent',
+        'committee_resolution' => 'markaz/consent'
+    ];
+
+    foreach ($fileFields as $field => $path) {
+        if ($request->hasFile($field)) {
+            if ($markazAgreement->$field) {
+                Storage::delete($markazAgreement->$field);
+            }
+            $markazAgreement->$field = $request->file($field)->store($path);
+        }
+    }
+
+    $markazAgreement->save();
+
+    // Get IDs of existing associated madrasas
+    $existingMadrasaIds = MarkazAgreementMadrasa::where('markaz_agreement_id', $id)
+        ->pluck('id')
+        ->toArray();
+
+    // Get IDs of madrasas that should remain after update
+    $updatedMadrasaIds = [];
+
+    // Update or create associated madrasas
+    foreach ($request->associated_madrasas as $madrasaData) {
+        if (isset($madrasaData['id'])) {
+            // Update existing madrasa
+            $associatedMadrasa = MarkazAgreementMadrasa::find($madrasaData['id']);
+            $updatedMadrasaIds[] = $madrasaData['id'];
+        } else {
+            // Create new madrasa
+            $associatedMadrasa = new MarkazAgreementMadrasa();
+            $associatedMadrasa->markaz_agreement_id = $id;
+        }
+        $associatedMadrasa->madrasa_Name = $madrasaData['madrasa_Name'];
+        $associatedMadrasa->fazilat = $madrasaData['fazilat'];
+        $associatedMadrasa->sanabiya_ulya = $madrasaData['sanabiya_ulya'];
+        $associatedMadrasa->sanabiya = $madrasaData['sanabiya'];
+        $associatedMadrasa->mutawassita = $madrasaData['mutawassita'];
+        $associatedMadrasa->ibtedaiyyah = $madrasaData['ibtedaiyyah'];
+        $associatedMadrasa->hifzul_quran = $madrasaData['hifzul_quran'];
+
+        // Handle file uploads
+        if (isset($madrasaData['noc_file']) && $madrasaData['noc_file'] instanceof UploadedFile) {
+            if ($associatedMadrasa->noc_file) {
+                Storage::delete($associatedMadrasa->noc_file);
+            }
+            $associatedMadrasa->noc_file = $madrasaData['noc_file']->store('markaz/associated/noc');
+        }
+
+        if (isset($madrasaData['resolution_file']) && $madrasaData['resolution_file'] instanceof UploadedFile) {
+            if ($associatedMadrasa->resolution_file) {
+                Storage::delete($associatedMadrasa->resolution_file);
+            }
+            $associatedMadrasa->resolution_file = $madrasaData['resolution_file']->store('markaz/associated/resolution');
+        }
+
+        $associatedMadrasa->save();
+    }
+
+    // Delete madrasas that are no longer in the request
+    $madrasasToDelete = array_diff($existingMadrasaIds, $updatedMadrasaIds);
+    MarkazAgreementMadrasa::whereIn('id', $madrasasToDelete)->delete();
+
+    return redirect()->route('markaz-agreements.index')
+        ->with('success', 'মারকায চুক্তি সফলভাবে আপডেট করা হয়েছে');
+}
 
 
 }

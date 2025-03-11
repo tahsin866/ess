@@ -129,9 +129,9 @@ Route::get('others/massaging', function () {
 
 // About_markaj
 
-Route::get('About_markaj/madrasha_list', function () {
-    return Inertia::render('About_markaj/madrasha_list');
-})->name('About_markaj.madrasha_list');
+// Route::get('About_markaj/madrasha_list', function () {
+//     return Inertia::render('About_markaj/madrasha_list');
+// })->name('About_markaj.madrasha_list');
 
 
 // Route::get('Auth/madrasha_check_for_user', function () {
@@ -155,6 +155,8 @@ Route::get('About_markaj/madrasha_list', function () {
     // Route::get('/markaz-agreements', [MarkazAgreementController::class, 'index'])
     // ->name('markaz-agreements.index');
     Route::get('/Markaz/marjaz_detailes_view/{id}', [MarkazAgreementController::class, 'viewDetails'])->name('Markaz.view');
+    Route::get('/Markaz/markaz_apply_edit/{id}', [MarkazAgreementController::class, 'Edit'])->name('Markaz.edit');
+    Route::post('/Markaz/markaz_apply_update/{id}', [MarkazAgreementController::class, 'update'])->name('markaz-agreements.update');
 
     Route::post('/markaz/submit/{id}', [MarkazAgreementController::class, 'submitApplication'])->name('markaz.submit');
 

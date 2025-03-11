@@ -481,107 +481,101 @@ const submitReturnReason = () => {
 
             <!-- Attachments -->
 
-            <div class="p-4 bg-white shadow-md rounded-md w-full">
-    <h2 class="text-lg font-semibold text-gray-800 mb-3">আবেদনের অবস্থা পরিবর্তন করুন</h2>
+            <div class="p-6 bg-white shadow-lg rounded-lg w-full border border-emerald-100">
+  <h2 class="text-xl font-bold text-emerald-800 mb-4 text-center">
+    <span class="border-b-2 border-emerald-500 pb-1">আবেদনের অবস্থা পরিবর্তন করুন</span>
+  </h2>
 
-    <div class="flex gap-2">
-      <!-- অনুমোদন বাটন -->
-      <button class="px-4 py-2 text-white bg-green-600 hover:bg-green-700 rounded-md">
-        অনুমোদন
-      </button>
+  <div class="flex gap-3 justify-center">
+    <button class="px-5 py-2 text-white bg-emerald-600 hover:bg-emerald-700 rounded-md transition duration-200 shadow-sm">
+      অনুমোদন
+    </button>
 
-      <!-- ফেরত বাটন -->
-      <button @click="openReturnModal"
-            class="px-4 py-2 text-white bg-yellow-500 hover:bg-yellow-600 rounded-md">
+    <button @click="openReturnModal"
+      class="px-5 py-2 text-white bg-amber-500 hover:bg-amber-600 rounded-md transition duration-200 shadow-sm">
       ফেরত
     </button>
 
-
-      <!-- রিজেক্ট বাটন -->
-      <button @click="openRejectModal"
-              class="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-md">
-        রিজেক্ট
-      </button>
-    </div>
-
-    <p class="mt-3 text-sm font-medium text-gray-700">
-      বর্তমান অবস্থা: {{ statusText }}
-    </p>
-
-    <!-- ফেরতের জন্য মডাল -->
-    <div v-if="isReturnModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-      <div class="bg-white p-6 rounded-md shadow-md w-96">
-        <h3 class="text-lg font-semibold text-gray-800 mb-3">ফেরতের কারণ</h3>
-
-        <!-- কারণ লেখার জায়গা -->
-        <textarea v-model="returnReason" placeholder="ফেরতের কারণ লিখুন..."
-                  class="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
-
-        <!-- ফাইল আপলোড -->
-        <div class="mt-4">
-          <label class="block text-sm font-medium text-gray-700">ছবি সংযুক্ত করুন</label>
-          <div class="mt-1 flex items-center">
-            <input type="file" @change="handleImageUpload"
-                   class="block w-full text-sm text-gray-700 border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
-        </div>
-
-        <!-- প্রিভিউ দেখানোর জায়গা -->
-        <div v-if="imagePreview" class="mt-4 relative">
-          <img :src="imagePreview" class="w-full h-40 object-cover rounded-md border border-gray-300">
-          <button @click="removeImage"
-                  class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
-            ❌
-          </button>
-        </div>
-
-        <!-- বাটন সেকশন -->
-        <div class="flex justify-end mt-4 gap-2">
-          <button @click="closeReturnModal" class="px-4 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-md">
-            বাতিল
-          </button>
-          <button @click="submitReturnReason" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">
-            সাবমিট
-          </button>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- রিজেক্টের জন্য মডাল -->
-    <div v-if="isRejectModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-      <div class="bg-white p-6 rounded-md shadow-md w-96">
-        <h3 class="text-lg font-semibold text-gray-800 mb-3">রিজেক্টের কারণ লিখুন</h3>
-
-        <textarea v-model="rejectReason" placeholder="রিজেক্টের কারণ লিখুন..."
-                  class="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"></textarea>
-
-        <div class="mt-4">
-          <label class="block text-sm font-medium text-gray-700">ছবি সংযুক্ত করুন</label>
-          <input type="file" @change="handleRejectImageUpload"
-                 class="block w-full text-sm text-gray-700 border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500">
-        </div>
-
-        <div v-if="rejectImage" class="mt-4 relative">
-          <img :src="rejectImage" class="w-full h-40 object-cover rounded-md border border-gray-300">
-          <button @click="removeRejectImage"
-                  class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
-            ❌
-          </button>
-        </div>
-
-        <div class="flex justify-end mt-4 gap-2">
-          <button @click="closeRejectModal" class="px-4 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-md">
-            বাতিল
-          </button>
-          <button @click="submitRejectReason" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md">
-            সাবমিট
-          </button>
-        </div>
-      </div>
-    </div>
-
+    <button @click="openRejectModal"
+      class="px-5 py-2 text-white bg-red-600 hover:bg-red-700 rounded-md transition duration-200 shadow-sm">
+      রিজেক্ট
+    </button>
   </div>
+
+  <p class="mt-4 text-sm font-medium text-emerald-700 text-center">
+    বর্তমান অবস্থা: {{ statusText }}
+  </p>
+
+  <!-- Return Modal -->
+  <div v-if="isReturnModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-[550px] border-t-4 border-emerald-500">
+      <h3 class="text-xl font-bold text-emerald-800 mb-4 text-center">ফেরতের কারণ</h3>
+
+      <textarea v-model="returnReason" placeholder="ফেরতের কারণ লিখুন..."
+        class="w-full h-36 p-4 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"></textarea>
+
+      <div class="mt-5">
+        <label class="block text-sm font-semibold text-emerald-700 mb-2">ছবি সংযুক্ত করুন</label>
+        <input type="file" @change="handleImageUpload"
+          class="block w-full text-sm text-gray-700 border border-emerald-200 rounded-lg p-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500">
+      </div>
+
+      <div v-if="imagePreview" class="mt-4 relative">
+        <img :src="imagePreview" class="w-full h-48 object-cover rounded-lg border border-emerald-200">
+        <button @click="removeImage"
+          class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition">
+          ❌
+        </button>
+      </div>
+
+      <div class="flex justify-end mt-6 gap-3">
+        <button @click="closeReturnModal"
+          class="px-5 py-2.5 bg-gray-400 hover:bg-gray-500 text-white rounded-md transition">
+          বাতিল
+        </button>
+        <button @click="submitReturnReason"
+          class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition">
+          সাবমিট
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reject Modal -->
+  <div v-if="isRejectModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-[550px] border-t-4 border-red-500">
+      <h3 class="text-xl font-bold text-red-800 mb-4 text-center">রিজেক্টের কারণ</h3>
+
+      <textarea v-model="rejectReason" placeholder="রিজেক্টের কারণ লিখুন..."
+        class="w-full h-36 p-4 border border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"></textarea>
+
+      <div class="mt-5">
+        <label class="block text-sm font-semibold text-red-700 mb-2">ছবি সংযুক্ত করুন</label>
+        <input type="file" @change="handleRejectImageUpload"
+          class="block w-full text-sm text-gray-700 border border-red-200 rounded-lg p-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500">
+      </div>
+
+      <div v-if="rejectImage" class="mt-4 relative">
+        <img :src="rejectImage" class="w-full h-48 object-cover rounded-lg border border-red-200">
+        <button @click="removeRejectImage"
+          class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition">
+          ❌
+        </button>
+      </div>
+
+      <div class="flex justify-end mt-6 gap-3">
+        <button @click="closeRejectModal"
+          class="px-5 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-md transition">
+          বাতিল
+        </button>
+        <button @click="submitRejectReason"
+          class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition">
+          সাবমিট
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

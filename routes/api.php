@@ -3,6 +3,7 @@
 use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\SubjectSettingsController;
 use App\Http\Controllers\ExamSetupController;
+use App\Http\Controllers\ScheduleSetupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarkazAgreementController;
 
@@ -41,6 +42,17 @@ Route::prefix('api')->group(function () {
 
     Route::get('/markaz-agreements', [MarkazAgreementController::class, 'fatch']);
 // Route::get('/markaz-agreement-madrasas/counts', [MarkazAgreementController::class, 'getMadrasaCounts']);
+
+
+
+
+Route::get('/markaz-madrashas/list', [MarkazAgreementController::class, 'getMadrashas'])->name('markaz.madrashas.list');
+
+
+
+
+Route::post('/schedule-setups', [ScheduleSetupController::class, 'store']);
+
 });
 
 

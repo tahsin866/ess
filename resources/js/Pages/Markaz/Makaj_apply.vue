@@ -23,14 +23,20 @@ const submitApplication = (id) => {
     if (confirm("আপনি কি নিশ্চিত যে এই আবেদনটি সাবমিট করতে চান?")) {
         router.post(route('markaz.submit', id), {}, {
             preserveScroll: true,
-            onSuccess: () => {
-                alert("আবেদন সফলভাবে সাবমিট করা হয়েছে!");
+            onSuccess: (response) => {
+                if (response.props.flash.success) {
+                    alert(response.props.flash.success);
+                    window.location.reload(); // Refresh to show updated status
+                }
+            },
+            onError: (errors) => {
+                if (errors.error) {
+                    alert(errors.error);
+                }
             }
         });
     }
 };
-
-
 
 // const dropdownPosition = ref({ top: 0, left: 0 });
 const showMenu = ref(false);
@@ -116,7 +122,7 @@ const showMenu = ref(false);
     <div v-if="agreement.showMenu"
          class="fixed transform -translate-x-full sm:translate-x-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none z-[999] origin-top-right lg:origin-top-left">
         <div class="py-1">
-            <a href="#"
+            <a @click="router.get(route('Markaz.edit', agreement.id))"
                class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700">
                 <i class="fas fa-edit mr-3 text-gray-400 group-hover:text-emerald-700"></i>
                 সম্পাদনা করুন

@@ -51,14 +51,26 @@
 
                                 <!-- Registration Fee Section -->
                                 <td class="border border-emerald-300 p-3">
-                                    <div class="flex items-center gap-1">
-                                        <input type="date" v-model="examFeesData[index].reg_date_from"
-                                            class="w-28 border border-emerald-200 p-2 rounded-sm">
-                                        <span class="whitespace-nowrap">থেকে</span>
-                                        <input type="date" v-model="examFeesData[index].reg_date_to"
-                                            class="w-28 border border-emerald-200 p-2 rounded-sm">
-                                    </div>
-                                </td>
+    <div class="flex items-center gap-3">
+        <div class="relative">
+            <label class="absolute -top-2 left-2 bg-white px-1 text-xs text-emerald-600">শুরু</label>
+            <input
+                type="date"
+                v-model="examFeesData[index].reg_date_from"
+                class="w-44 border-2 border-emerald-200 p-3 rounded focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+            >
+        </div>
+        <span class="whitespace-nowrap font-medium text-emerald-700">থেকে</span>
+        <div class="relative">
+            <label class="absolute -top-2 left-2 bg-white px-1 text-xs text-emerald-600">শেষ</label>
+            <input
+                type="date"
+                v-model="examFeesData[index].reg_date_to"
+                class="w-44 border-2 border-emerald-200 p-3 rounded focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+            >
+        </div>
+    </div>
+</td>
                                 <td class="border border-emerald-300 p-3">
                                     <input type="number" v-model="examFeesData[index].reg_regular_fee"
                                         class="w-full border border-emerald-300 p-2 rounded-sm">
@@ -81,14 +93,26 @@
 
                                 <!-- Late Fee Section -->
                                 <td class="border border-emerald-300 p-3">
-                                    <div class="flex items-center gap-1">
-                                        <input type="date" v-model="examFeesData[index].late_date_from"
-                                            class="w-28 border border-emerald-200 p-2 rounded-sm">
-                                        <span class="whitespace-nowrap">থেকে</span>
-                                        <input type="date" v-model="examFeesData[index].late_date_to"
-                                            class="w-28 border border-emerald-200 p-2 rounded-sm">
-                                    </div>
-                                </td>
+    <div class="flex items-center gap-3">
+        <div class="relative">
+            <label class="absolute -top-2 left-2 bg-white px-1 text-xs text-emerald-600">শুরু</label>
+            <input
+                type="date"
+                v-model="examFeesData[index].late_date_from"
+                class="w-44 border-2 border-emerald-200 p-3 rounded focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+            >
+        </div>
+        <span class="whitespace-nowrap font-medium text-emerald-700">থেকে</span>
+        <div class="relative">
+            <label class="absolute -top-2 left-2 bg-white px-1 text-xs text-emerald-600">শেষ</label>
+            <input
+                type="date"
+                v-model="examFeesData[index].late_date_to"
+                class="w-44 border-2 border-emerald-200 p-3 rounded focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+            >
+        </div>
+    </div>
+</td>
 
                                 <td class="border border-emerald-300 p-3">
                                     <input type="number" v-model="examFeesData[index].late_regular_fee"

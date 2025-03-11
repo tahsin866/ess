@@ -95,74 +95,7 @@ class MarhalaController extends Controller
     }
 
 
-    // public function edit($id)
-    // {
-    //     try {
-    //         $marhala = Marhala::with('subjects')->findOrFail($id);
-    //         return response()->json([
-    //             'marhala' => $marhala,
-    //             'subjects' => $marhala->subjects
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => 'Marhala not found'], 404);
-    //     }
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     try {
-    //         $validated = $request->validate([
-    //             'marhalaNameBn' => 'required|string',
-    //             'marhalaNameEn' => 'required|string',
-    //             'marhalaNameAr' => 'required|string',
-    //             'subjects' => 'required|array'
-    //         ]);
-
-    //         $marhala = Marhala::findOrFail($id);
-
-    //         DB::beginTransaction();
-
-    //         $marhala->update([
-    //             'marhala_name_bn' => $validated['marhalaNameBn'],
-    //             'marhala_name_en' => $validated['marhalaNameEn'],
-    //             'marhala_name_ar' => $validated['marhalaNameAr'],
-    //         ]);
-
-    //         $marhala->subjects()->delete();
-
-    //         foreach ($request->subjects as $subject) {
-    //             MarhalaSubject::create([
-    //                 'marhala_id' => $marhala->id,
-    //                 'subject_code' => $subject['code'],
-    //                 'name_bangla' => $subject['nameBangla'],
-    //                 'name_english' => $subject['nameEnglish'],
-    //                 'name_arabic' => $subject['nameArabic'],
-    //                 'status' => $subject['status']
-    //             ]);
-    //         }
-
-    //         DB::commit();
-    //         return response()->json(['message' => 'Marhala updated successfully']);
-
-    //     } catch (ValidationException $e) {
-    //         return response()->json(['errors' => $e->errors()], 422);
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-    //         return response()->json(['error' => 'Failed to update Marhala'], 500);
-    //     }
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
+   
 
 
 
