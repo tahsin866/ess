@@ -37,7 +37,7 @@ public function store(Request $request)
         'subject_id' => 'required',
         'Marhala_type' => 'required',
         'Subject_Names' => 'required',
-        // 'student_type' => 'required',
+        'student_type' => 'required',
         'syllabus_type' => 'required',
         'markaz_type' => 'required',
         'subject_type' => 'required',
@@ -62,18 +62,10 @@ public function index()
     $subjects = subject_settings::with('MarhalaSubject')
         ->get()
         ->map(function ($subject) {
-            $studentTypeText = match($subject->MarhalaSubject->status) {
-                'SRtype_1' => 'ছাত্র',
-                'SRtype_0' => 'ছাত্রী',
-                'both' => 'উভয়',
-                default => 'N/A'
-            };
-
             return [
                 'code' => $subject->MarhalaSubject->subject_code ?? 'N/A',
                 'Subject_Names' => $subject->Subject_Names,
                 'Marhala_type' => $subject->Marhala_type,
-                'student_type' => $studentTypeText, // Updated this line
                 'syllabus_type' => $subject->syllabus_type,
                 'markaz_type' => $subject->markaz_type,
                 'subject_type' => $subject->subject_type,
@@ -87,6 +79,10 @@ public function index()
         'subjects' => $subjects
     ]);
 }
+
+
+
+
 
 
 
@@ -176,6 +172,7 @@ public function store_1(Request $request)
     {
         return Marhala::select('id', 'marhala_name_bn')->get();
     }
+
 
 
  public function store_2(Request $request)

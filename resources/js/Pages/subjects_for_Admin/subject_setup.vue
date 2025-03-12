@@ -67,6 +67,18 @@
                      </select>
                  </div>
 
+
+                 <div class="col-span-1">
+                     <label class="block text-sm font-semibold text-emerald-800 mb-2">ছাত্র/ছাত্রীর ধরন *</label>
+                     <select v-model="form.student_type"
+                             class="w-full border-emerald-200 rounded-sm py-2 px-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-emerald-50">
+                         <option value="">নির্বাচন করুন</option>
+                         <option value="ছাত্র">ছাত্র</option>
+                         <option value="ছাত্রী">ছাত্রী</option>
+                         <option value="উভয়">উভয়</option>
+                     </select>
+                 </div>
+
                  <!-- মোট মার্ক -->
                  <div class="col-span-1">
                      <label class="block text-sm font-semibold text-emerald-800 mb-2">মোট মার্ক *</label>

@@ -610,7 +610,7 @@ onMounted(() => {
                 <label class="block text-xl text-emerald-800 font-bold mb-4 arabic-font">মারকায প্রাপ্তির
                     প্রয়োজনীয়তা</label>
                 <textarea v-model="form.requirements"
-                    class="w-full px-4 py-2 border border-emerald-300 text-xl rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white shadow-sm"
+                    class="w-full px-4 py-2 border text-2xl border-emerald-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white shadow-sm"
                     rows="4">
     </textarea>
             </div>

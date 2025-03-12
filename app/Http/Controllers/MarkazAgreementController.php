@@ -226,7 +226,9 @@ class MarkazAgreementController extends Controller
 
         // Format dates and set URLs for files
         $markazDetails->created_at = $markazDetails->created_at->format('d/m/Y');
-        $markazDetails->president_consent = $markazDetails->president_consent ? Storage::url($markazDetails->president_consent) : null;
+        $markazDetails->president_consent = $markazDetails->president_consent
+        ? asset('storage/images/' . basename($markazDetails->president_consent))
+        : null;
         $markazDetails->resolution_file = $markazDetails->resolution_file ? Storage::url($markazDetails->resolution_file) : null;
 
 
@@ -319,39 +321,70 @@ class MarkazAgreementController extends Controller
     }
 
 
-
-
-    // public function submitApplication($id)
+    // public function fatch()
     // {
-    //     $agreement = MarkazAgreement::find($id);
+    //     $agreements = MarkazAgreement::with(['associatedMadrasas', 'activityLogs' => function($query) {
+    //         $query->orderBy('created_at', 'desc');
+    //     }])
+    //     ->whereHas('activityLogs', function ($query) {
+    //         $query->where('status', 'বোর্ড দাখিল');
+    //     })
+    //     ->latest()
+    //     ->get()
+    //     ->map(function ($agreement) {
+    //         return [
+    //             'id' => $agreement->id,
+    //             'number' => $agreement->id,
+    //             'Elhaq_no' => $agreement->Elhaq_no,
+    //             'markaz_type' => $agreement->markaz_type,
+    //             'madrasha_Name' => $agreement->madrasha_Name,
+    //             'madrasha_code' => $agreement->madrasha_code,
+    //             'studentNumber' => $agreement->fazilat +
+    //                                $agreement->sanabiya_ulya +
+    //                                $agreement->sanabiya +
+    //                                $agreement->mutawassita +
+    //                                $agreement->ibtedaiyyah +
+    //                                $agreement->hifzul_quran +
+    //                                $agreement->associatedMadrasas->sum('fazilat') +
+    //                                $agreement->associatedMadrasas->sum('sanabiya_ulya') +
+    //                                $agreement->associatedMadrasas->sum('sanabiya') +
+    //                                $agreement->associatedMadrasas->sum('mutawassita') +
+    //                                $agreement->associatedMadrasas->sum('ibtedaiyyah') +
+    //                                $agreement->associatedMadrasas->sum('hifzul_quran'),
+    //             'madrasahNumber' => $agreement->associatedMadrasas->count(),
+    //             'activityLogs' => $agreement->activityLogs->map(function($log) {
+    //                 return [
+    //                     'id' => $log->id,
+    //                     'user_name' => $log->user_name,
+    //                     'admin_name' => $log->admin_name,
+    //                     'user_position' => $log->user_position,
+    //                     'status' => $log->status,
+    //                     'admin_message' => $log->admin_message,
+    //                     'created_at' => $log->created_at->format('Y-m-d H:i:s')
+    //                 ];
+    //             })
+    //         ];
+    //     });
 
-    //     if (!$agreement) {
-    //         return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
-    //     }
-
-    //     // Update agreement status
-    //     // $agreement->update([
-    //     //     'status' => 'সাবমিটেড',
-    //     //     'submitted_at' => now()
-    //     // ]);
-
-    //     // Create activity log with all required fields
-    //     activity_log::create([
-    //         'markaz_agreement_id' => $agreement->id,  // Ensure this value is correctly passed
-    //         'user_id' => Auth::user()->id,
-    //         'status' => 'বোর্ড দাখিল',
-    //         'actor_type' => 'user',
-    //         'user_name' => Auth::user()->name,
-    //         'user_position' => Auth::user()->admin_Designation,
-    //         'admin_position' => null,  // You can set null or a default value
-    //         'admin_message' => null,
-    //         'admin_feedback_image' => null,
-    //         'created_at' => now(),
-    //         'updated_at' => now()
-    //     ]);
-
-    //     return back()->with('success', 'আবেদন সফলভাবে সাবমিট হয়েছে!');
+    //     return response()->json($agreements);
     // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -385,14 +418,7 @@ class MarkazAgreementController extends Controller
             return back()->withErrors(['error' => 'আবেদনের সময় শেষ! আগামী বছর আবার চেষ্টা করুন।']);
         }
 
-        // 3️⃣ Then check if this agreement is already in activity_log
-        $existingLog = activity_log::where('markaz_agreement_id', $id)
-            ->where('status', 'বোর্ড দাখিল')
-            ->first();
 
-        if ($existingLog) {
-            return back()->withErrors(['error' => 'এই আবেদনটি ইতিমধ্যে বোর্ড দাখিল করা হয়েছে!']);
-        }
 
         // 4️⃣ If all checks pass, then create activity log
         activity_log::create([
@@ -412,11 +438,20 @@ class MarkazAgreementController extends Controller
         return back()->with('success', 'আবেদন সফলভাবে সাবমিট হয়েছে!');
     }
 
+// ডিলিট পার্ট
 
+public function deleteAgreement($id)
+{
+    $agreement = MarkazAgreement::find($id);
 
+    if (!$agreement) {
+        return response()->json(['error' => 'আবেদন পাওয়া যায়নি!'], 404);
+    }
 
+    $agreement->delete();
 
-
+    return redirect()->back()->with('success', 'আবেদন সফলভাবে মুছে ফেলা হয়েছে!');
+}
 
 
 
@@ -469,17 +504,40 @@ public function viewDetails_for_admin($id)
 
 
 
-public function approveApplication($id)
+public function approveApplication(Request $request, $id)
 {
+    // Find the agreement
     $agreement = MarkazAgreement::find($id);
+
     if (!$agreement) {
         return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
     }
 
-    $agreement->update(['status' => 'অনুমোদিত']);
+    $adminId = Auth::guard('admin')->id();
+    $adminName = Auth::guard('admin')->user()->name;
 
-    return back()->with('success', 'আবেদন অনুমোদন করা হয়েছে!');
+    // Create activity log entry
+    $logData = [
+        'admin_id' => $adminId,
+        'admin_name' => $adminName,
+        'markaz_agreement_id' => $agreement->id,
+        'status' => 'অনুমোদন',
+        'processed_at' => now(),
+    ];
+
+    // Insert into activity_logs
+    $inserted = activity_log::create($logData);
+
+    if ($inserted) {
+        return back()->with('success', 'আবেদন সফলভাবে অনুমোদন করা হয়েছে!');
+    }
+
+    return back()->withErrors(['error' => 'আপডেট করতে সমস্যা হয়েছে!']);
 }
+
+
+
+
 
 
 
@@ -542,10 +600,6 @@ public function Edit($id)
         'associatedMadrasas' => $markazAgreement->associatedMadrasas
     ]);
 }
-
-
-
-
 
 
 

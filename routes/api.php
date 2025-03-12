@@ -21,6 +21,7 @@ Route::prefix('api')->group(function () {
 
     Route::get('/exam-setups/latest', [SubjectSettingsController::class, 'getLatest']);
     Route::get('/marhalas', [SubjectSettingsController::class, 'index_1']);
+
     Route::post('/exam-fees', [SubjectSettingsController::class, 'store_2']);
 
     Route::get('/exam-setups_1', [ExamSetupController::class, 'index_2']);
@@ -52,6 +53,12 @@ Route::get('/markaz-madrashas/list', [MarkazAgreementController::class, 'getMadr
 
 
 Route::post('/schedule-setups', [ScheduleSetupController::class, 'store']);
+
+
+
+
+
+Route::delete('/markaz/delete/{id}', [MarkazAgreementController::class, 'deleteAgreement'])->name('markaz.delete');
 
 });
 

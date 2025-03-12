@@ -160,3 +160,4 @@ Route::get('others/massaging', function () {
 
     Route::post('/markaz/submit/{id}', [MarkazAgreementController::class, 'submitApplication'])->name('markaz.submit');
 
+    Route::delete('/markaz/delete/{id}', [MarkazAgreementController::class, 'deleteAgreement'])->name('markaz.delete');

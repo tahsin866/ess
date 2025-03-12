@@ -146,7 +146,7 @@ const setSelected = (item) => {
             কেন্দ্রীয় পরীক্ষা সেটাপ
         </Link>
 
-        <Link href="route('Takmil.cirtificateProvide')"
+        <Link :href="route('user_create_for_admin.user_create')"
             @click="setSelected('user_setup')"
             class="block px-4 py-2 text-lg hover:bg-[#123524]"
             :class="{'bg-[#123524] text-white': selectedItem === 'user_setup'}">
@@ -227,7 +227,7 @@ const setSelected = (item) => {
             <i :class="{'rotate-180': dropdownOpen.sanawia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
         </button>
                     <div v-if="dropdownOpen.sanawia" class="pl-6">
-                        <Link :href="route('markaz_for_admin.markaz_setup')" class="block text-lg px-4 py-2 hover:bg-[#123524]">মারকায সেটাপ</Link>
+                        <Link :href="route('markaz_for_admin.markaz_setup')" class="block text-lg px-4 py-2 hover:bg-[#123524]">মারকায আবেদন তালিকা</Link>
                         <Link href="route('OntorVukti.softDelete_draft_list')" class="block px-4 text-lg py-2 hover:bg-[#123524]">প্রস্তাবিত মারকায</Link>
                         <Link href="route('OntorVukti.stu_admit_card')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মারকায তালিকা</Link>
                         <Link href="route('OntorVukti.stu_payment')" class="block px-4 text-lg py-2 hover:bg-[#123524]">মারকায পরিবর্তনের আবেদন</Link>
@@ -422,22 +422,7 @@ const setSelected = (item) => {
                     </div>
                 </div>
 
-                <div>
-                    <button @click="dropdownOpen.Qirat = !dropdownOpen.Qirat"
-                class="w-full text-lg flex justify-between items-center px-4 py-2 hover:bg-[#123524]">
-            <div class="flex items-center gap-2">
-                <i class="fas fa-file-alt w-6 h-6 text-sm"></i>
-              খাতা ও লুজ
-            </div>
-            <i :class="{'rotate-180': dropdownOpen.Qirat}" class="fas fa-chevron-down fa-xs transition-transform"></i>
-        </button>
-                    <div v-if="dropdownOpen.Qirat" class="pl-6">
-                        <Link href="route('fazilat.sanawaia')" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাতা ও লুজ সেটাপ</Link>
-                        <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাতা ও লুজ জেনারেট</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">খাত ও লুজের হিসাব</Link>
-                        <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-lg">অন্যান্য</Link>
-                    </div>
-                </div>
+
 
 
 

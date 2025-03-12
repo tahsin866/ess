@@ -443,7 +443,7 @@ const submitForm = () => {
                         <div class="p-3 border-2 border-dashed border-emerald-300 rounded-lg">
                             <div class="flex items-center justify-between mb-4">
                                 <label class="text-lg font-medium text-emerald-700">পূর্বের মাদরাসার অনাপত্তিপত্র</label>
-                                <div v-if="nocFileForMadrahsa" class="flex items-center space-x-4">
+                                <div v-if="nocPreviewForMadrahsa" class="flex items-center space-x-4">
                                     <a :href="nocPreviewForMadrahsa" target="_blank"
                                         class="text-emerald-600 hover:text-emerald-800 flex items-center">
                                         <span class="material-symbols-outlined mr-1">দেখুন</span>

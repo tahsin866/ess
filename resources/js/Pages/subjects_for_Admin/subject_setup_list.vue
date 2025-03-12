@@ -40,15 +40,7 @@
       </svg> -->
       বিষয় সেটাপ করুন
   </Link>
-            <!-- <Link
-              :href="route('Mrahala_for_Admin.marhala_setup_list', { id: marhala.id })"
-              class="flex items-center px-3 py-1.5 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors duration-200"
-            >
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              নতুন যোগ করুন
-            </Link> -->
+
           </div>
         </td>
       </tr>
@@ -60,27 +52,26 @@
   </template>
 
 
-  <script setup>
-  import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue';
-  import { ref, onMounted } from 'vue';
+<script setup>
+import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { Link } from '@inertiajs/vue3';
 
-  import axios from 'axios';
-  import { Link } from '@inertiajs/vue3';
+const marhalas = ref([]);
 
-  const marhalas = ref([]);
+const loadMarhalaStats = async () => {
+    try {
+        const response = await axios.get('/api/subject-marhala-counts');
+        marhalas.value = response.data;
+    } catch (error) {
+        console.error('Error loading marhala stats:', error);
+    }
+};
 
-  const fetchMarhalas = async () => {
-      try {
-          const response = await axios.get('/api/marhalas');  // Updated URL
-          marhalas.value = response.data;
-      } catch (error) {
-
-      }
-  };
-
-  onMounted(() => {
-      fetchMarhalas();
-  });
-  </script>
+onMounted(() => {
+    loadMarhalaStats();
+});
+</script>
 
 

@@ -207,7 +207,7 @@ const page = usePage()
         <i :class="{'rotate-180': dropdownOpen.ibtedaia}" class="fas fa-chevron-down fa-xs transition-transform"></i>
     </button>
     <div v-if="dropdownOpen.ibtedaia" class="pl-6">
-        <Link :href="route('About_markaj.madrasha_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
+        <Link href="route('About_markaj.madrasha_list')" class="block text-xl px-4 py-2 hover:bg-[#123524]">মাদরাসার তালিকা</Link>
         <Link href="" class="block px-4 py-2 hover:bg-[#123524] text-xl">নেগরান তালিকা</Link>
         <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">প্রশ্নপত্র প্রিন্ট</Link>
         <Link href="#" class="block px-4 py-2 hover:bg-[#123524] text-xl">ভাউচার তৈরি</Link>

@@ -8,7 +8,7 @@ const desserts = ref([
   },
 ]);
 
-const items = ref(["Madarsa 1", "Madarsa 2", "Madarsa 3"]);
+const items = ref(["দারসিয়াত", "হিফজ", "ক্বিরাআত"]);
 const selectedMadrasa = ref("");
 </script>
 
@@ -25,11 +25,11 @@ const selectedMadrasa = ref("");
 
         <!-- Madrasa Selection -->
         <div class="p-6 border-b ">
-          <div class="bg-white p-4 rounded-md shadow-md">
+          <div class="bg-white p-4 rounded-sm shadow-md">
             <label class="text-emerald-800 font-semibold block mb-2">মারকাযের স্তর নির্বাচন করুন</label>
             <select
               v-model="selectedMadrasa"
-              class="w-full px-4 py-3 border  rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+              class="w-full px-4 py-3 border  rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
             >
               <option value="">মাদরাসা সিলেক্ট করুন</option>
               <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
@@ -38,76 +38,88 @@ const selectedMadrasa = ref("");
         </div>
 
         <!-- Content Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 ">
-          <!-- মারকাযের ধরন -->
-          <div class="bg-white p-5 rounded-md shadow-md border  hover:shadow-lg transition-shadow duration-300">
-            <label class="text-emerald-800 font-semibold block mb-3">
-              <i class="fas fa-mosque mr-2"></i>মারকাযের ধরন
-            </label>
-            <div class="mt-1 text-gray-800 font-medium">{{ desserts[0].dessert }}</div>
-          </div>
+        <div class="p-6">
+    <table class="w-full border-collapse">
+        <tbody>
+            <!-- Basic Information -->
+            <tr>
+                <td class="border p-4 w-1/3">
+                    <label class="text-emerald-800 font-semibold">মারকাযের ধরন</label>
+                </td>
+                <td class="border p-4 w-2/3">
+                    <div class="text-gray-800">{{ desserts[0].dessert }}</div>
+                </td>
+            </tr>
 
-          <!-- বর্তমান মারকায -->
-          <div class="bg-white p-5 rounded-md shadow-md border  hover:shadow-lg transition-shadow duration-300">
-            <label class="text-emerald-800 font-semibold block mb-3">
-              <i class="fas fa-map-marker-alt mr-2"></i>বর্তমান মারকায
-            </label>
-            <div class="mt-1 text-gray-800 font-medium">{{ desserts[0].calories }}</div>
-          </div>
+            <tr>
+                <td class="border p-4">
+                    <label class="text-emerald-800 font-semibold">বর্তমান মারকায</label>
+                </td>
+                <td class="border p-4">
+                    <div class="text-gray-800">{{ desserts[0].calories }}</div>
+                </td>
+            </tr>
 
-          <!-- কাঙ্খিত মারকায -->
-          <div class="bg-white p-5 rounded-md shadow-md border  hover:shadow-lg transition-shadow duration-300">
-            <label class="text-emerald-800 font-semibold block mb-3">
-              <i class="fas fa-star-and-crescent mr-2"></i>কাঙ্খিত মারকায
-            </label>
-            <select
-              v-model="selectedMadrasa"
-              class="w-full px-4 py-3 border border-emerald-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
-            >
-              <option value="">মাদরাসা সিলেক্ট করুন</option>
-              <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
-            </select>
-          </div>
-        </div>
+            <tr>
+                <td class="border p-4">
+                    <label class="text-emerald-800 font-semibold">কাঙ্খিত মারকায</label>
+                </td>
+                <td class="border p-4">
+                    <select
+                        v-model="selectedMadrasa"
+                        class="w-full px-4 py-2 border border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    >
+                        <option value="">মাদরাসা সিলেক্ট করুন</option>
+                        <option v-for="item in items" :key="item" :value="item">{{ item }}</option>
+                    </select>
+                </td>
+            </tr>
 
-        <!-- File Uploads -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 ">
-          <!-- অনাপত্তি পত্র -->
-          <div class="space-y-3">
-            <label class="text-emerald-800 font-semibold block">
-              <i class="fas fa-file-alt mr-2"></i>বর্তমান মারকায অনাপত্তিপত্র
-            </label>
-            <div class="relative">
-              <input
-                type="file"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                @change="handleFileChange"
-              />
-              <div class="flex items-center justify-center w-full px-4 py-3 bg-white border-2 border-dashed border-emerald-300 rounded-md hover:border-emerald-500 transition-colors duration-200">
-                <i class="fas fa-cloud-upload-alt text-emerald-400 text-xl mr-2"></i>
-                <span class="text-gray-600">ফাইল আপলোড করুন</span>
-              </div>
-            </div>
-          </div>
+            <!-- File Upload Sections -->
+            <tr>
+                <td class="border p-4">
+                    <label class="text-emerald-800 font-semibold">
+                        <i class="fas fa-file-alt mr-2"></i>বর্তমান মারকায অনাপত্তিপত্র
+                    </label>
+                </td>
+                <td class="border p-4">
+                    <div class="relative">
+                        <input
+                            type="file"
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                            @change="handleFileChange"
+                        />
+                        <div class="flex items-center justify-center w-full px-4 py-3 bg-white border-2 border-dashed border-emerald-300 rounded-md hover:border-emerald-500">
+                            <i class="fas fa-cloud-upload-alt text-emerald-400 text-xl mr-2"></i>
+                            <span class="text-gray-600">ফাইল আপলোড করুন</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
 
-          <!-- সম্মতিপত্র -->
-          <div class="space-y-3">
-            <label class="text-emerald-800 font-semibold block">
-              <i class="fas fa-file-signature mr-2"></i>কাঙ্খিত মারকায সম্মতিপত্র
-            </label>
-            <div class="relative">
-              <input
-                type="file"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                @change="handleFileChange"
-              />
-              <div class="flex items-center justify-center w-full px-4 py-3 bg-white border-2 border-dashed border-emerald-300 rounded-md hover:border-emerald-500 transition-colors duration-200">
-                <i class="fas fa-cloud-upload-alt text-emerald-400 text-xl mr-2"></i>
-                <span class="text-gray-600">ফাইল আপলোড করুন</span>
-              </div>
-            </div>
-          </div>
-        </div>
+            <tr>
+                <td class="border p-4">
+                    <label class="text-emerald-800 font-semibold">
+                        <i class="fas fa-file-signature mr-2"></i>কাঙ্খিত মারকায সম্মতিপত্র
+                    </label>
+                </td>
+                <td class="border p-4">
+                    <div class="relative">
+                        <input
+                            type="file"
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                            @change="handleFileChange"
+                        />
+                        <div class="flex items-center justify-center w-full px-4 py-3 bg-white border-2 border-dashed border-emerald-300 rounded-md hover:border-emerald-500">
+                            <i class="fas fa-cloud-upload-alt text-emerald-400 text-xl mr-2"></i>
+                            <span class="text-gray-600">ফাইল আপলোড করুন</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
       </div>
     </AuthenticatedLayout>
   </template>

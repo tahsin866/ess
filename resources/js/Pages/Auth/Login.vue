@@ -13,7 +13,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    mobile_no: '',
     password: '',
     remember: false,
 });
@@ -53,18 +53,18 @@ const submit = () => {
         class="space-y-6">
             <!-- Email Field -->
             <div>
-                <InputLabel for="email" value="ইমেইল" class="text-gray-700 dark:text-gray-300" />
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full rounded-md border-emerald-300 dark:border-emerald-700 focus:border-emerald-500 focus:ring-emerald-500 bg-white/50 dark:bg-gray-800/50"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+        <InputLabel for="mobile_no" value="মোবাইল নম্বর" class="text-gray-700 dark:text-gray-300" />
+        <TextInput
+            id="mobile_no"
+            type="text"
+            class="mt-1 block w-full rounded-md border-emerald-300 dark:border-emerald-700 focus:border-emerald-500 focus:ring-emerald-500 bg-white/50 dark:bg-gray-800/50"
+            v-model="form.mobile_no"
+            required
+            autofocus
+            autocomplete="mobile_no"
+        />
+        <InputError class="mt-2" :message="form.errors.mobile_no" />
+    </div>
 
             <!-- Password Field -->
             <div>

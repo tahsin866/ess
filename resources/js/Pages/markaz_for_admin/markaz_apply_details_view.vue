@@ -4,17 +4,20 @@ import AuthenticatedLayout from "@/Layouts/admin/AuthenticatedLayout.vue";
 import { Head } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3'
 
-const props = defineProps({
-  markazDetails: {
-    type: Object,
-    required: true
-  },
-  application: {
-    type: Object,
-    required: true
-  }
-});
 
+
+
+const props = defineProps({
+    markazDetails: {
+        type: Object,
+        required: true
+    },
+    application: {
+        type: Object,
+        required: false,
+        default: () => ({})
+    }
+});
 
 
 
@@ -156,6 +159,31 @@ const submitReturnReason = () => {
 
 
 
+
+
+const showModal = ref(false)
+const showToast = ref(false)
+
+const openApprovalModal = () => {
+  showModal.value = true
+}
+
+const confirmApproval = () => {
+  router.post(route('markaz.approve', { id: props.markazDetails.id }), {}, {
+    preserveScroll: true,
+    onSuccess: () => {
+      showModal.value = false
+      showToast.value = true
+      setTimeout(() => window.location.reload(), 100)
+    },
+    onError: (errors) => {
+      if (errors.error) {
+        alert(errors.error)
+      }
+    }
+  })
+}
+
 </script>
 
 <template>
@@ -186,7 +214,7 @@ const submitReturnReason = () => {
                       <div class="text-xl font-medium text-gray-900">মাদরাসার নাম</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-md font-semibold text-gray-900">{{ markazDetails.madrasha_Name}}</div>
+                      <div class="text-md font-semibold text-gray-900">{{markazDetails.madrasha_Name}}</div>
                     </td>
                   </tr>
                   <tr>
@@ -278,7 +306,7 @@ const submitReturnReason = () => {
         <div class="text-xl font-medium text-gray-900">প্রয়োজনীয়তা</div>
     </td>
     <td class="px-6 py-4">
-        <div class="max-h-32 overflow-y-auto text-md text-gray-900 pr-4">
+        <div class="max-h-32 text-2xl overflow-y-auto text-md text-gray-900 pr-4">
             {{ markazDetails.requirements }}
         </div>
     </td>
@@ -295,7 +323,7 @@ const submitReturnReason = () => {
             ভিউ ফাইল
         </a>
 
-        <a :href="'/storage/' + markazDetails.noc_file"
+        <a :href="'/storage/' + markazDetails.muhtamim_consent"
                          target="_blank"
                          class="inline-flex items-center mx-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
                         <i class="fas fa-download mr-2"></i>
@@ -303,6 +331,36 @@ const submitReturnReason = () => {
                       </a>
     </td>
 </tr>
+
+
+<tr>
+    <td class="px-6 py-4 whitespace-nowrap bg-gray-50">
+        <div class="text-xl font-medium text-gray-900">কমিটির রেজুলেশন</div>
+    </td>
+    <td class="px-6 py-4 whitespace-nowrap">
+        <a :href="'/storage/' + markazDetails.committee_resolution"
+           target="_blank"
+           class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700">
+            <i class="fas fa-eye mr-2"></i>
+            ভিউ ফাইল
+        </a>
+
+        <a :href="'/storage/' + markazDetails.committee_resolution"
+                         target="_blank"
+                         class="inline-flex items-center mx-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                        <i class="fas fa-download mr-2"></i>
+                        ডাউনলোড
+                      </a>
+    </td>
+</tr>
+
+
+
+
+
+
+
+
 
 <tr>
     <td class="px-6 py-4 whitespace-nowrap bg-gray-50">
@@ -315,7 +373,7 @@ const submitReturnReason = () => {
             <i class="fas fa-eye mr-2"></i>
             ভিউ ফাইল
         </a>
-        <a :href="'/storage/' + markazDetails.noc_file"
+        <a :href="'/storage/' + markazDetails.president_consent"
                          target="_blank"
                          class="inline-flex items-center mx-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
                         <i class="fas fa-download mr-2"></i>
@@ -487,24 +545,99 @@ const submitReturnReason = () => {
   </h2>
 
   <div class="flex gap-3 justify-center">
-    <button class="px-5 py-2 text-white bg-emerald-600 hover:bg-emerald-700 rounded-md transition duration-200 shadow-sm">
-      অনুমোদন
-    </button>
+    <!-- Approval Button -->
+    <button
+  @click="openApprovalModal()"
+  class="px-5 py-2 text-white bg-emerald-600 hover:bg-emerald-700 rounded-sm transition duration-200 shadow-sm flex items-center gap-2"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+  </svg>
+  অনুমোদন
+</button>
+  <!-- Islamic Modal -->
+  <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg w-96 overflow-hidden">
+      <!-- Islamic Pattern Header -->
+      <div class="bg-emerald-600 p-4 relative">
+        <div class="absolute inset-0 opacity-20 pattern-islamic"></div>
+
+      </div>
+
+      <!-- Modal Content -->
+      <div class="p-6">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 mx-auto mb-4 bg-emerald-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h4 class="text-xl font-semibold text-gray-800">অনুমোদন নিশ্চিতকরণ</h4>
+          <p class="text-gray-600 mt-2">আপনি কি এই অনুমোদন প্রদান করতে নিশ্চিত?</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4">
+          <button
+            @click="confirmApproval"
+            class="px-6 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition duration-200"
+          >
+            হ্যাঁ, নিশ্চিত
+          </button>
+          <button
+            @click="showModal = false"
+            class="px-6 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-200"
+          >
+            না, ফিরে যান
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div v-if="showToast"
+        class="fixed top-20 -right-96 flex items-center w-full max-w-md p-6 text-white bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg shadow-2xl border-l-4 border-emerald-400 transition-all duration-300 ease-out transform translate-x-[-512px]">
+        <div class="flex items-center space-x-4">
+            <div class="bg-white bg-opacity-20 rounded-full p-3">
+                <i class="fas fa-check-circle text-2xl"></i>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xl">আবেদন সফলভাবে অনুমোদন করা হয়েছে!</span>
+            </div>
+        </div>
+        <button @click="showToast = false" class="ml-auto text-white hover:text-emerald-200 text-xl">&times;</button>
+    </div>
+
+
+
+
+
+
+
+
+
 
     <button @click="openReturnModal"
-      class="px-5 py-2 text-white bg-amber-500 hover:bg-amber-600 rounded-md transition duration-200 shadow-sm">
+      class="px-5 py-2 text-white bg-amber-500 hover:bg-amber-600 rounded-sm transition duration-200 shadow-sm">
       ফেরত
     </button>
 
     <button @click="openRejectModal"
-      class="px-5 py-2 text-white bg-red-600 hover:bg-red-700 rounded-md transition duration-200 shadow-sm">
+      class="px-5 py-2 text-white bg-red-600 hover:bg-red-700 rounded-sm transition duration-200 shadow-sm">
       রিজেক্ট
     </button>
   </div>
 
-  <p class="mt-4 text-sm font-medium text-emerald-700 text-center">
-    বর্তমান অবস্থা: {{ statusText }}
-  </p>
+
+
+
+
+
+
+
+
+
 
   <!-- Return Modal -->
   <div v-if="isReturnModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60">
@@ -512,7 +645,7 @@ const submitReturnReason = () => {
       <h3 class="text-xl font-bold text-emerald-800 mb-4 text-center">ফেরতের কারণ</h3>
 
       <textarea v-model="returnReason" placeholder="ফেরতের কারণ লিখুন..."
-        class="w-full h-36 p-4 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"></textarea>
+        class="w-full h-36 p-4 border text-2xl border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"></textarea>
 
       <div class="mt-5">
         <label class="block text-sm font-semibold text-emerald-700 mb-2">ছবি সংযুক্ত করুন</label>
@@ -530,11 +663,11 @@ const submitReturnReason = () => {
 
       <div class="flex justify-end mt-6 gap-3">
         <button @click="closeReturnModal"
-          class="px-5 py-2.5 bg-gray-400 hover:bg-gray-500 text-white rounded-md transition">
+          class="px-5 py-2.5 bg-gray-400 hover:bg-gray-500 text-white rounded-sm transition">
           বাতিল
         </button>
         <button @click="submitReturnReason"
-          class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition">
+          class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-sm transition">
           সাবমিট
         </button>
       </div>
@@ -565,11 +698,11 @@ const submitReturnReason = () => {
 
       <div class="flex justify-end mt-6 gap-3">
         <button @click="closeRejectModal"
-          class="px-5 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-md transition">
+          class="px-5 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-sm transition">
           বাতিল
         </button>
         <button @click="submitRejectReason"
-          class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition">
+          class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-sm transition">
           সাবমিট
         </button>
       </div>

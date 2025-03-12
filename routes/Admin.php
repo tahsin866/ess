@@ -133,6 +133,14 @@ Route::get('nibondon_for_admin/student_detiles_For_nibondon', function () {
 
 
 
+Route::get('user_create_for_admin/user_create', function () {
+    return Inertia::render('user_create_for_admin/user_create');
+})->name('user_create_for_admin.user_create');
+
+
+
+
+
 Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->name('subject-settings.index');
 
 

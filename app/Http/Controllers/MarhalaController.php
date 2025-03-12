@@ -95,12 +95,12 @@ class MarhalaController extends Controller
     }
 
 
-   
 
 
 
 
-    public function getMarhalaList()
+
+    public function fetchMarhalaWithCounts()
     {
         $marhalas = Marhala::select('id', 'marhala_name_bn')
             ->withCount([
@@ -119,6 +119,37 @@ class MarhalaController extends Controller
 
         return response()->json($marhalas);
     }
+
+
+
+
+
+
+    public function getSubjectMarhalaStats()
+    {
+        $marhalas = Marhala::select('id', 'marhala_name_bn')
+            ->withCount([
+                'subjects as total_subjects',
+                'subjects as male_subjects' => function ($query) {
+                    $query->where('status', 'SRtype_1');
+                },
+                'subjects as female_subjects' => function ($query) {
+                    $query->where('status', 'SRtype_0');
+                },
+                'subjects as both_subjects' => function ($query) {
+                    $query->where('status', 'both');
+                },
+            ])
+            ->get();
+
+        return response()->json($marhalas);
+    }
+
+
+
+
+
+
 
 
 

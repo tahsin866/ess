@@ -30,11 +30,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// মারহালা
+Route::prefix('api')->group(function () {
+    Route::get('/get-marhala-list', [MarhalaController::class, 'fetchMarhalaWithCounts']);
+});
+
+// সাবজেক্ট
 
 Route::prefix('api')->group(function () {
-    Route::get('/marhalas', [MarhalaController::class, 'getMarhalaList']);
-
+    Route::get('/subject-marhala-counts', [MarhalaController::class, 'getSubjectMarhalaStats']);
 });
+
+
 
 
 // Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', function ($marhala) {
