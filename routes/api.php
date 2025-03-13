@@ -57,9 +57,11 @@ Route::post('/schedule-setups', [ScheduleSetupController::class, 'store']);
 
 
 Route::get('/madrasha-list', [MadrashaController::class, 'getMadrashaList']);
-Route::get('/madrasahs/{id}', [MadrashaController::class, 'show']);
-Route::get('/madrasahs/{id}/edit', [MadrashaController::class, 'edit']);
-Route::delete('/madrasahs/{id}', [MadrashaController::class, 'destroy']);
+Route::get('/madrasa-list', [MadrashaController::class, 'index']);
+Route::get('/divisions', [MadrashaController::class, 'getDivisions']);
+Route::get('/districts/{division}', [MadrashaController::class, 'getDistricts']);
+Route::get('/thanas/{district}', [MadrashaController::class, 'getThanas']);
+Route::get('/export-madrasa', [MadrashaController::class, 'export']);
 
 
 
