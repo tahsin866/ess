@@ -6,7 +6,7 @@ use App\Http\Controllers\ExamSetupController;
 use App\Http\Controllers\ScheduleSetupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarkazAgreementController;
-
+use App\Http\Controllers\MadrashaController;
 
 Route::get('/marhalas/{id}/edit', [MarhalaController::class, 'edit']);
 Route::put('/marhalas/{id}', [MarhalaController::class, 'update']);
@@ -56,9 +56,12 @@ Route::post('/schedule-setups', [ScheduleSetupController::class, 'store']);
 
 
 
+Route::get('/madrasha-list', [MadrashaController::class, 'getMadrashaList']);
+Route::get('/madrasahs/{id}', [MadrashaController::class, 'show']);
+Route::get('/madrasahs/{id}/edit', [MadrashaController::class, 'edit']);
+Route::delete('/madrasahs/{id}', [MadrashaController::class, 'destroy']);
 
 
-Route::delete('/markaz/delete/{id}', [MarkazAgreementController::class, 'deleteAgreement'])->name('markaz.delete');
 
 });
 

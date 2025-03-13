@@ -2,6 +2,7 @@
 use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MadrashaController;
 use App\Http\Controllers\SubjectSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,14 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
 
     Route::get('/central-exam-setup/nibondon-setup/{id}', [ExamSetupController::class, 'nibondonSetup'])
     ->name('central_Exam_setup.nibondon_setup');
+
+
+
+    Route::controller(MadrashaController::class)->group(function () {
+        Route::get('/madrasah-management', 'index')->name('admin.madrasah.index');
+        Route::get('/districts/{division}', 'getDistricts')->name('admin.locations.districts');
+        Route::get('/thanas/{district}', 'getThanas')->name('admin.locations.thanas');
+    });
 
 
 

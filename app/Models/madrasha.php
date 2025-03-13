@@ -12,7 +12,13 @@ protected $table = 'madrasha';
 
 protected $fillable = [
     'MName_uni',
-    'ElhaqNo'
+    'ElhaqNo',
+    'MType',
+        'markaz_serial',
+        'Mobile',
+        'division',
+        'district',
+        'Thana_uni'
 ];
 
 

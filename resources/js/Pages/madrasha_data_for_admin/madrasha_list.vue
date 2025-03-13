@@ -8,7 +8,7 @@
 
            সকল মাদরাসার তালিকা
            </h1>
-           <p class="text-gray-600">কেন্দ্রীয় মাদ্রাসা আবেদন ব্যবস্থাপনা সিস্টেম</p>
+
          </div>
 
          <!-- Search Panel -->
@@ -31,287 +31,445 @@
            </div>
 
            <div class="p-6">
-             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-               <div v-for="(field, index) in filterFields" :key="index"
-                    class="bg-gray-50 p-4 rounded-sm hover:shadow-md transition-all duration-300">
-                 <label :for="field.id" class=" text-md font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                   <i :class="field.icon" class="text-[#2d6a4f]"></i>
-                   {{ field.label }}
-                 </label>
-                 <select v-if="field.type === 'select'"
-                         v-model="filters[field.id]"
-                         :id="field.id"
-                         class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]">
-                   <option value="">সকল</option>
-                   <option v-for="option in field.options" :key="option.value" :value="option.value">
-                     {{ option.label }}
-                   </option>
-                 </select>
-                 <input v-else
-                        v-model="filters[field.id]"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]">
-               </div>
-             </div>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <!-- মাদ্রাসার নাম/কোড -->
+    <div class="bg-gray-50 p-4 rounded-sm hover:shadow-md transition-all duration-300">
+      <label class="text-xl font-semibold text-gray-700 mb-2 flex items-center gap-2">
 
-             <div class="mt-6 flex justify-end gap-3">
-               <button @click="search"
-                       class="px-6 py-2 bg-[#2d6a4f] text-white rounded-sm hover:bg-[#1b4332] flex items-center gap-2">
-                 <i class="fas fa-search"></i>
-                 অনুসন্ধান করুন
-               </button>
-             </div>
-           </div>
+        মাদ্রাসার নাম/কোড
+      </label>
+      <input
+        v-model="filters.madrasahName"
+        type="text"
+        placeholder="মাদ্রাসার নাম লিখুন"
+        class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]"
+      >
+    </div>
+
+    <!-- মাদ্রাসার ধরন -->
+    <div class="bg-gray-50 p-4 rounded-sm hover:shadow-md transition-all duration-300">
+      <label class="text-xl  font-semibold text-gray-700 mb-2 flex items-center gap-2">
+
+        মাদ্রাসার ধরন
+      </label>
+      <select
+        v-model="filters.type"
+        class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]"
+      >
+        <option value="">সকল</option>
+        <option value="dakhil">ছাত্র</option>
+        <option value="alim">ছাত্রী</option>
+      </select>
+    </div>
+
+    <!-- মাদরাসার স্তর -->
+    <div class="bg-gray-50 p-4 rounded-sm hover:shadow-md transition-all duration-300">
+      <label class="text-xl font-semibold text-gray-700 mb-2 flex items-center gap-2">
+
+        মাদরাসার স্তর
+      </label>
+      <select
+        v-model="filters.level"
+        class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]"
+      >
+        <option value="">সকল</option>
+        <option value="takmil">তাকমিল</option>
+        <option value="fazilat">ফযিলত</option>
+        <option value="sanabiaUlia">সানাবিয়া উলইয়া</option>
+        <option value="sanabia">সানাবিয়া</option>
+        <option value="mutawassita">মুতাওয়াসসিতা</option>
+        <option value="ibtedayya">ইবতেদাইয়্যা</option>
+        <option value="hifzul">হিফজুল কোরান</option>
+      </select>
+    </div>
+
+    <!-- মাদরাসার ধরন নির্বাচন -->
+    <div class="bg-gray-50 p-4 rounded-sm hover:shadow-md transition-all duration-300">
+      <label class="text-xl  font-semibold text-gray-700 mb-2 flex items-center gap-2">
+
+        মাদরাসার ধরন নির্বাচন
+      </label>
+      <select
+        v-model="filters.status"
+        class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]"
+      >
+        <option value="">সকল</option>
+        <option value="pending">অপেক্ষমান</option>
+        <option value="approved">অনুমোদিত</option>
+      </select>
+    </div>
+
+    <!-- বিভাগ -->
+    <div class="bg-gray-50 p-4 rounded-sm hover:shadow-md transition-all duration-300">
+      <label class="text-xl  font-semibold text-gray-700 mb-2 flex items-center gap-2">
+
+        বিভাগ
+      </label>
+      <select
+        v-model="filters.division"
+        class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]"
+      >
+        <option value="">সকল</option>
+        <option value="dhaka">ঢাকা</option>
+        <option value="chittagong">চট্টগ্রাম</option>
+        <!-- Add other divisions -->
+      </select>
+    </div>
+
+    <!-- জেলা -->
+    <div class="bg-gray-50 p-4 rounded-sm hover:shadow-md transition-all duration-300">
+      <label class="text-xl  font-semibold text-gray-700 mb-2 flex items-center gap-2">
+
+        জেলা
+      </label>
+      <select
+        v-model="filters.district"
+        class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]"
+      >
+        <option value="">সকল</option>
+        <!-- Add districts based on selected division -->
+      </select>
+    </div>
+
+    <!-- থানা/উপজেলা -->
+    <div class="bg-gray-50 p-4 rounded-sm hover:shadow-md transition-all duration-300">
+      <label class="text-xl  font-semibold text-gray-700 mb-2 flex items-center gap-2">
+
+        থানা/উপজেলা
+      </label>
+      <select
+        v-model="filters.thana"
+        class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f] focus:border-[#2d6a4f]"
+      >
+        <option value="">সকল</option>
+        <!-- Add thanas based on selected district -->
+      </select>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-end gap-3">
+    <button @click="search"
+            class="px-6 py-2 bg-[#2d6a4f] text-white rounded-sm hover:bg-[#1b4332] flex items-center gap-2">
+      <i class="fas fa-search"></i>
+      অনুসন্ধান করুন
+    </button>
+  </div>
+</div>
          </div>
 
          <!-- Results Table -->
          <div class="mt-8 bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
-           <div class="bg-[#2d6a4f] p-4 flex justify-between items-center">
-             <h2 class="text-white text-lg font-semibold flex items-center gap-2">
-               <i class="fas fa-list"></i>
-               আবেদন তালিকা
-             </h2>
-             <div class="text-white">
-               মোট আবেদন: {{ applications.length }}
-             </div>
-           </div>
+    <div class="bg-[#2d6a4f] p-4 flex justify-between items-center">
+      <h2 class="text-white text-lg font-semibold flex items-center gap-2">
+        <i class="fas fa-list"></i>
+        মাদরাসা তালিকা
+      </h2>
+      <div class="text-white">মোট উপাত্ত: {{ applications.data?.length || 0 }}</div>
 
-           <div class="p-6 overflow-x-auto">
-             <table class="min-w-full divide-y divide-gray-200">
-               <thead>
-                 <tr>
-                   <th v-for="header in tableHeaders" :key="header.id"
-                       class="px-6 py-3 bg-gray-50 text-left text-md font-semibold text-gray-500 uppercase tracking-wider">
-                     {{ header.label }}
-                   </th>
-                 </tr>
-               </thead>
-               <tbody class="bg-white divide-y divide-gray-200">
-                 <tr v-for="(application, index) in applications" :key="index"
-                     class="hover:bg-gray-50 transition-colors">
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ index + 1 }}</td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.number }}</td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.name }}</td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.class }}</td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.code }}</td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.studentNumber }}</td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.applicantType }}</td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasahNumber }}</td>
-                   <td class="px-6 py-4 whitespace-nowrap">
-                     <span :class="getStatusClass(application.boardStatus)">
-                       {{ application.boardStatus }}
-                     </span>
-                   </td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                     <div class="flex gap-2">
-                       <button @click="viewApplication(application)"
-                               class="text-blue-600 hover:text-blue-800">
-                         <i class="fas fa-eye"></i>
-                       </button>
-                       <button @click="editApplication(application)"
-                               class="text-green-600 hover:text-green-800">
-                         <i class="fas fa-edit"></i>
-                       </button>
-                       <button @click="deleteApplication(application)"
-                               class="text-red-600 hover:text-red-800">
-                         <i class="fas fa-trash-alt"></i>
-                       </button>
-                     </div>
-                   </td>
-                 </tr>
-               </tbody>
-             </table>
-           </div>
+    </div>
 
-           <!-- Pagination -->
-           <div class="bg-gray-50 px-6 py-4 flex items-center justify-between">
-             <div class="flex-1 flex justify-between sm:hidden">
-               <button class="btn-pagination">Previous</button>
-               <button class="btn-pagination">Next</button>
-             </div>
-             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-               <div>
-                 <p class="text-sm text-gray-700">
-                   Showing
-                   <span class="font-medium">1</span>
-                   to
-                   <span class="font-medium">10</span>
-                   of
-                   <span class="font-medium">{{ applications.length }}</span>
-                   results
-                 </p>
-               </div>
-               <div>
-                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-                   <!-- Add pagination buttons here -->
-                 </nav>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
+    <div class="p-6 overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead>
+      <tr>
+        <th v-for="header in tableHeaders" :key="header.id"
+            class="px-6 py-3 bg-gray-50 text-left text-xl font-medium text-gray-500 uppercase tracking-wider">
+          {{ header.label }}
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr v-for="(application, index) in applications.data" :key="application.id"
+          class="hover:bg-gray-50">
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ index + 1 }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.name }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.Elhaq_no }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.MType }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.markaz_serial }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.id }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.mobile_no }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.division }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.district }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.thana }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
+          <div class="flex gap-2">
+            <button @click="viewApplication(application)" class="text-blue-600 hover:text-blue-800">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button @click="editApplication(application)" class="text-green-600 hover:text-green-800 flex items-center gap-2">
+
+  <i class="fas fa-envelope"></i>
+</button>
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    <!-- Pagination -->
+    <div class="flex flex-col items-center gap-6 mt-4 mb-5 font-bangla">
+  <!-- Top Controls -->
+  <div class="flex items-center justify-between w-full max-w-3xl bg-[#f8f9fa] p-4 rounded-lg shadow-sm border border-emerald-100">
+    <div class="flex items-center gap-3">
+      <label class="text-sm font-medium text-emerald-800">প্রতি পেজে:</label>
+      <select
+        v-model="perPage"
+        @change="handlePerPageChange"
+        class="border-2 border-emerald-200 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
+      >
+        <option value="10">১০</option>
+        <option value="20">২০</option>
+        <option value="50">৫০</option>
+        <option value="100">১০০</option>
+      </select>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <label class="text-sm font-medium text-emerald-800">পেজে যান:</label>
+      <div class="flex items-center gap-2">
+        <input
+          type="number"
+          v-model="jumpToPage"
+          min="1"
+          :max="applications.last_page"
+          class="border-2 border-emerald-200 rounded-md w-24 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        />
+        <button
+          @click="handleJumpToPage"
+          class="bg-emerald-600 text-white px-4 py-1.5 rounded-md text-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors duration-200"
+        >
+          যান
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Info -->
+  <div class="text-sm font-medium text-emerald-800 bg-emerald-50 px-6 py-3 rounded-lg border border-emerald-200">
+    মোট <span class="text-emerald-600 font-bold">{{ applications.total }}</span> টির মধ্যে
+    <span class="text-emerald-600 font-bold">{{ applications.from }}-{{ applications.to }}</span> দেখাচ্ছে
+  </div>
+
+  <!-- Pagination -->
+  <nav class="flex items-center gap-1.5 bg-white p-2 rounded-lg shadow-sm">
+    <button
+      @click="handlePageChange(1)"
+      class="pagination-btn rounded-l-md"
+      :class="{'opacity-50 cursor-not-allowed': applications.current_page === 1}"
+    >
+      <i class="fas fa-angle-double-left"></i>
+    </button>
+
+    <button
+      @click="handlePageChange(applications.current_page - 1)"
+      class="pagination-btn"
+      :class="{'opacity-50 cursor-not-allowed': applications.current_page === 1}"
+    >
+      <i class="fas fa-angle-left"></i>
+    </button>
+
+    <button
+      v-for="page in displayedPages"
+      :key="page"
+      @click="handlePageChange(page)"
+      class="relative inline-flex items-center px-4 py-2 border-2 border-emerald-200 text-sm font-medium transition-all duration-200 hover:bg-emerald-50"
+      :class="applications.current_page === page ? 'bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700' : 'text-emerald-800'"
+    >
+      {{ page }}
+    </button>
+
+    <button
+      @click="handlePageChange(applications.current_page + 1)"
+      class="pagination-btn"
+      :class="{'opacity-50 cursor-not-allowed': applications.current_page === applications.last_page}"
+    >
+      <i class="fas fa-angle-right"></i>
+    </button>
+
+    <button
+      @click="handlePageChange(applications.last_page)"
+      class="pagination-btn rounded-r-md"
+      :class="{'opacity-50 cursor-not-allowed': applications.current_page === applications.last_page}"
+    >
+      <i class="fas fa-angle-double-right"></i>
+    </button>
+  </nav>
+</div>
+            </div>
+        </div>
+    </div>
     </AuthenticatedLayout>
    </template>
 
-   <script setup>
-   import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue';
- import { ref, reactive } from 'vue';
+<script setup>
+import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue';
+import { ref, reactive, onMounted ,computed } from 'vue';
+import axios from 'axios'; // Add this import
 
-   const filterFields = [
-     {
-       id: 'madrasahName',
-       label: 'মাদ্রাসার নাম/কোড',
-       type: 'text',
-       placeholder: 'মাদ্রাসার নাম লিখুন',
+// Define applications as ref
+const applications = ref({
+    data: [],
+    current_page: 1,
+    last_page: 1,
+    total: 0,
+    from: 0,
+    to: 0
+});
 
-     },
-     {
-       id: 'type',
-       label: 'মাদ্রাসার ধরন',
-       type: 'select',
 
-       options: [
-         { value: 'dakhil', label: 'ছাত্র' },
-         { value: 'alim', label: 'ছাত্রী' }
-       ]
-     },
-     {
-       id: 'status',
-       label: 'মাদরাসার স্তর',
-       type: 'select',
+const displayedPages = computed(() => {
+  const current = applications.value.current_page;
+  const last = applications.value.last_page;
+  const delta = 2;
+  const range = [];
 
-       options: [
-         { value: 'pending', label: 'তাকমিল' },
-         { value: 'approved', label: 'ফযিলত' },
-         { value: 'approved', label: 'সানাবিয়া উলইয়া' },
-         { value: 'approved', label: 'সানাবিয়া' },
-         { value: 'approved', label: 'মুতাওয়াসসিতা' },
-         { value: 'approved', label: 'ইবতেদাইয়্যা' },
-         { value: 'approved', label: 'হিফজুল কোরান' },
-       ]
-     },
-     // Add other filter fields...
-     {
-       id: 'status',
-       label: 'মাদরাসার ধরন নির্বাচন',
-       type: 'select',
+  for (let i = Math.max(2, current - delta);
+       i <= Math.min(last - 1, current + delta);
+       i++) {
+    range.push(i);
+  }
 
-       options: [
-         { value: 'pending', label: 'অপেক্ষমান' },
-         { value: 'approved', label: 'অনুমোদিত' }
-       ]
-     },
-     {
-       id: 'status',
-       label: 'অবস্থা',
-       type: 'select',
+  return range;
+});
 
-       options: [
-         { value: 'pending', label: 'অপেক্ষমান' },
-         { value: 'approved', label: 'অনুমোদিত' }
-       ]
-     },
-     {
-       id: 'status',
-       label: 'বিভাগ',
-       type: 'select',
+const fetchMadrashaData = async () => {
+    try {
+        const response = await axios.get('/api/madrasha-list');
+        applications.value = response.data;
+    } catch (error) {
+        console.log('Error fetching data:', error);
+    }
+};
 
-       options: [
-         { value: 'pending', label: 'অপেক্ষমান' },
-         { value: 'approved', label: 'অনুমোদিত' }
-       ]
-     },
-     {
-       id: 'status',
-       label: 'জেলা',
-       type: 'select',
+onMounted(() => {
+    fetchMadrashaData();
+});
 
-       options: [
-         { value: 'pending', label: 'অপেক্ষমান' },
-         { value: 'approved', label: 'অনুমোদিত' }
-       ]
-     },
-     {
-       id: 'status',
-       label: 'থানা/উপজেলা',
-       type: 'select',
+const tableHeaders = [
+  { id: 1, label: "ক্রমিক" },
+  { id: 2, label: "মাদরাসার নাম" },
+  { id: 3, label: "এলহাক নম্বর" },
+  { id: 4, label: "ধরন" },
+  { id: 5, label: "মারকাজ সিরিয়াল" },
+  { id: 6, label: "আইডি" },
+  { id: 7, label: "মোবাইল নম্বর" },
+  { id: 8, label: "বিভাগ" },
+  { id: 9, label: "জেলা" },
+  { id: 10, label: "থানা" },
+  { id: 11, label: "অ্যাকশন" }
+];
 
-       options: [
-         { value: 'pending', label: 'অপেক্ষমান' },
-         { value: 'approved', label: 'অনুমোদিত' }
-       ]
-     },
-   ];
 
-   const tableHeaders = [
-     { id: 'serial', label: 'ক্রমিক নং' },
-     { id: 'number', label: 'আবেদন নং' },
-     { id: 'name', label: 'মাদ্রাসার নাম' },
-     { id: 'class', label: 'ইলহাক নং' },
-     { id: 'code', label: 'কোড' },
-     { id: 'studentNumber', label: 'ছাত্র সংখ্যা' },
-     { id: 'applicantType', label: 'আবেদনকারীর ধরন' },
-     { id: 'madrasahNumber', label: 'মাদ্রাসা সংখ্যা' },
-     { id: 'boardStatus', label: 'বোর্ড স্ট্যাটাস' },
-     { id: 'actions', label: 'একশন' }
-   ];
 
-   const filters = reactive({
-     madrasahName: '',
-     type: '',
-     status: '',
-     applicationNumber: '',
-     examSelection: '',
-     applicantType: '',
-     division: '',
-     district: '',
-     subDistrict: ''
-   });
+const filters = reactive({
+  madrasahName: '',
+  type: '',
+  level: '',
+  markazType: '',
+  division: '',
+  district: '',
+  thana: ''
+});
 
-   // Sample applications data
-   const applications = ref([
-     // Add your applications data here
-   ]);
+// Fetch data function
 
-   const getStatusClass = (status) => {
-     return {
-       'px-2 py-1 text-xs font-medium rounded-full': true,
-       'bg-yellow-100 text-yellow-800': status === 'pending',
-       'bg-green-100 text-green-800': status === 'approved',
-       'bg-red-100 text-red-800': status === 'rejected'
-     };
-   };
 
-   const search = () => {
-     // Implement search logic
-   };
+// Search function
+const handleSearch = async () => {
+    try {
+        const response = await axios.get('/api/madrasha-list', {
+            params: filters
+        });
+        applications.value = response.data;
+    } catch (error) {
+        console.log('Error searching:', error);
+    }
+};
 
-   const resetFilters = () => {
-     Object.keys(filters).forEach(key => filters[key] = '');
-   };
+// Page change function
+const perPage = ref(10);
+const jumpToPage = ref('');
 
-   const exportData = () => {
-     // Implement export logic
-   };
+// Add these methods
+const handlePerPageChange = async () => {
+  try {
+    const response = await axios.get('/api/madrasha-list', {
+      params: {
+        page: 1,
+        per_page: perPage.value
+      }
+    });
+    applications.value = response.data;
+  } catch (error) {
+    console.log('Error changing items per page:', error);
+  }
+};
 
-   const viewApplication = (application) => {
-     // Implement view logic
-   };
+const handleJumpToPage = async () => {
+  const pageNumber = parseInt(jumpToPage.value);
+  if (pageNumber && pageNumber >= 1 && pageNumber <= applications.value.last_page) {
+    await handlePageChange(pageNumber);
+    jumpToPage.value = ''; // Reset input after jump
+  }
+};
 
-   const editApplication = (application) => {
-     // Implement edit logic
-   };
+// Update your handlePageChange function
+const handlePageChange = async (page) => {
+  try {
+    const response = await axios.get('/api/madrasha-list', {
+      params: {
+        page: page,
+        per_page: perPage.value
+      }
+    });
+    applications.value = response.data;
+  } catch (error) {
+    console.log('Error fetching page:', error);
+  }
+};
 
-   const deleteApplication = (application) => {
-     // Implement delete logic
-   };
-   </script>
+const resetFilters = () => {
+    Object.keys(filters).forEach(key => filters[key] = '');
+    fetchMadrashaData(); // Reload data after reset
+};
 
-   <style scoped>
-   .btn-pagination {
-     @apply relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50;
-   }
-   </style>
+const exportData = () => {
+    console.log('Exporting data...');
+};
+
+const viewApplication = async (application) => {
+    try {
+        await axios.get(`/api/madrasahs/${application.id}`);
+    } catch (error) {
+        console.log('Error viewing application:', error);
+    }
+};
+
+const editApplication = async (application) => {
+    try {
+        await axios.get(`/api/madrasahs/${application.id}/edit`);
+    } catch (error) {
+        console.log('Error editing application:', error);
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+onMounted(() => {
+    fetchMadrashaData();
+});
+</script>
+
+
+

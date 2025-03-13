@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
 use App\Http\Controllers\ScheduleSetupController;
+use App\Http\Controllers\MadrashaController;
 use App\Http\Controllers\SubjectSettingsController;
 use App\Http\Controllers\ExamSetupController;
 use App\Http\Controllers\MarkazAgreementController;
@@ -167,3 +168,13 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
 
     Route::get('/schedule-setups', [ScheduleSetupController::class, 'index'])->name('schedule-setups.index');
     Route::post('/schedule-setups', [ScheduleSetupController::class, 'store'])->name('schedule-setups.store');
+
+
+
+    // Route::get('/madrashas/search', [MadrashaController::class, 'search'])->name('madrashas.search');
+    Route::controller(MadrashaController::class)->group(function () {
+
+        Route::post('/madrasah-search', 'search')->name('admin.madrasah.search');
+        Route::get('/districts/{division}', 'getDistricts')->name('admin.locations.districts');
+        Route::get('/thanas/{district}', 'getThanas')->name('admin.locations.thanas');
+    });
