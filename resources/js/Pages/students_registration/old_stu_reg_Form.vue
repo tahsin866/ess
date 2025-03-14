@@ -35,6 +35,22 @@ const availableMarhalas = computed(() => {
         return allMarhalas.filter(marhala => ['2', '3'].includes(marhala.id));
     }
 
+    if (currentMarhalaId.value === '10') {
+        return allMarhalas.filter(marhala => ['4', '3'].includes(marhala.id));
+    }
+
+
+    if (currentMarhalaId.value === '11') {
+        return allMarhalas.filter(marhala => ['5', '4'].includes(marhala.id));
+    }
+
+    if (currentMarhalaId.value === '12') {
+        return allMarhalas.filter(marhala => ['6', '5'].includes(marhala.id));
+    }
+
+    if (currentMarhalaId.value === '14') {
+        return allMarhalas.filter(marhala => ['6', '7'].includes(marhala.id));
+    }
     return allMarhalas;
 });
 
@@ -196,49 +212,81 @@ const resetSearch = () => {
         </div>
       </div>
     </div>
-
     <div v-if="students.length > 0" class="w-full p-6 bg-emerald-50 border border-emerald-200 mt-8">
-      <table class="w-full border-collapse">
-        <thead class="bg-emerald-700 text-white">
-          <tr>
-            <th class="p-4 text-left">ছাত্রের তথ্য</th>
-            <th class="p-4 text-left">বিগত পরীক্ষার তথ্য</th>
-            <th class="p-4 text-center">একশন</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="student in students" :key="student.id" class="border-b border-emerald-200">
-            <td class="p-4">
-              <div class="space-y-2">
-                <div class="flex items-center gap-2">
-                  <i class="fas fa-user-graduate text-emerald-700"></i>
-                  <span class="font-semibold">{{ student.Name }}</span>
-                </div>
-                <p>পিতা - {{ student.Father }}</p>
-                <p>মাতা - </p>
-                <p>জন্ম-তারিখ: {{ student.DateofBirth }}</p>
-                <p>পরীক্ষার্থীর ধরন:</p>
+    <table class="w-full border-collapse">
+      <thead class="bg-emerald-700 text-white">
+        <tr>
+          <th class="p-4 text-left">ছাত্রের তথ্য</th>
+          <th class="p-4 text-left">বিগত পরীক্ষার তথ্য</th>
+          <th class="p-4 text-center">একশন</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="student in students" :key="student.id" class="border-b border-emerald-200">
+          <td class="p-4">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <i class="fas fa-user-graduate text-emerald-700"></i>
+                <span class="font-semibold text-xl">{{ student.Name }}</span>
               </div>
-            </td>
-            <td class="p-4">
-              <div class="space-y-2">
-                <p>ক্লাস: {{ student.Class }}</p>
-                <p>রেজিস্ট্রেশন নং - {{ student.reg_id }}</p>
-                <p>নিবন্ধন নং - {{ student.Roll }}</p>
-                <p>মাদরাসার নাম: {{ student.Madrasha }}</p>
-                <p>মারকাযের নাম: {{ student.Markaj }}</p>
-              </div>
-            </td>
-            <td class="p-4 text-center">
+              <p class="text-xl">পিতা - {{ student.Father }}</p>
+              <p class="text-xl">মাতা - {{ student.Mother || 'N/A' }}</p>
+              <p class="text-xl">জন্ম-তারিখ: {{ student.DateofBirth }}</p>
+              <p class="text-xl">
+                পরীক্ষার্থীর ধরন:
+                <span
+                  :class="{
+                    'text-green-600 font-medium': student.student_type === 'নিয়মিত ',
+                    'text-amber-600 font-medium': student.student_type === 'অনিয়মিত যেমনী',
+                    'text-red-600 font-medium': student.student_type === 'অনিয়মিত অন্যান্য'
+                  }"
+                >
+                  {{ student.student_type }}
+                </span>
+              </p>
+            </div>
+          </td>
+          <td class="p-4">
+            <div class="space-y-2">
+              <p class="text-xl">ক্লাস: {{ student.Class }}</p>
+              <p class="text-xl">রেজিস্ট্রেশন নং - {{ student.reg_id }}</p>
+              <p class="text-xl">নিবন্ধন নং - {{ student.Roll }}</p>
+              <p class="text-xl">মাদরাসার নাম: {{ student.Madrasha }}</p>
+              <p class="text-xl">মারকাযের নাম: {{ student.Markaj }}</p>
+              <p v-if="student.Division" class="text-xl">
+                ফলাফল:
+                <span
+                  :class="{
+                    'text-green-600 font-medium': student.Division !== 'রাসিব',
+                    'text-red-600 font-medium': student.Division === 'রাসিব'
+                  }"
+                >
+                  {{ student.Division }}
+                </span>
+              </p>
+            </div>
+          </td>
+          <td class="p-4 text-center">
+            <div class="flex flex-col gap-3">
               <button class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
                 <i class="fas fa-edit"></i>
                 সংশোধন
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
+              <!-- <Link
+                v-if="student.student_type !== 'নিয়মিত'"
+                :href="route('students_registration.irregular_form', { studentId: student.id })"
+                class="bg-amber-600 text-white px-6 py-2 rounded-md hover:bg-amber-700 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto"
+              >
+                <i class="fas fa-clipboard-list"></i>
+                অনিয়মিত ফরম
+              </Link> -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
     <div v-else-if="loading" class="w-full p-6 bg-emerald-50 border border-emerald-200 mt-8 text-center">
       <p class="text-lg">ডাটা লোড হচ্ছে...</p>

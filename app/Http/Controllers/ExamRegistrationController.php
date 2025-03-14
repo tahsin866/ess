@@ -119,41 +119,26 @@ class ExamRegistrationController extends Controller
 
 
 
-    // public function getMarhalaInfo($marhalaId)
-    // {
-    //     // Map CID to class names
-    //     $marhalaNamesMap = [
-    //         '2' => 'ফযিলত',
-    //         '3' => 'সানাবিয়া উলইয়া',
-    //         '4' => 'সানাবিয়া',
-    //          '5' => 'মুতাওয়াসসিতাহ',
-    //          '6' => 'ইবতিদাইয়্যাহ',
-    //          '7' => 'হিফযুল কুরআন',
-    //          '7' => 'ইলমুত তাজবীদ ওয়াল ক্বিরাআত',
-    //     ];
 
-    //     return response()->json([
-    //         'examName' => 'পরীক্ষা', // Replace with actual exam name if needed
-    //         'marhalaName' => $marhalaNamesMap[$marhalaId] ?? 'Unknown'
-    //     ]);
+    // public function getStudentYears()
+    // {
+    //     // Get distinct years from students table using ORM
+    //     $years = Student::distinct()
+    //         ->whereNotNull('years')
+    //         ->pluck('years');
+
+    //     return response()->json($years);
     // }
 
-    /**
-     * Get all student years
-     */
+
     public function getStudentYears()
     {
-        // Get distinct years from students table using ORM
-        $years = Student::distinct()
-            ->whereNotNull('years')
-            ->pluck('years');
-
-        return response()->json($years);
+        // Return only 2024 as the year
+        return response()->json(['2024']);
     }
 
-    /**
-     * Search students based on criteria
-     */
+
+
     public function searchStudents(Request $request)
     {
         $query = Student::query();
@@ -163,9 +148,9 @@ class ExamRegistrationController extends Controller
             $query->where('CID', $request->marhala);
         }
 
-        if ($request->filled('year')) {
-            $query->where('years', $request->year);
-        }
+        // Set default year to 2024 if not provided
+        $year = $request->filled('year') ? $request->year : '2024';
+        $query->where('years', $year);
 
         if ($request->filled('roll')) {
             $query->where('Roll', $request->roll);
@@ -178,10 +163,93 @@ class ExamRegistrationController extends Controller
         // Get the results
         $students = $query->get();
 
+        // Process each student to determine their type
+        foreach ($students as $student) {
+            // Only apply special logic for CID=2 and years=2024
+            if ($student->CID == 2 && $student->years == '2024') {
+                // Initialize counters
+                $failedSubjects = 0;
+                $absentSubjects = 0;
+                $zeroSubjects = 0;
+
+                $subjectFields = ['SubValue_1', 'SubValue_2', 'SubValue_3', 'SubValue_4',
+                                 'SubValue_5', 'SubValue_6', 'SubValue_7', 'SubValue_8'];
+
+                foreach ($subjectFields as $field) {
+                    $absenceField = str_replace('SubValue', 'Absence', $field);
+
+                    // Count subjects with marks below 33 but not 0
+                    if (isset($student->$field) && $student->$field < 33 && $student->$field > 0) {
+                        $failedSubjects++;
+                    }
+
+                    // Count subjects with 0 marks
+                    if (isset($student->$field) && $student->$field === 0) {
+                        $zeroSubjects++;
+                    }
+
+                    // Count subjects marked as 'অনুপস্থিত'
+                    if (isset($student->$absenceField) && $student->$absenceField === 'অনুপস্থিত') {
+                        $absentSubjects++;
+                    }
+                }
+
+                // Determine student type based on the rules
+                if (
+                    ($failedSubjects == 1 && $zeroSubjects == 1) ||
+                    $absentSubjects > 0
+                ) {
+                    $student->student_type = 'অনিয়মিত যেমনী';
+                }
+                elseif ($failedSubjects == 1 && $student->Division === 'রাসিব' && $absentSubjects == 0) {
+                    $student->student_type = 'অনিয়মিত যেমনী';
+                }
+                elseif ($failedSubjects == 2 && $student->Division === 'রাসিব' && $absentSubjects == 0) {
+                    $student->student_type = 'অনিয়মিত যেমনী';
+                }
+                elseif ($absentSubjects == 1 && $student->Division === 'রাসিব' && $failedSubjects == 0) {
+                    $student->student_type = 'অনিয়মিত যেমনী';
+                }
+                elseif ($absentSubjects == 2 && $student->Division === 'রাসিব' && $failedSubjects == 0) {
+                    $student->student_type = 'অনিয়মিত যেমনী';
+                }
+                elseif ($failedSubjects == 1 && $absentSubjects == 1 && $student->Division === 'রাসিব') {
+                    $student->student_type = 'অনিয়মিত যেমনী';
+                }
+                elseif ($student->Division === 'রাসিব') {
+                    $student->student_type = 'অনিয়মিত অন্যান্য';
+                }
+                elseif ($student->Division !== 'রাসিব' && $absentSubjects == 0) {
+                    $student->student_type = 'নিয়মিত';
+                } else {
+                    $student->student_type = 'অনিয়মিত অন্যান্য';
+                }
+
+                // Debugging info
+                $student->failed_subjects = $failedSubjects;
+                $student->absent_subjects = $absentSubjects;
+            } else {
+                // For students not in CID=2 and years=2024
+                if ($student->Division !== 'রাসিব') {
+                    $student->student_type = 'নিয়মিত';
+                } else {
+                    // Check if any subject is marked as absent
+                    $hasAbsence = false;
+                    for ($i = 1; $i <= 8; $i++) {
+                        $absenceField = "Absence_$i";
+                        if (isset($student->$absenceField) && $student->$absenceField === 'অনুপস্থিত') {
+                            $hasAbsence = true;
+                            break;
+                        }
+                    }
+
+                    $student->student_type = $hasAbsence ? 'অনিয়মিত অন্যান্য' : 'নিয়মিত';
+                }
+            }
+        }
+
         return response()->json($students);
     }
-
-
 
 
 }
