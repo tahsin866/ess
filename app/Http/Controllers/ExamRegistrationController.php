@@ -163,9 +163,35 @@ class ExamRegistrationController extends Controller
         // Get the results
         $students = $query->get();
 
-        // Process each student to determine their type
+        // ✅ CID = 3, years = 2024, Division ≠ 'রাসিব' এবং Absence ফিল্ডে 'অনুপস্থিত' না থাকলে রেজাল্ট শো করবে
+        if ($request->filled('marhala') && $request->marhala == 3) {
+            $filteredStudents = $students->filter(function ($student) {
+                // Division 'রাসিব' হলে বাদ দেবে
+                if ($student->Division === 'রাসিব') {
+                    return false;
+                }
+
+                // যদি কোনো Absence_* ফিল্ডে 'অনুপস্থিত' থাকে তাহলে বাদ দেবে
+                for ($i = 1; $i <= 8; $i++) {
+                    $absenceField = "Absence_$i";
+                    if (isset($student->$absenceField) && $student->$absenceField === 'অনুপস্থিত') {
+                        return false;
+                    }
+                }
+
+                return true; // যদি শর্ত মিলে তাহলে রেজাল্ট শো করবে
+            });
+
+            // যদি রেজাল্ট ফাঁকা হয়, তাহলে error message দিবে
+            if ($filteredStudents->isEmpty()) {
+                return response()->json(['error' => 'রেজাল্ট পাওয়া যায়নি'], 404);
+            }
+
+            return response()->json($filteredStudents);
+        }
+
+        // ✅ আগের CID = 2 এবং years = 2024 সংক্রান্ত লজিক অপরিবর্তিত রাখা হয়েছে
         foreach ($students as $student) {
-            // Only apply special logic for CID=2 and years=2024
             if ($student->CID == 2 && $student->years == '2024') {
                 // Initialize counters
                 $failedSubjects = 0;
@@ -250,6 +276,7 @@ class ExamRegistrationController extends Controller
 
         return response()->json($students);
     }
+
 
 
 }
