@@ -103,8 +103,8 @@ const toggleDialog = () => {
 
 
             <tbody class="divide-y divide-gray-100">
-                        <tr v-for="fee in examFees" :key="fee.id" class="hover:bg-gray-50 transition-colors">
-                            <td class="px-4 py-3">{{ fee.marhala }}</td>
+                <tr v-for="fee in examFees" :key="fee.id" class="hover:bg-gray-50 transition-colors">
+                    <td class="px-4 py-3">{{ fee.marhala_name_bn }}</td>
                             <td class="px-4 py-3 text-center">{{ fee.regularStartDate }}</td>
                             <td class="px-4 py-3 text-center">{{ fee.regularEndDate }}</td>
                             <td class="px-4 py-3 text-center font-medium">৳{{ fee.regularFee }}</td>
@@ -116,12 +116,12 @@ const toggleDialog = () => {
 
               <td class="px-4 py-3">
                 <div class="flex gap-2 justify-center">
-                  <Link
-                    :href="route('students_registration.old_stu_reg_Form')"
-                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-sm text-sm transition-all duration-300"
-                  >
-                    নিবন্ধন
-                  </Link>
+                    <Link
+                :href="route('students_registration.old_stu_reg_Form', { marhalaId: fee.marhala_id })"
+                class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-sm text-sm transition-all duration-300"
+            >
+                নিবন্ধন
+            </Link>
                   <Link
                     :href="route('Markaz.Makaj_change')"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-sm text-sm transition-all duration-300"

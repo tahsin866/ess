@@ -25,7 +25,10 @@ class ExamFee extends Model
     ];
 
 
-
+    public function marhala()
+    {
+        return $this->belongsTo(Marhala::class, 'marhala_id', 'id');
+    }
 
     public function examSetup()
     {

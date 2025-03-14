@@ -2,7 +2,7 @@
 use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\MadrashaController;
+use App\Http\Controllers\ExamRegistrationController;
 use App\Http\Controllers\SubjectSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -42,14 +42,6 @@ Route::prefix('api')->group(function () {
 
 
 
-
-
-// Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', function ($marhala) {
-//     $marhalaData = Marhala::with('subjects')->findOrFail($marhala);
-//     return Inertia::render('Mrahala_for_Admin/marhala_edit', [
-//         'marhala' => $marhalaData->toArray()
-//     ]);
-// })->name('Mrahala_for_Admin.marhala_edit');
 Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class, 'edit'])
     ->name('Mrahala_for_Admin.marhala_edit');
 
@@ -66,12 +58,8 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
 
 
 
-    // Route::controller(MadrashaController::class)->group(function () {
-    //     Route::get('/madrasah-management', 'index')->name('admin.madrasah.index');
-    //     Route::get('/districts/{division}', 'getDistricts')->name('admin.locations.districts');
-    //     Route::get('/thanas/{district}', 'getThanas')->name('admin.locations.thanas');
-    // });
-
+    Route::get('/student-registration/{marhalaId}', [ExamRegistrationController::class, 'oldStuRegForm'])
+    ->name('students_registration.old_stu_reg_Form');
 
 
 
