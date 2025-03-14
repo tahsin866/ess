@@ -11,8 +11,8 @@ defineProps({
 });
 
 
-const formatDate = (date) => {
-    return moment(date).format('YYYY-MM-DD HH:mm:ss');
+const formatDate = (timestamp) => {
+    return moment(timestamp).format('DD/MM/YYYY');
 };
 </script>
 
@@ -54,7 +54,7 @@ const formatDate = (date) => {
                                             <div class="text-xl font-medium text-gray-900">আবেদনের তারিখ</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{{ markazDetails.created_at }}</div>
+                                            <div class="text-sm text-gray-900">  {{ formatDate(markazDetails.created_at) }}</div>
                                         </td>
                                     </tr>
                                 </tbody>

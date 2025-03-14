@@ -99,7 +99,7 @@
     <label class="text-xl font-semibold text-gray-700 mb-2">জেলা</label>
     <select v-model="filters.district" @change="handleDistrictChange" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
       <option value="">সকল</option>
-      <option v-for="district in districts" :key="district.Des_ID" :value="district.Des_ID">
+      <option v-for="district in districts" :key="district.DesID" :value="district.DesID">
         {{ district.District_U }}
       </option>
     </select>
@@ -110,7 +110,7 @@
     <label class="text-xl font-semibold text-gray-700 mb-2">থানা/উপজেলা</label>
     <select v-model="filters.thana" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
       <option value="">সকল</option>
-      <option v-for="thana in thanas" :key="thana.id" :value="thana.id">
+      <option v-for="thana in thanas" :key="thana.TID" :value="thana.TID">
         {{ thana.Thana_U }}
       </option>
     </select>

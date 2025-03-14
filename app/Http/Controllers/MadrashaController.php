@@ -107,10 +107,8 @@ class MadrashaController extends Controller
 
     public function getThanas($district_Id)
     {
-        // Shows thanas where Des_ID matches selected district's Des_ID
-        // Example for Sylhet: "দক্ষিণ সুরমা", "বালাগঞ্জ", etc
-        return Thana::select('Des_ID', 'Thana_U')
-            ->where('Des_ID', $district_Id)
+        return Thana::select('TID', 'Thana_U')
+            ->where('Des_ID', $district_Id)  // This matches thana.Des_ID with district.DesID
             ->get();
     }
 

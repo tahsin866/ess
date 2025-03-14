@@ -72,7 +72,7 @@
 
             <!-- Exam Table -->
             <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-                <table class="w-full table-auto text-sm">
+                <table class="w-full table-auto text-xl">
                     <thead>
                         <tr class="bg-emerald-50 text-emerald-800">
                             <th class="px-6 py-3 text-left font-semibold">কেন্দ্রীয় পরীক্ষার নাম</th>
@@ -97,7 +97,7 @@
                             <td class="px-6 py-4 space-x-2">
 
                                 <Link :href="route('central_Exam_setup.central_exam_edit', exam.exam_setup_id)"
-                                    class="bg-amber-500 text-white px-4 py-2 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-sm">
+                                    class="bg-amber-500 text-white px-4 py-2 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-md">
                                 সংশোধনী
                                 </Link>
 
@@ -111,7 +111,7 @@
                             <td class="px-6 py-4 space-x-2">
 
                                 <Link :href="route('central_Exam_setup.central_exam_edit', exam.exam_setup_id)"
-                                    class="bg-amber-500 text-white px-4 py-2 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-sm">
+                                    class="bg-amber-500 text-white px-4 py-2 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-md">
                                 সংশোধনী
                                 </Link>
 
@@ -121,7 +121,7 @@
                 class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">নিবন্ধন সেটআপ</Link > -->
 
                                 <Link :href="route('central_Exam_setup.nibondon_setup', exam.id)"
-                                    class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">
+                                    class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-md">
                                 নিবন্ধন সেটআপ
                                 </Link>
 
@@ -132,14 +132,14 @@
                             <td class="px-6 py-4 space-x-2">
 
                                 <Link :href="route('central_Exam_setup.central_exam_edit', exam.exam_setup_id)"
-                                    class="bg-amber-500 text-white px-4 py-2 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-sm">
+                                    class="bg-amber-500 text-white px-4 py-2 rounded-sm hover:bg-amber-600 transition-colors duration-200 text-md">
                                 সংশোধনী
                                 </Link>
 
 
 
                                 <Link :href="route('central_Exam_setup.nibondon_setup', exam.id)"
-                                    class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">
+                                    class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-md">
                             অন্তর্ভুক্তি সেটআপ
                                 </Link>
 
@@ -157,7 +157,7 @@
                 class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">নিবন্ধন সেটআপ</Link > -->
 
                                 <Link :href="route('central_Exam_setup.nibondon_setup', exam.id)"
-                                    class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-sm">
+                                    class="bg-emerald-500 text-white px-4 py-2 rounded-sm hover:bg-emerald-600 transition-colors duration-200 text-md">
                               সংশোধনী
                                 </Link>
 
@@ -165,7 +165,7 @@
 
 
                                 <Link :href="route('central_Exam_setup.others_setup')"
-                                    class="bg-indigo-500 text-white px-4 py-2 rounded-sm hover:bg-indigo-600 transition-colors duration-200 text-sm">
+                                    class="bg-indigo-500 text-white px-4 py-2 rounded-sm hover:bg-indigo-600 transition-colors duration-200 text-md">
                                 অন্যান্য সেটআপ</Link>
                             </td>
                         </tr>

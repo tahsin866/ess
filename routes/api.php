@@ -4,6 +4,7 @@ use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\SubjectSettingsController;
 use App\Http\Controllers\ExamSetupController;
 use App\Http\Controllers\ScheduleSetupController;
+use App\Http\Controllers\ExamRegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarkazAgreementController;
 use App\Http\Controllers\MadrashaController;
@@ -64,11 +65,9 @@ Route::get('/thanas/{district}', [MadrashaController::class, 'getThanas']);
 Route::get('/export-madrasa', [MadrashaController::class, 'export']);
 
 
+Route::get('/exam-fees', [ExamRegistrationController::class, 'examFeeList']);
 
 });
 
 
-// Route::prefix('api')->group(function () {
 
-
-// });

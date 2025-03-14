@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
 use App\Http\Controllers\ScheduleSetupController;
+use App\Http\Controllers\ExamRegistrationController;
 use App\Http\Controllers\MadrashaController;
 use App\Http\Controllers\SubjectSettingsController;
 use App\Http\Controllers\ExamSetupController;
@@ -162,7 +163,7 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
 
 
     Route::post('/markaz/approve/{id}', [MarkazAgreementController::class, 'approveApplication'])->name('markaz.approve');
-    Route::post('/markaz/reject/{id}', [MarkazAgreementController::class, 'rejectApplication'])->name('markaz.reject');
+    Route::post('/markaz/reject/{id}', [MarkazAgreementController::class, 'return'])->name('markaz.reject');
 
 
 
@@ -178,3 +179,6 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
         Route::get('/districts/{division}', 'getDistricts')->name('admin.locations.districts');
         Route::get('/thanas/{district}', 'getThanas')->name('admin.locations.thanas');
     });
+
+
+    // Route::get('/exam-fees', [ExamRegistrationController::class, 'examFeeList'])->name('exam.fees.list');

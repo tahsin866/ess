@@ -34,13 +34,12 @@ Route::middleware('auth')->group(function () {
 // মারহালা
 Route::prefix('api')->group(function () {
     Route::get('/get-marhala-list', [MarhalaController::class, 'fetchMarhalaWithCounts']);
-});
-
-// সাবজেক্ট
-
-Route::prefix('api')->group(function () {
     Route::get('/subject-marhala-counts', [MarhalaController::class, 'getSubjectMarhalaStats']);
 });
+
+
+
+
 
 
 
@@ -67,11 +66,11 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
 
 
 
-    Route::controller(MadrashaController::class)->group(function () {
-        Route::get('/madrasah-management', 'index')->name('admin.madrasah.index');
-        Route::get('/districts/{division}', 'getDistricts')->name('admin.locations.districts');
-        Route::get('/thanas/{district}', 'getThanas')->name('admin.locations.thanas');
-    });
+    // Route::controller(MadrashaController::class)->group(function () {
+    //     Route::get('/madrasah-management', 'index')->name('admin.madrasah.index');
+    //     Route::get('/districts/{division}', 'getDistricts')->name('admin.locations.districts');
+    //     Route::get('/thanas/{district}', 'getThanas')->name('admin.locations.thanas');
+    // });
 
 
 

@@ -31,7 +31,7 @@ const onSubmit = () => {
 
 <template>
   <AuthenticatedLayout>
-    <div class="space-y-6 mx-5 mt-5">
+    <div class="space-y-6 mx-5 mt-5 mb-5">
     <!-- Personal Information Card -->
     <div class="bg-white rounded-sm shadow-md ">
         <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-3 rounded-t-md flex items-center gap-3">
@@ -179,7 +179,6 @@ const onSubmit = () => {
   <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-md relative overflow-hidden">
     <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
     <div class="flex items-center gap-3 relative z-10">
-      <i class="fas fa-book-open text-2xl text-white"></i>
       <h5 class="text-white text-xl font-arabic">প্রয়োজনীয় তথ্য</h5>
     </div>
   </div>
@@ -199,7 +198,7 @@ const onSubmit = () => {
             type="text"
             disabled
             class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800"
-            placeholder="মোট ছাত্র সংখ্যা"
+            placeholder="পরীক্ষার্থীর ধরন"
           >
         </div>
       </div>
@@ -217,7 +216,7 @@ const onSubmit = () => {
             type="text"
             disabled
             class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800"
-            placeholder="মোট ছাত্র সংখ্যা"
+            placeholder="বোর্ডের নাম"
           >
         </div>
       </div>
@@ -255,7 +254,7 @@ const onSubmit = () => {
   <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-md relative overflow-hidden">
     <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
     <div class="flex items-center gap-3 relative z-10">
-      <i class="fas fa-map-marked-alt text-2xl text-white"></i>
+
       <h5 class="text-white text-xl font-arabic">বর্তমান ঠিকানা</h5>
     </div>
   </div>
@@ -305,7 +304,7 @@ const onSubmit = () => {
   <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-3 rounded-t-md relative overflow-hidden">
     <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
     <div class="flex items-center gap-3 relative z-10">
-      <i class="fas fa-map-marked-alt text-2xl text-white"></i>
+
       <h5 class="text-white text-xl font-arabic"> স্থায়ী ঠিকানা</h5>
     </div>
   </div>
@@ -353,10 +352,81 @@ const onSubmit = () => {
   </div>
 </div>
     <!-- Attachment Card -->
-    <div class="bg-white rounded-lg shadow">
-      <div class="bg-[#243b55] px-6 py-4 rounded-t-lg">
-        <h5 class="text-white text-lg font-medium">সংযক্তি</h5>
-      </div>
+    <div class="bg-white rounded-lg shadow ">
+        <div class="bg-white rounded-md shadow-md border border-emerald-200 p-6">
+                <h3 class="text-xl text-emerald-800 font-bold mb-6 arabic-font">সংযুক্তি</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Muhtamim's Consent -->
+                    <div class="space-y-3">
+                        <label class="block text-lg font-medium text-emerald-700 arabic-font">ছাত্রের ছবি (পাসপোর্ট সাইজ এবং নীল ব্যাকগ্রাইন্ড হতে হবে)</label>
+                        <div class="relative">
+                            <div
+                                class="flex items-center justify-between border-2 border-dashed border-emerald-300 rounded-md p-4 hover:border-emerald-500 transition-colors duration-200 bg-emerald-50">
+                                <span class="text-emerald-600 arabic-font">
+                                    {{ muhtamimFile ? muhtamimFile.name : 'ফাইল আপলোড করুন' }}
+                                </span>
+                                <div v-if="muhtamimPreview"
+                                    class="flex items-center space-x-2 relative z-10 pointer-events-auto">
+                                    <a :href="muhtamimPreview" target="_blank"
+                                        class="text-emerald-600 hover:text-emerald-800">প্রিভিউ</a>
+                                    <button @click.stop="removeFileMumtahin('muhtamim')"
+                                        class="text-red-600 hover:text-red-800">মুছুন</button>
+                                </div>
+                            </div>
+                            <input type="file" @change="handleFileUploadMumtahin($event, 'muhtamim')"
+                                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-0"
+                                accept="image/*,.pdf,.doc,.docx">
+                        </div>
+                    </div>
+
+                    <!-- District President's Consent -->
+                    <div class="space-y-3">
+                        <label class="block text-lg font-medium text-emerald-700 arabic-font">জন্ম নিবন্ধন/এন আইডি সংযুক্তি করুন</label>
+                        <div class="relative">
+                            <div
+                                class="flex items-center justify-between border-2 border-dashed border-emerald-300 rounded-md p-4 hover:border-emerald-500 transition-colors duration-200 bg-emerald-50">
+                                <span class="text-emerald-600 arabic-font">
+                                    {{ presidentFile ? presidentFile.name : 'ফাইল আপলোড করুন' }}
+                                </span>
+                                <div v-if="presidentPreview"
+                                    class="flex items-center space-x-2 relative z-10 pointer-events-auto">
+                                    <a :href="presidentPreview" target="_blank"
+                                        class="text-emerald-600 hover:text-emerald-800">প্রিভিউ</a>
+                                    <button @click.stop="removeFileMumtahin('president')"
+                                        class="text-red-600 hover:text-red-800">মুছুন</button>
+                                </div>
+                            </div>
+                            <input type="file" @change="handleFileUploadMumtahin($event, 'president')"
+                                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-0"
+                                accept="image/*,.pdf,.doc,.docx">
+                        </div>
+                    </div>
+
+                    <!-- Committee Resolution -->
+                    <div class="space-y-3">
+                        <label class="block text-lg font-medium text-emerald-700 arabic-font">মার্কশীট সংযুক্ত করুন</label>
+                        <div class="relative">
+                            <div
+                                class="flex items-center justify-between border-2 border-dashed border-emerald-300 rounded-md p-4 hover:border-emerald-500 transition-colors duration-200 bg-emerald-50">
+                                <span class="text-emerald-600 arabic-font">
+                                    {{ committeeFile ? committeeFile.name : 'ফাইল আপলোড করুন' }}
+                                </span>
+                                <div v-if="committeePreview"
+                                    class="flex items-center space-x-2 relative z-10 pointer-events-auto">
+                                    <a :href="committeePreview" target="_blank"
+                                        class="text-emerald-600 hover:text-emerald-800">প্রিভিউ</a>
+                                    <button @click.stop="removeFileMumtahin('committee')"
+                                        class="text-red-600 hover:text-red-800">মুছুন</button>
+                                </div>
+                            </div>
+                            <input type="file" @change="handleFileUploadMumtahin($event, 'committee')"
+                                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-0"
+                                accept="image/*,.pdf,.doc,.docx">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
     </div>
