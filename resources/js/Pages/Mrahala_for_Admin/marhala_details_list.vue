@@ -3,23 +3,23 @@
       <div class="bg-[#f8f9fa] rounded-sm shadow-md p-6 border-t-4 border-emerald-600 mx-5 mt-5">
         <div class="relative mb-8">
           <div class="absolute inset-0 bg-emerald-50 opacity-25 pattern-islamic"></div>
-          <h2 class="text-2xl font-bold text-center text-emerald-800 py-4">মারহালা তথ্য</h2>
+          <h2 class="text-2xl font-bold  text-center text-emerald-800 py-4">মারহালা তথ্য</h2>
         </div>
 
         <div class="overflow-x-auto">
           <table class="w-full border-collapse mb-8">
             <thead>
               <tr class="bg-emerald-100">
-                <th class="border border-emerald-200 p-3">মারহালা নাম</th>
-                <th class="border border-emerald-200 p-3">মোট বিষয়</th>
-                <th class="border border-emerald-200 p-3">পুরুষ</th>
-                <th class="border border-emerald-200 p-3">মহিলা</th>
-                <th class="border border-emerald-200 p-3">উভয়</th>
-                <th class="border border-emerald-200 p-3">অ্যাকশন</th>
+                <th class="border border-emerald-200 p-3 text-xl">মারহালা নাম</th>
+                <th class="border border-emerald-200 p-3 text-xl">মোট বিষয়</th>
+                <th class="border border-emerald-200 p-3 text-xl">পুরুষ</th>
+                <th class="border border-emerald-200 p-3 text-xl">মহিলা</th>
+                <th class="border border-emerald-200 p-3 text-xl">উভয়</th>
+                <th class="border border-emerald-200 p-3 text-xl">অ্যাকশন</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="marhala in marhalas" :key="marhala.id" class="hover:bg-emerald-50">
+              <tr v-for="marhala in marhalas" :key="marhala.id" class="hover:bg-emerald-50 text-xl">
                 <td class="border border-emerald-200 p-3 font-semibold text-emerald-700">{{ marhala.marhala_name_bn }}</td>
                 <td class="border border-emerald-200 p-3 text-center font-bold text-emerald-700">{{ marhala.total_subjects }}</td>
                 <td class="border border-emerald-200 p-3 text-center font-bold text-emerald-700">{{ marhala.male_subjects }}</td>

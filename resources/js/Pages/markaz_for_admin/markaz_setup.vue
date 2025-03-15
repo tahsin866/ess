@@ -69,11 +69,11 @@
         <!-- Results Table -->
         <div class="mt-8 bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
           <div class="bg-[#2d6a4f] p-4 flex justify-between items-center">
-            <h2 class="text-white text-lg font-semibold flex items-center gap-2">
+            <h2 class="text-white text-xl font-semibold flex items-center gap-2">
               <i class="fas fa-list"></i>
               আবেদন তালিকা
             </h2>
-            <div class="text-white">
+            <div class="text-white text-xl">
               মোট আবেদন: {{ applications.length }}
             </div>
           </div>
@@ -83,7 +83,7 @@
             <thead>
                 <tr>
                     <th v-for="header in tableHeaders" :key="header.id"
-                        class="px-6 py-3 bg-gray-50 text-left text-md font-semibold text-gray-500 uppercase tracking-wider">
+                        class="px-6 py-3 bg-gray-50 text-left text-xl font-semibold text-gray-500 uppercase tracking-wider">
                         {{ header.label }}
                     </th>
                 </tr>
@@ -91,16 +91,16 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="(application, index) in applications" :key="index"
                     class="hover:bg-gray-50 transition-colors">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ index + 1 }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.number }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasha_Name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.Elhaq_no }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{{ index + 1 }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{{ application.number }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{{ application.madrasha_Name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{{ application.Elhaq_no }}</td>
 
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasha_code }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.studentNumber }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.markaz_type }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ application.madrasahNumber }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{{ application.madrasha_code }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{{ application.studentNumber }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{{ application.markaz_type }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-900">{{ application.madrasahNumber }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xl">
     <span
         :class="{
             'bg-yellow-300 text-black px-3 py-1 rounded': application.status === 'বোর্ড দাখিল',
@@ -112,7 +112,7 @@
     </span>
 </td>
 
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-500">
                         <div class="flex gap-2">
                             <button @click="router.get(route('AdminMarkaz.view', application.id))"
         class="text-blue-600 hover:text-blue-800">
