@@ -39,7 +39,6 @@ const availableMarhalas = computed(() => {
         return allMarhalas.filter(marhala => ['4', '3'].includes(marhala.id));
     }
 
-
     if (currentMarhalaId.value === '11') {
         return allMarhalas.filter(marhala => ['5', '4'].includes(marhala.id));
     }
@@ -85,17 +84,27 @@ const fetchYears = async () => {
 const searchStudents = async () => {
     loading.value = true;
     try {
+        // এখানে পরিবর্তন করা হয়েছে - marhalaId হেডারে পাঠানো হচ্ছে
         const response = await axios.get('/api/search-students', {
             params: {
                 marhala: selectedMarhala.value,
                 year: selectedYear.value,
                 roll: rollNumber.value,
                 registration: registrationNumber.value
+            },
+            headers: {
+                'marhalaId': currentMarhalaId.value // রাউট থেকে পাওয়া marhalaId হেডারে পাঠাচ্ছি
             }
         });
         students.value = response.data;
     } catch (error) {
-        console.error('Error searching students:', error);
+        if (error.response && error.response.status === 404) {
+            // যদি 404 এরর আসে (রেজাল্ট না পাওয়া গেলে)
+            students.value = [];
+            alert('রেজাল্ট পাওয়া যায়নি');
+        } else {
+            console.error('Error searching students:', error);
+        }
     } finally {
         loading.value = false;
     }

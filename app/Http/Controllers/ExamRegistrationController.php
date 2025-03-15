@@ -163,35 +163,30 @@ class ExamRegistrationController extends Controller
         // Get the results
         $students = $query->get();
 
-        // Special handling for CID = 3
-        if ($request->filled('marhala') && $request->marhala == 3) {
-            $filteredStudents = $students->filter(function ($student) {
-                // Division 'রাসিব' হলে বাদ দেবে
-                if ($student->Division === 'রাসিব') {
-                    return false;
-                }
+        // Get marhalaId from header
+        $marhalaId = $request->header('marhalaId');
 
-                // যদি কোনো Absence_* ফিল্ডে 'অনুপস্থিত' থাকে তাহলে বাদ দেবে
-                for ($i = 1; $i <= 8; $i++) {
-                    $absenceField = "Absence_$i";
-                    if (isset($student->$absenceField) && $student->$absenceField === 'অনুপস্থিত') {
-                        return false;
-                    }
-                }
+        // Filter students based on special conditions
+        $filteredStudents = collect();
 
-                return true; // যদি শর্ত মিলে তাহলে রেজাল্ট শো করবে
-            });
-
-            // যদি রেজাল্ট ফাঁকা হয়, তাহলে error message দিবে
-            if ($filteredStudents->isEmpty()) {
-                return response()->json(['error' => 'রেজাল্ট পাওয়া যায়নি'], 404);
+        foreach ($students as $student) {
+            // Skip students with Division = রাসিব for specific CID and marhalaId combinations
+            if ($student->Division == 'রাসিব' && $student->years == '2024' && (
+                ($student->CID == 3 && $marhalaId == 9) ||
+                ($student->CID == 4 && $marhalaId == 10) ||
+                ($student->CID == 5 && $marhalaId == 11) ||
+                ($student->CID == 6 && $marhalaId == 14)
+            )) {
+                // Skip this student
+                continue;
             }
 
-            return response()->json($filteredStudents);
+            // For all other cases, include the student
+            $filteredStudents->push($student);
         }
 
         // Process all students based on new conditions
-        foreach ($students as $student) {
+        foreach ($filteredStudents as $student) {
             // Check if the student matches the specific combinations where rules should apply
             $shouldApplyRules = false;
 
@@ -278,9 +273,8 @@ class ExamRegistrationController extends Controller
                 }
 
                 // Division = রাসিব এবং মুমতায নয় এমন হলে মানউন্নয়ন
-                else {
+                elseif ($student->Division !== 'রাসিব' && $student->Division !== 'মুমতায') {
                     $student->student_type = 'মানউন্নয়ন';
-                }
 
                 // Debugging info
                 $student->failed_subjects = $failedSubjects;
@@ -292,14 +286,17 @@ class ExamRegistrationController extends Controller
             }
         }
 
-        return response()->json($students);
+        // যদি রেজাল্ট ফাঁকা হয়, তাহলে error message দিবে
+        if ($filteredStudents->isEmpty()) {
+            return response()->json(['error' => 'রেজাল্ট পাওয়া যায়নি'], 404);
+        }
+
+        return response()->json($filteredStudents);
     }
-
-
 
 }
 
-
+}
 
 
 

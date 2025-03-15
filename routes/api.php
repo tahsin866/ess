@@ -69,7 +69,7 @@ Route::get('/exam-fees', [ExamRegistrationController::class, 'examFeeList']);
 
 
 Route::get('/student-registration/{marhalaId}', [ExamRegistrationController::class, 'getRegistrationData']);
-// Route::get('/student-registration/{marhalaId}', [ExamRegistrationController::class, 'getMarhalaInfo']);
+
 Route::get('/student-years', [ExamRegistrationController::class, 'getStudentYears']);
 Route::get('/search-students', [ExamRegistrationController::class, 'searchStudents']);
 
