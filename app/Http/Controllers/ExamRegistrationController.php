@@ -163,7 +163,7 @@ class ExamRegistrationController extends Controller
         // Get the results
         $students = $query->get();
 
-        // ✅ CID = 3, years = 2024, Division ≠ 'রাসিব' এবং Absence ফিল্ডে 'অনুপস্থিত' না থাকলে রেজাল্ট শো করবে
+        // Special handling for CID = 3
         if ($request->filled('marhala') && $request->marhala == 3) {
             $filteredStudents = $students->filter(function ($student) {
                 // Division 'রাসিব' হলে বাদ দেবে
@@ -182,21 +182,41 @@ class ExamRegistrationController extends Controller
                 return true; // যদি শর্ত মিলে তাহলে রেজাল্ট শো করবে
             });
 
-            // যদি রেজাল্ট ফাঁকা হয়, তাহলে error message দিবে
+            // যদি রেজাল্ট ফাঁকা হয়, তাহলে error message দিবে
             if ($filteredStudents->isEmpty()) {
-                return response()->json(['error' => 'রেজাল্ট পাওয়া যায়নি'], 404);
+                return response()->json(['error' => 'রেজাল্ট পাওয়া যায়নি'], 404);
             }
 
             return response()->json($filteredStudents);
         }
 
-        // ✅ আগের CID = 2 এবং years = 2024 সংক্রান্ত লজিক অপরিবর্তিত রাখা হয়েছে
+        // Process all students based on new conditions
         foreach ($students as $student) {
-            if ($student->CID == 2 && $student->years == '2024') {
+            // Check if the student matches the specific combinations where rules should apply
+            $shouldApplyRules = false;
+
+            // Check for the specific combinations where rules should apply
+            if (
+                ($request->filled('marhala') && $request->marhala == 9) ||
+                ($request->filled('marhala') && $request->marhala == 2 && $year == '2024') ||
+                ($request->filled('marhala') && $request->marhala == 10) ||
+                ($request->filled('marhala') && $request->marhala == 3 && $year == '2024') ||
+                ($request->filled('marhala') && $request->marhala == 11) ||
+                ($request->filled('marhala') && $request->marhala == 4 && $year == '2024') ||
+                ($request->filled('marhala') && $request->marhala == 12) ||
+                ($request->filled('marhala') && $request->marhala == 5 && $year == '2024') ||
+                ($request->filled('marhala') && $request->marhala == 14) ||
+                ($request->filled('marhala') && $request->marhala == 6 && $year == '2024')
+            ) {
+                $shouldApplyRules = true;
+            }
+
+            // Only apply the classification rules if the student matches the specific combinations
+            if ($shouldApplyRules) {
                 // Initialize counters
                 $failedSubjects = 0;
-                $absentSubjects = 0;
-                $zeroSubjects = 0;
+                $absentSubjects = 0; // অনুপস্থিত (Absence field = 'অনুপস্থিত')
+                $zeroSubjects = 0;   // অনু (SubValue = 0)
 
                 $subjectFields = ['SubValue_1', 'SubValue_2', 'SubValue_3', 'SubValue_4',
                                  'SubValue_5', 'SubValue_6', 'SubValue_7', 'SubValue_8'];
@@ -204,12 +224,12 @@ class ExamRegistrationController extends Controller
                 foreach ($subjectFields as $field) {
                     $absenceField = str_replace('SubValue', 'Absence', $field);
 
-                    // Count subjects with marks below 33 but not 0
+                    // Count subjects with marks below 33 but not 0 (ফেল)
                     if (isset($student->$field) && $student->$field < 33 && $student->$field > 0) {
                         $failedSubjects++;
                     }
 
-                    // Count subjects with 0 marks
+                    // Count subjects with 0 marks (অনু)
                     if (isset($student->$field) && $student->$field === 0) {
                         $zeroSubjects++;
                     }
@@ -220,57 +240,55 @@ class ExamRegistrationController extends Controller
                     }
                 }
 
-                // Determine student type based on the rules
+                // Determine student type based on the new rules
+
+                // "অনিয়মিত যেমনী" conditions
                 if (
-                    ($failedSubjects == 1 && $zeroSubjects == 1) ||
-                    $absentSubjects > 0
+                    // 1. এক বা দুই বিষয়ে ফেল এবং বিভাগ রাসিব
+                    (($failedSubjects == 1 || $failedSubjects == 2) && $student->Division === 'রাসিব') ||
+
+                    // 2. এক বা দুই বিষয়ে অনু (SubValue = 0) এবং কোন বিষয়ে ফেল নেই
+                    (($zeroSubjects == 1 || $zeroSubjects == 2) && $failedSubjects == 0) ||
+
+                    // 3. এক বিষয়ে অনু এবং এক বিষয়ে ফেল
+                    ($zeroSubjects == 1 && $failedSubjects == 1)
                 ) {
                     $student->student_type = 'অনিয়মিত যেমনী';
                 }
-                elseif ($failedSubjects == 1 && $student->Division === 'রাসিব' && $absentSubjects == 0) {
-                    $student->student_type = 'অনিয়মিত যেমনী';
-                }
-                elseif ($failedSubjects == 2 && $student->Division === 'রাসিব' && $absentSubjects == 0) {
-                    $student->student_type = 'অনিয়মিত যেমনী';
-                }
-                elseif ($absentSubjects == 1 && $student->Division === 'রাসিব' && $failedSubjects == 0) {
-                    $student->student_type = 'অনিয়মিত যেমনী';
-                }
-                elseif ($absentSubjects == 2 && $student->Division === 'রাসিব' && $failedSubjects == 0) {
-                    $student->student_type = 'অনিয়মিত যেমনী';
-                }
-                elseif ($failedSubjects == 1 && $absentSubjects == 1 && $student->Division === 'রাসিব') {
-                    $student->student_type = 'অনিয়মিত যেমনী';
-                }
-                elseif ($student->Division === 'রাসিব') {
+
+                // "অনিয়মিত অন্যান্য" conditions
+                elseif (
+                    // 1. দুয়ের অধিক বিষয়ে ফেল এবং বিভাগ রাসিব
+                    ($failedSubjects > 2 && $student->Division === 'রাসিব') ||
+
+                    // 2. দুই বিষয় অনু এক বিষয়ে ফেল বা এক বিষয়ে অনু দুই বিষয়ে ফেল
+                    ($zeroSubjects == 2 && $failedSubjects == 1) ||
+                    ($zeroSubjects == 1 && $failedSubjects == 2) ||
+
+                    // 3. এক বিষয়ে অনু এবং দুয়ের অধিক বিষয়ে ফেল
+                    ($zeroSubjects == 1 && $failedSubjects > 2) ||
+
+                    // 4. একের অধিক অনু একের অধিক ফেল
+                    ($zeroSubjects > 1 && $failedSubjects > 1) ||
+
+                    // 5. দুয়ের অধিক অনু বিভাগ অনু
+                    ($zeroSubjects > 2 && $student->Absence === 'অনুপস্থিত')
+                ) {
                     $student->student_type = 'অনিয়মিত অন্যান্য';
                 }
-                elseif ($student->Division !== 'রাসিব' && $absentSubjects == 0) {
-                    $student->student_type = 'নিয়মিত';
-                } else {
-                    $student->student_type = 'অনিয়মিত অন্যান্য';
+
+                // Division = রাসিব এবং মুমতায নয় এমন হলে মানউন্নয়ন
+                else {
+                    $student->student_type = 'মানউন্নয়ন';
                 }
 
                 // Debugging info
                 $student->failed_subjects = $failedSubjects;
                 $student->absent_subjects = $absentSubjects;
+                $student->zero_subjects = $zeroSubjects;
             } else {
-                // For students not in CID=2 and years=2024
-                if ($student->Division !== 'রাসিব') {
-                    $student->student_type = 'নিয়মিত';
-                } else {
-                    // Check if any subject is marked as absent
-                    $hasAbsence = false;
-                    for ($i = 1; $i <= 8; $i++) {
-                        $absenceField = "Absence_$i";
-                        if (isset($student->$absenceField) && $student->$absenceField === 'অনুপস্থিত') {
-                            $hasAbsence = true;
-                            break;
-                        }
-                    }
-
-                    $student->student_type = $hasAbsence ? 'অনিয়মিত অন্যান্য' : 'নিয়মিত';
-                }
+                // For students that don't match the specific combinations, set a default type
+                $student->student_type = 'নিয়মিত'; // Or any other default type you prefer
             }
         }
 
