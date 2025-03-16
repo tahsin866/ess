@@ -117,6 +117,27 @@ const resetSearch = () => {
     registrationNumber.value = '';
     students.value = [];
 };
+
+
+
+
+
+// 1. Base64 এনকোডিং ব্যবহার করে URL তৈরি
+const getEditUrl = (student) => {
+  if (!student) return '#';
+
+  // Roll এবং reg_id কে একটি স্ট্রিং-এ যোগ করে Base64 এনকোড করুন
+  const encodedData = btoa(`${student.Roll}:${student.reg_id}`);
+
+  return route('students_registration.old_stu_reg_edit', {
+    data: encodedData
+  });
+};
+
+
+
+
+
 </script>
 
 <template>
@@ -277,13 +298,25 @@ const resetSearch = () => {
           </td>
           <td class="p-4 text-center">
             <div class="flex flex-col gap-3">
-              <Link
+                <!-- <Link
+  :href="route('students_registration.old_stu_reg_edit', {
+    roll: student.Roll,
+    reg_id: student.reg_id
+  })"
+  class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
+  <i class="fas fa-edit"></i>
+  সংশোধন
+</Link> -->
 
-              :href="route('students_registration.old_stu_reg_edit')"
-              class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
-                <i class="fas fa-edit"></i>
-                সংশোধন
-              </Link>
+
+
+<Link
+    :href="getEditUrl(student)"
+    class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
+    <i class="fas fa-edit"></i>
+    সংশোধন
+  </Link>
+
 
 
             </div>

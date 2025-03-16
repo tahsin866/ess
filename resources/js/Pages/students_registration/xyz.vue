@@ -39,7 +39,7 @@
                         <i class="fas fa-user text-emerald-600"></i>
                       </span>
                       <input
-                       v-model="pastExamForm.Name"
+                       v-model="form.Name"
                         type="text"
                         disabled
                         class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-gray-700 cursor-not-allowed"
@@ -87,7 +87,7 @@
                         <i class="fas fa-male text-emerald-600"></i>
                       </span>
                       <input
-                           v-model="pastExamForm.Father"
+                           v-model="form.Father"
                         type="text"
                         disabled
                         class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-gray-700 cursor-not-allowed"
@@ -103,7 +103,7 @@
                         <i class="fas fa-male text-emerald-600"></i>
                       </span>
                       <input
-
+                        v-model="studentData.fatherNameEnglish"
                         type="text"
                         class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       >
@@ -117,7 +117,7 @@
                         <i class="fas fa-male text-emerald-600"></i>
                       </span>
                       <input
-
+                        v-model="studentData.fatherNameArabic"
                         type="text"
                         class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         dir="rtl"
@@ -135,10 +135,10 @@
                         <i class="fas fa-female text-emerald-600"></i>
                       </span>
                       <input
-
+                        v-model="studentData.motherNameBangla"
                         type="text"
-
-                        class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md  text-gray-700 "
+                        disabled
+                        class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-gray-700 cursor-not-allowed"
                       >
                     </div>
                     <p class="text-xs text-gray-500 mt-1 italic">* এই ফিল্ডটি পরিবর্তন করা যাবে না</p>
@@ -151,7 +151,7 @@
                         <i class="fas fa-female text-emerald-600"></i>
                       </span>
                       <input
-
+                        v-model="studentData.motherNameEnglish"
                         type="text"
                         class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       >
@@ -165,7 +165,7 @@
                         <i class="fas fa-female text-emerald-600"></i>
                       </span>
                       <input
-
+                        v-model="studentData.motherNameArabic"
                         type="text"
                         class="w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         dir="rtl"
@@ -180,7 +180,7 @@
                   </label>
                   <div class="relative">
                     <input
-
+                      v-model="studentData.birthRegNo"
                       type="text"
 
                       class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md  text-emerald-800 "
@@ -196,7 +196,7 @@
                   </label>
                   <div class="relative">
                     <input
-
+                      v-model="studentData.birthRegNo"
                       type="text"
 
                       class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md  text-emerald-800 "
@@ -226,7 +226,7 @@
                     </label>
                     <div class="relative">
                       <input
-                         v-model="pastExamForm.Madrasha"
+                         v-model="form.Madrasha"
                         type="text"
                         disabled
                         class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
@@ -241,7 +241,7 @@
                     </label>
                     <div class="relative">
                       <input
-                         v-model="pastExamForm.Markaj"
+                         v-model="form.Markaj"
                         type="text"
                         disabled
                         class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
@@ -257,7 +257,7 @@
                     </label>
                     <div class="relative">
                       <input
-                        v-model="pastExamForm.Class"
+                        v-model="form.Class"
                         type="text"
                         disabled
                         class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
@@ -272,30 +272,13 @@
                     </label>
                     <div class="relative">
                       <input
-                         v-model="pastExamForm.Roll"
+                         v-model="form.Roll"
                         type="text"
                         disabled
                         class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
                       >
                     </div>
                   </div>
-
-                  <div class="relative">
-                    <label class="text-lg font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
-                      <i class="fas fa-id-card text-emerald-600"></i>
-                      রোল নম্বর
-                    </label>
-                    <div class="relative">
-                      <input
-                         v-model="pastExamForm.reg_id"
-                        type="text"
-                        disabled
-                        class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
-                      >
-                    </div>
-                  </div>
-
-
 
 
                   <div class="relative">
@@ -305,7 +288,7 @@
                   </label>
                   <div class="relative">
                     <input
-                    v-model="pastExamForm.DateofBirth"
+                    v-model="form.DateofBirth"
                       type="date"
                       disabled
                       class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
@@ -314,21 +297,11 @@
                 </div>
 
 
-                <div class="relative">
-                    <label class="text-lg font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
-                    <i class="fas fa-calendar-alt text-emerald-600"></i>
-                    ফলাফল
-                  </label>
-                  <div class="relative">
-                    <input
-                    v-model="pastExamForm.Division"
-                      type="text"
-                      disabled
-                      class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
-                    >
-                  </div>
+
+
                 </div>
-                </div>
+
+
             </div>
           </div>
 
@@ -344,7 +317,7 @@
                 </div>
               </div>
 
-              <div class="p-6  bg-opacity-5">
+              <div class="p-6 bg-[url('/images/subtle-pattern.png')] bg-opacity-5">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div class="relative">
                     <label class="text-lg font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
@@ -353,7 +326,7 @@
                     </label>
                     <div class="relative">
                       <input
-  v-model="currentExamForm.Madrasha"
+                        v-model="studentData.madrasha"
                         type="text"
                         disabled
                         class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
@@ -368,8 +341,7 @@
                     </label>
                     <div class="relative">
                       <input
-                      v-model="currentExamForm.Markaj"
-
+                        v-model="studentData.madrasha"
                         type="text"
                         disabled
                         class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
@@ -385,7 +357,7 @@
                     </label>
                     <div class="relative">
                       <input
-v-model="currentExamForm.Class"
+                        v-model="studentData.class"
                         type="text"
                         disabled
                         class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
@@ -395,13 +367,29 @@ v-model="currentExamForm.Class"
 
                   <div class="relative">
                     <label class="text-lg font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+                      <i class="fas fa-id-card text-emerald-600"></i>
+                      রোল নম্বর
+                    </label>
+                    <div class="relative">
+                      <input
+                        v-model="studentData.roll"
+                        type="text"
+                        disabled
+                        class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
+                      >
+                    </div>
+                  </div>
 
-                   পরীক্ষার্থীর ধরন
+
+                  <div class="relative">
+                    <label class="text-lg font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+                    <i class="fas fa-calendar-alt text-emerald-600"></i>
+                    জন্ম-তারিখ
                   </label>
                   <div class="relative">
                     <input
-  v-model="currentExamForm.student_type"
-                      type="text"
+                      v-model="studentData.dateOfBirth"
+                      type="date"
                       disabled
                       class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
                     >
@@ -411,24 +399,25 @@ v-model="currentExamForm.Class"
 
 
 
-                <div class="relative" v-if="currentExamForm.student_type === 'অনিয়মিত যেমনী' || currentExamForm.student_type === 'অনিয়মিত অন্যান্য'">
-                  <label class="text-lg font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
-                    অনিয়মিত হলে পরীক্ষা দিতে হবে এমন কিতাবের নাম
-                  </label>
-<div class="relative">
-<input
- v-model="currentExamForm.irregular_subjects"
-  type="text"
-  disabled
-  class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
->
-</div>
-</div>
-
-
                 </div>
 
+                <div class="grid grid-cols-1  gap-6 mt-6">
 
+                    <div class="relative">
+                    <label class="text-lg font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
+                    <i class="fas fa-calendar-alt text-emerald-600"></i>
+              অনিয়মিত  হলে পরীক্ষা দিতে হবে এমন কিতাবের নাম
+                  </label>
+                  <div class="relative">
+                    <input
+                      v-model="studentData.dateOfBirth"
+                      type="date"
+                      disabled
+                      class="w-full pl-4 pr-3 py-2 border border-emerald-200 rounded-md bg-emerald-50 text-emerald-800 cursor-not-allowed"
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -453,13 +442,13 @@ v-model="currentExamForm.Class"
             </label>
             <div class="relative">
               <select
-
+                v-model="studentData.presentDivision"
                 @change="loadPresentDistricts"
                 class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
               >
                 <option value="" disabled>বিভাগ নির্বাচন করুন</option>
-                <option>
-
+                <option v-for="division in divisions" :key="division.id" :value="division.name">
+                  {{ division.name }}
                 </option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -474,14 +463,14 @@ v-model="currentExamForm.Class"
             </label>
             <div class="relative">
               <select
-
+                v-model="studentData.presentDistrict"
                 @change="loadPresentUpazilas"
                 class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-
+                :disabled="!studentData.presentDivision"
               >
                 <option value="" disabled>জেলা নির্বাচন করুন</option>
-                <option >
-
+                <option v-for="district in presentDistricts" :key="district.id" :value="district.name">
+                  {{ district.name }}
                 </option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -496,13 +485,13 @@ v-model="currentExamForm.Class"
             </label>
             <div class="relative">
               <select
-
+                v-model="studentData.presentUpazila"
                 class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-
+                :disabled="!studentData.presentDistrict"
               >
                 <option value="" disabled>থানা/উপজেলা নির্বাচন করুন</option>
-                <option >
-
+                <option v-for="upazila in presentUpazilas" :key="upazila.id" :value="upazila.name">
+                  {{ upazila.name }}
                 </option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -532,13 +521,13 @@ v-model="currentExamForm.Class"
             </label>
             <div class="relative">
               <select
-
+                v-model="studentData.permanentDivision"
                 @change="loadPermanentDistricts"
                 class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
               >
                 <option value="" disabled>বিভাগ নির্বাচন করুন</option>
-                <option >
-
+                <option v-for="division in divisions" :key="division.id" :value="division.name">
+                  {{ division.name }}
                 </option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -553,14 +542,14 @@ v-model="currentExamForm.Class"
             </label>
             <div class="relative">
               <select
-
+                v-model="studentData.permanentDistrict"
                 @change="loadPermanentUpazilas"
                 class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-
+                :disabled="!studentData.permanentDivision"
               >
                 <option value="" disabled>জেলা নির্বাচন করুন</option>
-                <option >
-
+                <option v-for="district in permanentDistricts" :key="district.id" :value="district.name">
+                  {{ district.name }}
                 </option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -569,19 +558,19 @@ v-model="currentExamForm.Class"
             </div>
           </div>
 
-         <div class="relative">
+          <div class="relative">
             <label class="text-lg font-medium text-emerald-700 mb-1 font-arabic flex items-center gap-2">
               থানা/উপজেলা
             </label>
             <div class="relative">
               <select
-
+                v-model="studentData.permanentUpazila"
                 class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-
+                :disabled="!studentData.permanentDistrict"
               >
                 <option value="" disabled>থানা/উপজেলা নির্বাচন করুন</option>
-                <option >
-
+                <option v-for="upazila in permanentUpazilas" :key="upazila.id" :value="upazila.name">
+                  {{ upazila.name }}
                 </option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -664,10 +653,10 @@ v-model="currentExamForm.Class"
             <button
                                 type="submit"
                                 class="px-6 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors flex items-center gap-2"
-                                :disabled="pastExamForm.processing"
+                                :disabled="form.processing"
                             >
                                 <i class="fas fa-save"></i>
-                                <span v-if="pastExamForm.processing">সংরক্ষণ হচ্ছে...</span>
+                                <span v-if="form.processing">সংরক্ষণ হচ্ছে...</span>
                                 <span v-else>সংরক্ষণ করুন</span>
                             </button>
           </div>
@@ -684,7 +673,6 @@ v-model="currentExamForm.Class"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { ref, onMounted } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
-
 // Student data with initial values
 const props = defineProps({
     roll: String,
@@ -695,70 +683,55 @@ const student = ref(null);
 const loading = ref(true);
 const error = ref(null);
 
-// Past exam form
-const pastExamForm = useForm({
+// Student types for dropdown
+// const studentTypes = [
+//     { value: 'নিয়মিত', label: 'নিয়মিত' },
+//     { value: 'অনিয়মিত যেমনী', label: 'অনিয়মিত যেমনী' },
+//     { value: 'অনিয়মিত অন্যান্য', label: 'অনিয়মিত অন্যান্য' }
+// ];
+
+// Form for updating student data
+const form = useForm({
+    id: '',
     Name: '',
     Father: '',
     Mother: '',
     DateofBirth: '',
-    Roll: '',
-    reg_id: '',
-    Madrasha: '',
-    Markaj: '',
-    Class: '',
-    Division: ''
-});
-
-// Current exam form
-const currentExamForm = useForm({
-    Madrasha: '',
-    Markaj: '',
-    Class: '',
     student_type: '',
-    marhalaId: '',
-    irregular_subjects: ''
+    Class: '',
+    reg_id: '',
+    Roll: '',
+    Madrasha: '',
+    Markaj: '',
+    Division: '',
+    marhalaId: ''
 });
 
 onMounted(async () => {
     try {
-        // Get marhalaId from localStorage or another source
-        const marhalaId = localStorage.getItem('marhalaId') || '';
-
         const response = await axios.get('/api/get-student-for-edit', {
             params: {
                 roll: props.roll,
                 reg_id: props.reg_id
-            },
-            headers: {
-                'marhalaId': marhalaId
             }
         });
 
         student.value = response.data;
 
-        // Populate the past exam form
-        if (response.data.pastExam) {
-            pastExamForm.Name = response.data.pastExam.Name || '';
-            pastExamForm.Father = response.data.pastExam.Father || '';
-            pastExamForm.Mother = response.data.pastExam.Mother || '';
-            pastExamForm.DateofBirth = response.data.pastExam.DateofBirth || '';
-            pastExamForm.Roll = response.data.pastExam.Roll || '';
-            pastExamForm.reg_id = response.data.pastExam.reg_id || '';
-            pastExamForm.Madrasha = response.data.pastExam.Madrasha || '';
-            pastExamForm.Markaj = response.data.pastExam.Markaj || '';
-            pastExamForm.Class = response.data.pastExam.Class || '';
-            pastExamForm.Division = response.data.pastExam.Division || '';
-        }
-
-        // Populate the current exam form
-        if (response.data.currentExam) {
-            currentExamForm.Madrasha = response.data.currentExam.Madrasha || '';
-            currentExamForm.Markaj = response.data.currentExam.Markaj || '';
-            currentExamForm.Class = response.data.currentExam.Class || '';
-            currentExamForm.student_type = response.data.currentExam.student_type || '';
-            currentExamForm.marhalaId = response.data.currentExam.marhalaId || '';
-            currentExamForm.irregular_subjects = response.data.currentExam.irregular_subjects || '';
-        }
+        // Populate the form with student data
+        form.id = student.value.id;
+        form.Name = student.value.Name;
+        form.Father = student.value.Father;
+        form.Mother = student.value.Mother || '';
+        form.DateofBirth = student.value.DateofBirth;
+        form.student_type = student.value.student_type;
+        form.Class = student.value.Class;
+        form.reg_id = student.value.reg_id;
+        form.Roll = student.value.Roll;
+        form.Madrasha = student.value.Madrasha;
+        form.Markaj = student.value.Markaj;
+        form.Division = student.value.Division || '';
+        form.marhalaId = student.value.marhalaId || '';
 
         loading.value = false;
     } catch (err) {
@@ -769,21 +742,7 @@ onMounted(async () => {
 });
 
 const submitForm = () => {
-    // Combine both forms for submission if needed
-    const combinedData = {
-        ...pastExamForm,
-        ...currentExamForm,
-        // Add any additional fields needed for submission
-    };
-
-    // Use the combined data for submission
-    axios.post(route('students_registration.update'), combinedData)
-        .then(response => {
-            // Handle success
-        })
-        .catch(error => {
-            // Handle error
-        });
+    form.post(route('students_registration.update'));
 };
 
 // Attachment files
@@ -794,57 +753,88 @@ const presidentPreview = ref(null);
 const committeeFile = ref(null);
 const committeePreview = ref(null);
 
-// Handle file upload for attachments
-const handleFileUploadMumtahin = (event, type) => {
-    const file = event.target.files[0];
-    if (!file) return;
+// Save changes to the database
+const saveChanges = () => {
+  // Here you would implement the API call to save the data
+  // For example:
+  // axios.put(`/api/students/${route.params.id}`, {
+  //   nameEnglish: studentData.value.nameEnglish,
+  //   nameArabic: studentData.value.nameArabic,
+  //   fatherNameEnglish: studentData.value.fatherNameEnglish,
+  //   fatherNameArabic: studentData.value.fatherNameArabic,
+  //   motherNameEnglish: studentData.value.motherNameEnglish,
+  //   motherNameArabic: studentData.value.motherNameArabic
+  // })
 
-    // Set the file based on type
-    if (type === 'muhtamim') {
-        muhtamimFile.value = file;
-        createFilePreview(file, 'muhtamim');
-    } else if (type === 'president') {
-        presidentFile.value = file;
-        createFilePreview(file, 'president');
-    } else if (type === 'committee') {
-        committeeFile.value = file;
-        createFilePreview(file, 'committee');
-    }
-};
-
-// Create file preview
-const createFilePreview = (file, type) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        if (type === 'muhtamim') {
-            muhtamimPreview.value = e.target.result;
-        } else if (type === 'president') {
-            presidentPreview.value = e.target.result;
-        } else if (type === 'committee') {
-            committeePreview.value = e.target.result;
-        }
-    };
-    reader.readAsDataURL(file);
-};
-
-// Remove file
-const removeFileMumtahin = (type) => {
-    if (type === 'muhtamim') {
-        muhtamimFile.value = null;
-        muhtamimPreview.value = null;
-    } else if (type === 'president') {
-        presidentFile.value = null;
-        presidentPreview.value = null;
-    } else if (type === 'committee') {
-        committeeFile.value = null;
-        committeePreview.value = null;
-    }
+  // For now, just show a success message
+  alert('তথ্য সফলভাবে সংরক্ষণ করা হয়েছে!');
 };
 
 // Go back to previous page without using router
 const goBack = () => {
-    window.history.back();
+  // Using window.history instead of Vue Router
+  window.history.back();
 };
+
+// Handle file upload for attachments
+const handleFileUploadMumtahin = (event, type) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  // Set the file based on type
+  if (type === 'muhtamim') {
+    muhtamimFile.value = file;
+    createFilePreview(file, 'muhtamim');
+  } else if (type === 'president') {
+    presidentFile.value = file;
+    createFilePreview(file, 'president');
+  } else if (type === 'committee') {
+    committeeFile.value = file;
+    createFilePreview(file, 'committee');
+  }
+};
+
+// Create file preview
+const createFilePreview = (file, type) => {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    if (type === 'muhtamim') {
+      muhtamimPreview.value = e.target.result;
+    } else if (type === 'president') {
+      presidentPreview.value = e.target.result;
+    } else if (type === 'committee') {
+      committeePreview.value = e.target.result;
+    }
+  };
+  reader.readAsDataURL(file);
+};
+
+// Remove file
+const removeFileMumtahin = (type) => {
+  if (type === 'muhtamim') {
+    muhtamimFile.value = null;
+    muhtamimPreview.value = null;
+  } else if (type === 'president') {
+    presidentFile.value = null;
+    presidentPreview.value = null;
+  } else if (type === 'committee') {
+    committeeFile.value = null;
+    committeePreview.value = null;
+  }
+};
+
+// Fetch student data when component is mounted
+onMounted(() => {
+  // Here you would fetch the student data from the API
+  // For example:
+  // axios.get(`/api/students/${route.params.id}`)
+  //   .then(response => {
+  //     studentData.value = response.data;
+  //   })
+  //   .catch(error => {
+  //     console.error('Error fetching student data:', error);
+  //   });
+});
 </script>
 
 

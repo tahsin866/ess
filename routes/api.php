@@ -71,11 +71,11 @@ Route::get('/exam-fees', [ExamRegistrationController::class, 'examFeeList']);
 Route::get('/student-registration/{marhalaId}', [ExamRegistrationController::class, 'getRegistrationData']);
 Route::get('/student-years', [ExamRegistrationController::class, 'getStudentYears']);
 Route::get('/search-students', [ExamRegistrationController::class, 'searchStudents']);
+Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStudentForEdit']);
 
 
-
-Route::post('/student-registration/update-old-student', [ExamRegistrationController::class, 'updateOldStudent']);
-
+Route::post('/update-student-registration', [ExamRegistrationController::class, 'updateStudentRegistration'])
+    ->name('students_registration.update');
 
 });
 

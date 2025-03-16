@@ -167,9 +167,15 @@ Route::get('others/massaging', function () {
     Route::delete('/markaz/delete/{id}', [MarkazAgreementController::class, 'deleteAgreement'])->name('markaz.delete');
 
 
-    // Route::get('/student-registration/edit-old-student', [ExamRegistrationController::class, 'editOldStudent'])
+
+    // Route::get('/student-registration/edit', [ExamRegistrationController::class, 'editStudentRegistration'])
     // ->name('students_registration.old_stu_reg_edit');
 
-// Update old student registration
-// Route::get('/student-registration/edit-old-student/{roll}/{reg_id}', [ExamRegistrationController::class, 'editOldStudent'])
-//     ->name('students_registration.old_stu_reg_edit');
+    Route::get('/students/registration/edit', [ExamRegistrationController::class, 'editStudentRegistration'])
+    ->name('students_registration.old_stu_reg_edit');
+
+// Add this route to fetch student data for editing
+Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStudentForEdit']);
+
+// Add this route to update student data
+

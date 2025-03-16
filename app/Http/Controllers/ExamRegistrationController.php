@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use MirazMac\BanglaString\Translator\BijoyToAvro\Translator;
-
+use Illuminate\Support\Facades\Auth;
 
 class ExamRegistrationController extends Controller
 {
@@ -154,8 +154,8 @@ class ExamRegistrationController extends Controller
             $student->Division = $translator->translate($student->Division);
             $student->Class = $translator->translate($student->Class);
             $student->Markaj = $translator->translate($student->Markaj);
-            $student->Roll = $translator->translate($student->Roll);
-            $student->reg_id = $translator->translate($student->reg_id);
+            // $student->Roll = $translator->translate($student->Roll);
+            // $student->reg_id = $translator->translate($student->reg_id);
             $student->DateofBirth = $translator->translate($student->DateofBirth);
 
             // Skip students with Division = রাসিব for specific CID and marhalaId combinations
@@ -294,94 +294,259 @@ class ExamRegistrationController extends Controller
 
 
 
-    public function editOldStudent(Request $request)
+
+
+
+
+    public function editStudentRegistration(Request $request)
     {
-        $roll = $request->roll;
-        $regId = $request->reg_id;
+        // Check if we have encoded data
+        if ($request->has('data')) {
+            // Decode the data
+            try {
+                $decodedData = base64_decode($request->data);
+                list($roll, $reg_id) = explode(':', $decodedData);
 
-        // Fetch the basic student data from students table
-        $student = Student::where('Roll', $roll)
-                         ->where('reg_id', $regId)
-                         ->first();
-
-        if (!$student) {
-            return redirect()->back()->with('error', 'ছাত্র খুঁজে পাওয়া যায়নি');
-        }
-
-        // Fetch additional information if it exists
-        $additionalInfo = reg_stu_information::where('roll', $roll)
-                                            ->where('reg_id', $regId)
-                                            ->first();
-
-        return Inertia::render('StudentRegistration/EditOldStudent', [
-            'studentBasicInfo' => $student,
-            'additionalInfo' => $additionalInfo
-        ]);
-    }
-
-    public function updateOldStudent(Request $request)
-    {
-        // Validate the request data
-        $validated = $request->validate([
-            'roll' => 'required|string',
-            'reg_id' => 'required|string',
-            'nameEnglish' => 'nullable|string|max:255',
-            'nameArabic' => 'nullable|string|max:255',
-            'fatherNameEnglish' => 'nullable|string|max:255',
-            'fatherNameArabic' => 'nullable|string|max:255',
-            'motherNameEnglish' => 'nullable|string|max:255',
-            'motherNameArabic' => 'nullable|string|max:255',
-            'birthRegNo' => 'nullable|string|max:20',
-            'nidNo' => 'nullable|string|max:20',
-            // Add other fields as needed
-        ]);
-
-        try {
-            // Check if a record already exists
-            $studentInfo = reg_stu_information::where('roll', $validated['roll'])
-                ->where('reg_id', $validated['reg_id'])
-                ->first();
-
-            if ($studentInfo) {
-                // Update existing record
-                $studentInfo->name_en = $validated['nameEnglish'];
-                $studentInfo->name_ar = $validated['nameArabic'];
-                $studentInfo->father_name_en = $validated['fatherNameEnglish'];
-                $studentInfo->father_name_ar = $validated['fatherNameArabic'];
-                $studentInfo->mother_name_en = $validated['motherNameEnglish'];
-                $studentInfo->mother_name_ar = $validated['motherNameArabic'];
-                $studentInfo->birth_reg_no = $validated['birthRegNo'];
-                $studentInfo->nid_no = $validated['nidNo'];
-                $studentInfo->save();
-            } else {
-                // Create a new record
-                $studentInfo = new reg_stu_information();
-                $studentInfo->roll = $validated['roll'];
-                $studentInfo->reg_id = $validated['reg_id'];
-                $studentInfo->name_en = $validated['nameEnglish'];
-                $studentInfo->name_ar = $validated['nameArabic'];
-                $studentInfo->father_name_en = $validated['fatherNameEnglish'];
-                $studentInfo->father_name_ar = $validated['fatherNameArabic'];
-                $studentInfo->mother_name_en = $validated['motherNameEnglish'];
-                $studentInfo->mother_name_ar = $validated['motherNameArabic'];
-                $studentInfo->birth_reg_no = $validated['birthRegNo'];
-                $studentInfo->nid_no = $validated['nidNo'];
-                $studentInfo->save();
+                return Inertia::render('students_registration/old_stu_reg_edit', [
+                    'roll' => $roll,
+                    'reg_id' => $reg_id
+                ]);
+            } catch (\Exception $e) {
+                // Handle decoding error
+                return redirect()->back()->with('error', 'Invalid student data');
             }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'ছাত্রের তথ্য সফলভাবে সংরক্ষণ করা হয়েছে'
+        }
+        // Fallback to direct parameters if encoded data is not provided
+        else if ($request->has('roll') && $request->has('reg_id')) {
+            return Inertia::render('students_registration/old_stu_reg_edit', [
+                'roll' => $request->roll,
+                'reg_id' => $request->reg_id
             ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'তথ্য সংরক্ষণ করতে সমস্যা হয়েছে',
-                'error' => $e->getMessage()
-            ], 500);
+        }
+        // No valid data provided
+        else {
+            return redirect()->back()->with('error', 'Student information is missing');
         }
     }
 
+
+public function getStudentForEdit(Request $request)
+{
+    $roll = $request->query('roll');
+    $reg_id = $request->query('reg_id');
+    $marhalaId = $request->header('marhalaId');
+
+    // Fetch the student data based on roll and registration ID using Eloquent
+    $student = Student::where('Roll', $roll)
+        ->where('reg_id', $reg_id)
+        ->first();
+
+    if (!$student) {
+        return response()->json(['message' => 'Student not found'], 404);
+    }
+
+    // Create response structure with both past and current exam info
+    $response = [
+        'pastExam' => [
+            'id' => $student->id,
+            'Name' => $student->Name,
+            'Father' => $student->Father,
+            'Mother' => $student->Mother,
+            'DateofBirth' => $student->DateofBirth,
+            'Roll' => $student->Roll,
+            'reg_id' => $student->reg_id,
+            'Madrasha' => $student->Madrasha, // From students table
+            'Markaj' => $student->Markaj,
+            'Class' => $student->Class, // From students table
+            'Division' => $student->Division
+        ],
+        'currentExam' => [
+            'Madrasha' => Auth::user()->madrasha_name, // From authenticated user
+            'Markaj' => $student->Markaj, // Assuming this is the same
+            'Class' => $this->getClassNameByMarhalaId($marhalaId), // Based on marhalaId
+            'marhalaId' => $marhalaId
+        ]
+    ];
+
+    // Determine student type based on the logic
+    $this->determineStudentType($response['currentExam'], $marhalaId, $student);
+
+    return response()->json($response);
+}
+
+/**
+ * Get class name based on marhalaId
+ */
+private function getClassNameByMarhalaId($marhalaId)
+{
+    $classNames = [
+        '9' => 'ফযিলত',
+        '10' => 'সানাবিয়া উলইয়া',
+        '11' => 'সানাবিয়া',
+        '12' => 'মুতাওয়াসসিতাহ',
+        '14' => 'ইবতেদাইয়্যাহ'
+    ];
+
+    return $classNames[$marhalaId] ?? '';
+}
+
+/**
+ * Determine the student type based on grades and other criteria
+ */
+private function determineStudentType(&$currentExam, $marhalaId, $student)
+{
+    // Default student type
+    $currentExam['student_type'] = 'নিয়মিত';
+
+    // Check if the student matches the specific combinations where rules should apply
+    $shouldApplyRules = false;
+    $year = $student->years ?? '2024';
+
+    // Check for the specific combinations where rules should apply
+    if (
+        ($student->CID == 9) ||
+        ($student->CID == 2 && $year == '2024') ||
+        ($student->CID == 10) ||
+        ($student->CID == 3 && $year == '2024') ||
+        ($student->CID == 11) ||
+        ($student->CID == 4 && $year == '2024') ||
+        ($student->CID == 12) ||
+        ($student->CID == 5 && $year == '2024') ||
+        ($student->CID == 14) ||
+        ($student->CID == 6 && $year == '2024')
+    ) {
+        $shouldApplyRules = true;
+    }
+
+    // Only apply the classification rules if the student matches the specific combinations
+    if ($shouldApplyRules) {
+        // Initialize counters
+        $failedSubjects = 0;
+        $absentSubjects = 0; // অনুপস্থিত (Absence field = 'অনুপস্থিত')
+        $zeroSubjects = 0;   // অনু (SubValue = 0)
+
+        $subjectFields = [
+            'SubValue_1', 'SubValue_2', 'SubValue_3', 'SubValue_4',
+            'SubValue_5', 'SubValue_6', 'SubValue_7', 'SubValue_8'
+        ];
+
+        foreach ($subjectFields as $index => $field) {
+            $labelField = 'SubLabel_' . ($index + 1);
+            $absenceField = 'Absence_' . ($index + 1);
+
+            // Only count subjects that have a label (name)
+            if (isset($student->$labelField) && !empty($student->$labelField)) {
+                // Count subjects with marks below 33 but not 0 (ফেল)
+                if (isset($student->$field) && $student->$field < 33 && $student->$field > 0) {
+                    $failedSubjects++;
+                }
+
+                // Count subjects with 0 marks (অনু)
+                if (isset($student->$field) && $student->$field === 0) {
+                    $zeroSubjects++;
+                }
+
+                // Count subjects marked as 'অনুপস্থিত'
+                if (isset($student->$absenceField) && $student->$absenceField === 'অনুপস্থিত') {
+                    $absentSubjects++;
+                }
+            }
+        }
+
+        // "অনিয়মিত যেমনী" conditions
+        if (
+            // 1. এক বা দুই বিষয়ে ফেল এবং বিভাগ রাসিব
+            (($failedSubjects == 1 || $failedSubjects == 2) && $student->Division === 'রাসিব') ||
+
+            // 2. এক বা দুই বিষয়ে অনু (SubValue = 0) এবং কোন বিষয়ে ফেল নেই
+            (($zeroSubjects == 1 || $zeroSubjects == 2) && $failedSubjects == 0) ||
+
+            // 3. এক বিষয়ে অনু এবং এক বিষয়ে ফেল
+            ($zeroSubjects == 1 && $failedSubjects == 1)
+        ) {
+            $currentExam['student_type'] = 'অনিয়মিত যেমনী';
+        }
+
+        // "অনিয়মিত অন্যান্য" conditions
+        elseif (
+            // 1. দুয়ের অধিক বিষয়ে ফেল এবং বিভাগ রাসিব
+            ($failedSubjects > 2 && $student->Division === 'রাসিব') ||
+
+            // 2. দুই বিষয় অনু এক বিষয়ে ফেল বা এক বিষয়ে অনু দুই বিষয়ে ফেল
+            ($zeroSubjects == 2 && $failedSubjects == 1) ||
+            ($zeroSubjects == 1 && $failedSubjects == 2) ||
+
+            // 3. এক বিষয়ে অনু এবং দুয়ের অধিক বিষয়ে ফেল
+            ($zeroSubjects == 1 && $failedSubjects > 2) ||
+
+            // 4. একের অধিক অনু একের অধিক ফেল
+            ($zeroSubjects > 1 && $failedSubjects > 1) ||
+
+            // 5. দুয়ের অধিক অনু বিভাগ অনু
+            ($zeroSubjects > 2 && $student->Absence === 'অনুপস্থিত')
+        ) {
+            $currentExam['student_type'] = 'অনিয়মিত অন্যান্য';
+        }
+
+        // Division = রাসিব এবং মুমতায নয় এমন হলে মানউন্নয়ন
+        elseif ($student->Division !== 'রাসিব' && $student->Division !== 'মুমতায') {
+            $currentExam['student_type'] = 'মানউন্নয়ন';
+        }
+
+        // Store the counts for debugging/reference
+        $currentExam['failed_subjects'] = $failedSubjects;
+        $currentExam['absent_subjects'] = $absentSubjects;
+        $currentExam['zero_subjects'] = $zeroSubjects;
+    }
+
+    // Add a field for irregular subjects if needed
+    $currentExam['irregular_subjects'] = $this->getIrregularSubjects($student, $currentExam['student_type']);
+}
+
+/**
+ * Get the list of irregular subjects for the student
+ */
+private function getIrregularSubjects($student, $studentType)
+{
+    $irregularSubjects = [];
+
+    // Only process if student is irregular
+    if ($studentType === 'অনিয়মিত যেমনী' || $studentType === 'অনিয়মিত অন্যান্য') {
+        $subjectFields = [
+            'SubValue_1', 'SubValue_2', 'SubValue_3', 'SubValue_4',
+            'SubValue_5', 'SubValue_6', 'SubValue_7', 'SubValue_8'
+        ];
+
+        // If student type is "অনিয়মিত অন্যান্য", show all subjects
+        if ($studentType === 'অনিয়মিত অন্যান্য') {
+            $allSubjects = [];
+            foreach ($subjectFields as $index => $field) {
+                $labelField = 'SubLabel_' . ($index + 1);
+                if (isset($student->$labelField) && !empty($student->$labelField)) {
+                    $allSubjects[] = $student->$labelField;
+                }
+            }
+            return implode(', ', $allSubjects);
+        }
+
+        // For "অনিয়মিত যেমনী", only show failed or zero-mark subjects
+        foreach ($subjectFields as $index => $field) {
+            $labelField = 'SubLabel_' . ($index + 1);
+
+            // Check if this is a failed or zero-mark subject
+            if (isset($student->$labelField) && !empty($student->$labelField)) {
+                if (
+                    (isset($student->$field) && $student->$field < 33) ||
+                    (isset($student->$field) && $student->$field === 0)
+                ) {
+                    $irregularSubjects[] = $student->$labelField;
+                }
+            }
+        }
+    }
+
+    return implode(', ', $irregularSubjects);
+}
 
 
 
@@ -390,11 +555,6 @@ class ExamRegistrationController extends Controller
 
 
 }
-
-
-
-
-
 
 
 
