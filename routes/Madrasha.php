@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\MarhalaController;
-use App\Http\Controllers\MarhalaListController;
+use App\Http\Controllers\ExamRegistrationController;
 use App\Http\Controllers\MarkazAgreementController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -74,6 +74,10 @@ Route::get('students_registration/stu_reg_payment', function () {
 Route::get('students_registration/stue_reg_draft_soft_delete', function () {
     return Inertia::render('students_registration/stue_reg_draft_soft_delete');
 })->name('students_registration.stue_reg_draft_soft_delete');
+
+Route::get('students_registration/old_stu_reg_edit', function () {
+    return Inertia::render('students_registration/old_stu_reg_edit');
+})->name('students_registration.old_stu_reg_edit');
 
 // অন্তর্ভুক্তি রাউট
 
@@ -161,3 +165,11 @@ Route::get('others/massaging', function () {
     Route::post('/markaz/submit/{id}', [MarkazAgreementController::class, 'submitApplication'])->name('markaz.submit');
 
     Route::delete('/markaz/delete/{id}', [MarkazAgreementController::class, 'deleteAgreement'])->name('markaz.delete');
+
+
+    // Route::get('/student-registration/edit-old-student', [ExamRegistrationController::class, 'editOldStudent'])
+    // ->name('students_registration.old_stu_reg_edit');
+
+// Update old student registration
+// Route::get('/student-registration/edit-old-student/{roll}/{reg_id}', [ExamRegistrationController::class, 'editOldStudent'])
+//     ->name('students_registration.old_stu_reg_edit');

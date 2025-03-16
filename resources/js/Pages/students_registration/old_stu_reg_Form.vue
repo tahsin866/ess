@@ -239,7 +239,7 @@ const resetSearch = () => {
                 <span class="font-semibold text-xl">{{ student.Name }}</span>
               </div>
               <p class="text-xl">পিতা - {{ student.Father }}</p>
-              <p class="text-xl">মাতা - {{ student.Mother || 'N/A' }}</p>
+              <p class="text-xl">মাতা - {{ student.Mother || '' }}</p>
               <p class="text-xl">জন্ম-তারিখ: {{ student.DateofBirth }}</p>
               <p class="text-xl">
                 পরীক্ষার্থীর ধরন:
@@ -277,19 +277,15 @@ const resetSearch = () => {
           </td>
           <td class="p-4 text-center">
             <div class="flex flex-col gap-3">
-              <button class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
+              <Link
+
+              :href="route('students_registration.old_stu_reg_edit')"
+              class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
                 <i class="fas fa-edit"></i>
                 সংশোধন
-              </button>
+              </Link>
 
-              <!-- <Link
-                v-if="student.student_type !== 'নিয়মিত'"
-                :href="route('students_registration.irregular_form', { studentId: student.id })"
-                class="bg-amber-600 text-white px-6 py-2 rounded-md hover:bg-amber-700 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto"
-              >
-                <i class="fas fa-clipboard-list"></i>
-                অনিয়মিত ফরম
-              </Link> -->
+
             </div>
           </td>
         </tr>

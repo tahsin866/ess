@@ -58,8 +58,7 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
 
 
 
-    Route::get('/student-registration/{marhalaId}', [ExamRegistrationController::class, 'oldStuRegForm'])
-    ->name('students_registration.old_stu_reg_Form');
+
 
 
 
