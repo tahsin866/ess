@@ -170,9 +170,9 @@ Route::get('others/massaging', function () {
 
     // Route::get('/student-registration/edit', [ExamRegistrationController::class, 'editStudentRegistration'])
     // ->name('students_registration.old_stu_reg_edit');
-
     Route::get('/students/registration/edit', [ExamRegistrationController::class, 'editStudentRegistration'])
     ->name('students_registration.old_stu_reg_edit');
+
 
 // Add this route to fetch student data for editing
 Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStudentForEdit']);

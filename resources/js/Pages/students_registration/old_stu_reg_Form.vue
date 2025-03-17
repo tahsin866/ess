@@ -127,7 +127,7 @@ const getEditUrl = (student) => {
   if (!student) return '#';
 
   // Roll এবং reg_id কে একটি স্ট্রিং-এ যোগ করে Base64 এনকোড করুন
-  const encodedData = btoa(`${student.Roll}:${student.reg_id}`);
+  const encodedData = btoa(`${student.Roll}:${student.reg_id}:${student.CID}`);
 
   return route('students_registration.old_stu_reg_edit', {
     data: encodedData
@@ -301,7 +301,8 @@ const getEditUrl = (student) => {
                 <!-- <Link
   :href="route('students_registration.old_stu_reg_edit', {
     roll: student.Roll,
-    reg_id: student.reg_id
+    reg_id: student.reg_id,
+    CID: student.CID
   })"
   class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
   <i class="fas fa-edit"></i>

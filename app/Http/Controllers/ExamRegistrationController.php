@@ -298,47 +298,65 @@ class ExamRegistrationController extends Controller
 
 
 
-    public function editStudentRegistration(Request $request)
-    {
-        // Check if we have encoded data
-        if ($request->has('data')) {
-            // Decode the data
-            try {
-                $decodedData = base64_decode($request->data);
-                list($roll, $reg_id) = explode(':', $decodedData);
+public function editStudentRegistration(Request $request)
+{
+    // Check if we have encoded data
+    if ($request->has('data')) {
+        // Decode the data
+        try {
+            $decodedData = base64_decode($request->data);
+            list($roll, $reg_id,$CID) = explode(':', $decodedData);
 
-                return Inertia::render('students_registration/old_stu_reg_edit', [
-                    'roll' => $roll,
-                    'reg_id' => $reg_id
-                ]);
-            } catch (\Exception $e) {
-                // Handle decoding error
-                return redirect()->back()->with('error', 'Invalid student data');
-            }
-        }
-        // Fallback to direct parameters if encoded data is not provided
-        else if ($request->has('roll') && $request->has('reg_id')) {
             return Inertia::render('students_registration/old_stu_reg_edit', [
-                'roll' => $request->roll,
-                'reg_id' => $request->reg_id
+                'roll' => $roll,
+                'reg_id' => $reg_id,
+                'CID' => $CID
             ]);
-        }
-        // No valid data provided
-        else {
-            return redirect()->back()->with('error', 'Student information is missing');
+        } catch (\Exception $e) {
+            // Handle decoding error
+            return redirect()->back()->with('error', 'Invalid student data');
         }
     }
+    // Fallback to direct parameters if encoded data is not provided
+    else if ($request->has('roll') && $request->has('reg_id')&& $request->has('CID')) {
+        return Inertia::render('students_registration/old_stu_reg_edit', [
+            'roll' => $request->roll,
+            'reg_id' => $request->reg_id,
+            'CID' => $request->CID
+        ]);
+    }
+    // No valid data provided
+    else {
+        return redirect()->back()->with('error', 'Student information is missing');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 public function getStudentForEdit(Request $request)
 {
     $roll = $request->query('roll');
     $reg_id = $request->query('reg_id');
+    $CID = $request->query('CID');
+
     $marhalaId = $request->header('marhalaId');
 
     // Fetch the student data based on roll and registration ID using Eloquent
     $student = Student::where('Roll', $roll)
         ->where('reg_id', $reg_id)
+
+        ->where('CID', $CID)
         ->first();
 
     if (!$student) {
@@ -393,6 +411,8 @@ private function getClassNameByMarhalaId($marhalaId)
 /**
  * Determine the student type based on grades and other criteria
  */
+
+
 private function determineStudentType(&$currentExam, $marhalaId, $student)
 {
     // Default student type
@@ -547,6 +567,14 @@ private function getIrregularSubjects($student, $studentType)
 
     return implode(', ', $irregularSubjects);
 }
+
+
+
+
+
+
+
+
 
 
 

@@ -2,18 +2,18 @@
     <AuthenticatedLayout>
         <div class=" mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-8">
       <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-md relative overflow-hidden">
+        <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-3 rounded-t-sm relative overflow-hidden">
           <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
           <div class="flex items-center justify-between relative z-10">
             <div class="flex items-center gap-3">
               <i class="fas fa-user-edit text-2xl text-white"></i>
-              <h5 class="text-white text-xl font-arabic">ছাত্র তথ্য সম্পাদনা</h5>
+              <h5 class="text-white text-xl ">ছাত্র তথ্য সম্পাদনা</h5>
             </div>
             <div class="flex space-x-2">
-              <button @click="saveChanges" class="bg-white text-emerald-700 px-4 py-2 rounded-md hover:bg-emerald-50 transition-colors font-arabic flex items-center gap-2">
+              <button @click="saveChanges" class="bg-white text-emerald-700 px-4 py-1.5 rounded-md hover:bg-emerald-50 transition-colors font-arabic flex items-center gap-2">
                 <i class="fas fa-save"></i> সংরক্ষণ করুন
               </button>
-              <button @click="goBack" class="bg-transparent text-white border border-white px-4 py-2 rounded-md hover:bg-white/10 transition-colors font-arabic flex items-center gap-2">
+              <button @click="goBack" class="bg-transparent text-white border border-white px-4 py-1.5 rounded-md hover:bg-white/10 transition-colors font-arabic flex items-center gap-2">
                 <i class="fas fa-arrow-left"></i> ফিরে যান
               </button>
             </div>
@@ -26,7 +26,7 @@
             <div class="bg-white rounded-sm shadow border border-emerald-100">
               <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-3 rounded-t-md flex items-center gap-3">
                 <i class="fas fa-user-circle text-2xl text-white"></i>
-                <h5 class="text-white text-xl font-arabic">ব্যক্তিগত তথ্য</h5>
+                <h5 class="text-white text-xl ">ব্যক্তিগত তথ্য</h5>
               </div>
 
               <div class="p-6">
@@ -209,7 +209,7 @@
 
             <!-- Student Information Section -->
             <div class="bg-white rounded-lg shadow border border-emerald-100">
-              <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-md relative overflow-hidden">
+              <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-3 rounded-t-md relative overflow-hidden">
                 <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
                 <div class="flex items-center gap-3 relative z-10">
                   <i class="fas fa-graduation-cap text-2xl text-white"></i>
@@ -336,7 +336,7 @@
 
 
           <div class="bg-white rounded-lg shadow border border-emerald-100">
-              <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-md relative overflow-hidden">
+              <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-3 rounded-t-md relative overflow-hidden">
                 <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
                 <div class="flex items-center gap-3 relative z-10">
                   <i class="fas fa-graduation-cap text-2xl text-white"></i>
@@ -437,7 +437,7 @@ v-model="currentExamForm.Class"
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <!-- Present Address -->
     <div class="bg-white rounded-md shadow border border-emerald-100">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-md relative overflow-hidden">
+      <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-3 rounded-t-md relative overflow-hidden">
         <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
         <div class="flex items-center gap-3 relative z-10">
           <i class="fas fa-map-marker-alt text-2xl text-white"></i>
@@ -452,16 +452,12 @@ v-model="currentExamForm.Class"
               বিভাগ
             </label>
             <div class="relative">
-              <select
-
-                @change="loadPresentDistricts"
-                class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-              >
-                <option value="" disabled>বিভাগ নির্বাচন করুন</option>
-                <option>
-
-                </option>
-              </select>
+                <select v-model="filters.division" @change="PresenthandleDivisionChange" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
+      <option value="">সকল</option>
+      <option v-for="division in divisions" :key="division.id" :value="division.id">
+        {{ division.Division_U }}
+      </option>
+    </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
 
               </div>
@@ -473,17 +469,12 @@ v-model="currentExamForm.Class"
               জেলা
             </label>
             <div class="relative">
-              <select
-
-                @change="loadPresentUpazilas"
-                class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-
-              >
-                <option value="" disabled>জেলা নির্বাচন করুন</option>
-                <option >
-
-                </option>
-              </select>
+                <select v-model="filters.district" @change="PresenthandleDistrictChange" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
+      <option value="">সকল</option>
+      <option v-for="district in districts" :key="district.DesID" :value="district.DesID">
+        {{ district.District_U }}
+      </option>
+    </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
 
               </div>
@@ -495,16 +486,12 @@ v-model="currentExamForm.Class"
               থানা/উপজেলা
             </label>
             <div class="relative">
-              <select
-
-                class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-
-              >
-                <option value="" disabled>থানা/উপজেলা নির্বাচন করুন</option>
-                <option >
-
-                </option>
-              </select>
+                <select v-model="filters.thana" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
+      <option value="">সকল</option>
+      <option v-for="thana in thanas" :key="thana.TID" :value="thana.TID">
+        {{ thana.Thana_U }}
+      </option>
+    </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
 
               </div>
@@ -516,7 +503,7 @@ v-model="currentExamForm.Class"
 
     <!-- Permanent Address -->
     <div class="bg-white rounded-md shadow border border-emerald-100">
-      <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-4 rounded-t-md relative overflow-hidden">
+      <div class="bg-gradient-to-r from-emerald-800 to-emerald-600 px-6 py-3 rounded-t-md relative overflow-hidden">
         <div class="absolute inset-0 opacity-10 bg-[url('/images/islamic-pattern.png')]"></div>
         <div class="flex items-center gap-3 relative z-10">
           <i class="fas fa-home text-2xl text-white"></i>
@@ -531,16 +518,12 @@ v-model="currentExamForm.Class"
               বিভাগ
             </label>
             <div class="relative">
-              <select
-
-                @change="loadPermanentDistricts"
-                class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-              >
-                <option value="" disabled>বিভাগ নির্বাচন করুন</option>
-                <option >
-
-                </option>
-              </select>
+                <select v-model="filters.division" @change="handleDivisionChange" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
+      <option value="">সকল</option>
+      <option v-for="division in divisions" :key="division.id" :value="division.id">
+        {{ division.Division_U }}
+      </option>
+    </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
 
               </div>
@@ -552,17 +535,12 @@ v-model="currentExamForm.Class"
               জেলা
             </label>
             <div class="relative">
-              <select
-
-                @change="loadPermanentUpazilas"
-                class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-
-              >
-                <option value="" disabled>জেলা নির্বাচন করুন</option>
-                <option >
-
-                </option>
-              </select>
+                <select v-model="filters.district" @change="handleDistrictChange" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
+      <option value="">সকল</option>
+      <option v-for="district in districts" :key="district.DesID" :value="district.DesID">
+        {{ district.District_U }}
+      </option>
+    </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
 
               </div>
@@ -574,16 +552,12 @@ v-model="currentExamForm.Class"
               থানা/উপজেলা
             </label>
             <div class="relative">
-              <select
-
-                class="w-full pl-4 pr-10 py-2 border border-emerald-200 rounded-md bg-white text-emerald-800 appearance-none"
-
-              >
-                <option value="" disabled>থানা/উপজেলা নির্বাচন করুন</option>
-                <option >
-
-                </option>
-              </select>
+                <select v-model="filters.thana" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
+      <option value="">সকল</option>
+      <option v-for="thana in thanas" :key="thana.TID" :value="thana.TID">
+        {{ thana.Thana_U }}
+      </option>
+    </select>
               <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
 
               </div>
@@ -595,7 +569,7 @@ v-model="currentExamForm.Class"
   </div>
 
           <!-- Attachment Section -->
-          <div class="bg-white rounded-lg shadow border border-emerald-100">
+          <div class="bg-white rounded-md shadow border border-emerald-100">
             <div class="bg-white rounded-md shadow-md border border-emerald-200 p-6">
               <h3 class="text-xl text-emerald-800 font-bold mb-6 arabic-font">সংযুক্তি</h3>
 
@@ -657,13 +631,13 @@ v-model="currentExamForm.Class"
             <button
               type="button"
               @click="goBack"
-              class="px-6 py-3 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors font-arabic flex items-center gap-2">
+              class="px-6 py-1.5 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors font-arabic flex items-center gap-2">
               <i class="fas fa-times"></i> বাতিল করুন
             </button>
 
             <button
                                 type="submit"
-                                class="px-6 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors flex items-center gap-2"
+                                class="px-6 py-1.5 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors flex items-center gap-2"
                                 :disabled="pastExamForm.processing"
                             >
                                 <i class="fas fa-save"></i>
@@ -682,13 +656,22 @@ v-model="currentExamForm.Class"
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,reactive } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 
 // Student data with initial values
 const props = defineProps({
     roll: String,
-    reg_id: String
+    reg_id: String,
+    CID: String
+});
+
+
+const filters = reactive({
+
+    division: '',
+    district: '',
+    thana: ''
 });
 
 const student = ref(null);
@@ -703,6 +686,7 @@ const pastExamForm = useForm({
     DateofBirth: '',
     Roll: '',
     reg_id: '',
+    CID: '',
     Madrasha: '',
     Markaj: '',
     Class: '',
@@ -727,7 +711,8 @@ onMounted(async () => {
         const response = await axios.get('/api/get-student-for-edit', {
             params: {
                 roll: props.roll,
-                reg_id: props.reg_id
+                reg_id: props.reg_id,
+                CID: props.CID
             },
             headers: {
                 'marhalaId': marhalaId
@@ -785,6 +770,88 @@ const submitForm = () => {
             // Handle error
         });
 };
+
+
+
+
+const divisions = ref([]);
+const districts = ref([]);
+const thanas = ref([]);
+
+
+
+
+
+
+const loadDivisions = async () => {
+    try {
+        const response = await axios.get('/api/divisions');
+        divisions.value = response.data;
+    } catch (error) {
+        console.error('Error loading divisions:', error);
+    }
+};
+
+
+
+const PresentloadDivisions = async () => {
+    try {
+        const response = await axios.get('/api/divisions');
+        divisions.value = response.data;
+    } catch (error) {
+        console.error('Error loading divisions:', error);
+    }
+};
+
+
+const PresenthandleDivisionChange = async () => {
+    filters.district = '';
+    filters.thana = '';
+    if (filters.division) {
+        const response = await axios.get(`/api/districts/${filters.division}`);
+        districts.value = response.data;
+    } else {
+        districts.value = [];
+    }
+};
+
+
+
+
+
+const handleDivisionChange = async () => {
+    filters.district = '';
+    filters.thana = '';
+    if (filters.division) {
+        const response = await axios.get(`/api/districts/${filters.division}`);
+        districts.value = response.data;
+    } else {
+        districts.value = [];
+    }
+};
+
+const handleDistrictChange = async () => {
+    filters.thana = '';
+    if (filters.district) {
+        const response = await axios.get(`/api/thanas/${filters.district}`);
+        thanas.value = response.data;
+    } else {
+        thanas.value = [];
+    }
+};
+
+
+
+const PresenthandleDistrictChange = async () => {
+    filters.thana = '';
+    if (filters.district) {
+        const response = await axios.get(`/api/thanas/${filters.district}`);
+        thanas.value = response.data;
+    } else {
+        thanas.value = [];
+    }
+};
+
 
 // Attachment files
 const muhtamimFile = ref(null);
@@ -845,6 +912,12 @@ const removeFileMumtahin = (type) => {
 const goBack = () => {
     window.history.back();
 };
+
+
+onMounted(() => {
+    loadDivisions();
+    PresentloadDivisions();
+});
 </script>
 
 
