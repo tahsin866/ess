@@ -336,14 +336,6 @@ public function editStudentRegistration(Request $request)
 
 
 
-
-
-
-
-
-
-
-
 public function getStudentForEdit(Request $request)
 {
     $roll = $request->query('roll');
@@ -578,7 +570,54 @@ private function getIrregularSubjects($student, $studentType)
 
 
 
+public function saveStudentInfo(Request $request)
+{
+    $request->validate([
+        'name_bn' => 'required|string|max:255',
+        'name_en' => 'nullable|string|max:255',
+        'name_ar' => 'nullable|string|max:255',
+        'father_name_bn' => 'required|string|max:255',
+        'father_name_en' => 'nullable|string|max:255',
+        'father_name_ar' => 'nullable|string|max:255',
+        'mother_name_bn' => 'nullable|string|max:255',
+        'mother_name_en' => 'nullable|string|max:255',
+        'mother_name_ar' => 'nullable|string|max:255',
+        'BRN_no' => 'nullable|string|max:255',
+        'NID_no' => 'nullable|string|max:255',
+        // 'student_id' => 'required|exists:students,id',
+    ]);
 
+    // Create new record in reg_stu_informations table
+    reg_stu_information::updateOrCreate(
+        // ['student_id' => $request->IDs], // Find by student_id
+        [
+            'name_bn' => $request->name_bn,
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'father_name_bn' => $request->father_name_bn,
+            'father_name_en' => $request->father_name_en,
+            'father_name_ar' => $request->father_name_ar,
+            'mother_name_bn' => $request->mother_name_bn,
+            'mother_name_en' => $request->mother_name_en,
+            'mother_name_ar' => $request->mother_name_ar,
+            'BRN_no' => $request->BRN_no,
+            'NID_no' => $request->NID_no,
+            'past_Roll' => $request->past_Roll,
+            'past_reg_id' => $request->past_reg_id,
+            'madrasha_name' => $request->madrasha_name,
+            'class' => $request->class,
+            'Division' => $request->Division,
+            'Date_of_birth' => $request->Date_of_birth,
+            'current_madrasha' => $request->current_madrasha,
+            'current_markaz' => $request->current_markaz,
+            'student_type' => $request->student_type,
+            'current_class' => $request->current_class,
+            'sublabel_1' => $request->sublabel_1,
+        ]
+    );
+
+    return response()->json(['message' => 'Student information saved successfully']);
+}
 
 
 

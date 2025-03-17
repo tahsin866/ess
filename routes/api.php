@@ -74,8 +74,11 @@ Route::get('/search-students', [ExamRegistrationController::class, 'searchStuden
 Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStudentForEdit']);
 
 
-Route::post('/update-student-registration', [ExamRegistrationController::class, 'updateStudentRegistration'])
-    ->name('students_registration.update');
+
+
+
+Route::post('/save-student-info', [ExamRegistrationController::class, 'saveStudentInfo']);
+
 
 });
 

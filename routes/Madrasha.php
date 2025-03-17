@@ -179,3 +179,4 @@ Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStud
 
 // Add this route to update student data
 
+Route::post('/store-student-registration', [ExamRegistrationController::class, 'storeStudentRegistration']);
