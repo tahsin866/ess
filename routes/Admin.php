@@ -46,7 +46,9 @@ Route::get('subjects_for_Admin/subject_setup', function () {
     return Inertia::render('subjects_for_Admin/subject_setup');
 })->name('subjects_for_Admin.subject_setup');
 
-
+Route::get('subjects_for_Admin/subject_setings_edit', function () {
+    return Inertia::render('subjects_for_Admin/subject_setings_edit');
+})->name('subjects_for_Admin.subject_setings_edit');
 // কেন্দ্রীয় পরীক্ষা সেটাপ
 
 
@@ -182,3 +184,9 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
 
 
     // Route::get('/exam-fees', [ExamRegistrationController::class, 'examFeeList'])->name('exam.fees.list');
+
+
+
+
+
+

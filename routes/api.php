@@ -8,6 +8,7 @@ use App\Http\Controllers\ExamRegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarkazAgreementController;
 use App\Http\Controllers\MadrashaController;
+use App\Http\Controllers\MarhalaListController;
 
 Route::get('/marhalas/{id}/edit', [MarhalaController::class, 'edit']);
 Route::put('/marhalas/{id}', [MarhalaController::class, 'update']);
@@ -79,6 +80,16 @@ Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStud
 
 Route::post('/save-student-info', [ExamRegistrationController::class, 'saveStudentInfo']);
 
+
+
+
+
+
+
+// মাদরাসা পেনেলের সাবজেক্ট সেটিংস
+
+Route::get('/subjects/{marhalaId}', [MarhalaListController::class, 'getSubjects'])->name('api.subjects');
+Route::get('/api/subject-selection/{marhalaId}', [MarhalaListController::class, 'getsubjectForMadrasha'])->name('subject.selection');
 
 });
 

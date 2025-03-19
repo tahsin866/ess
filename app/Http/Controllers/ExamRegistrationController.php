@@ -585,7 +585,35 @@ public function saveStudentInfo(Request $request)
         'BRN_no' => 'nullable|string|max:255',
         'NID_no' => 'nullable|string|max:255',
         // 'student_id' => 'required|exists:students,id',
+
+        'present_division_name' => 'nullable|string|max:255',
+        'presernt_DID' => 'nullable|numeric',
+        'present_district_name' => 'nullable|string|max:255',
+        'present_des_id' => 'nullable|numeric',
+        'present_thana_name' => 'nullable|string|max:255',
+        'present_TID' => 'nullable|numeric',
+        'parmanent_division_name' => 'nullable|string|max:45',
+        'parmanent_DID' => 'nullable|numeric',
+        'parmanent_district_name' => 'nullable|string|max:45',
+        'parmanent_desId' => 'nullable|numeric',
+        'parmanent_thana_name' => 'nullable|string|max:45',
+        'parmanent_TID' => 'nullable|numeric',
+
+'student_image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+        'NID_attach' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
+
     ]);
+
+     // ফাইল আপলোড হ্যান্ডলিং
+     $studentImagePath = null;
+     if ($request->hasFile('student_image')) {
+         $studentImagePath = $request->file('student_image')->store('student_images', 'public');
+     }
+
+     $nidAttachmentPath = null;
+     if ($request->hasFile('NID_attach')) {
+         $nidAttachmentPath = $request->file('NID_attach')->store('nid_attachments', 'public');
+     }
 
     // Create new record in reg_stu_informations table
     reg_stu_information::updateOrCreate(
@@ -612,7 +640,29 @@ public function saveStudentInfo(Request $request)
             'current_markaz' => $request->current_markaz,
             'student_type' => $request->student_type,
             'current_class' => $request->current_class,
-            'sublabel_1' => $request->sublabel_1,
+            'exam_books_name' => $request->exam_books_name,
+
+
+
+            'present_division_name' => $request->present_division_name,
+            'presernt_DID' => $request->presernt_DID,
+            'present_district_name' => $request->present_district_name,
+            'present_desId' => $request->present_desId,
+            'present_thana_name' => $request->present_thana_name,
+            'present_TID' => $request->present_TID,
+
+            // New fields for permanent address
+            'parmanent_division_name' => $request->parmanent_division_name,
+            'parmanent_DID' => $request->parmanent_DID,
+            'parmanent_district_name' => $request->parmanent_district_name,
+            'parmanent_desId' => $request->parmanent_desId,
+            'parmanent_thana_name' => $request->parmanent_thana_name,
+            'parmanent_TID' => $request->parmanent_TID,
+            'student_image' => $request->student_image,
+
+            'student_image' => $studentImagePath,
+            'NID_attach' => $nidAttachmentPath,
+
         ]
     );
 

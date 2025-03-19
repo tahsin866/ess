@@ -41,6 +41,24 @@ class reg_stu_information extends Model
         'current_madrasha',
         'current_markaz',
         'current_class',
-        'sublabel_1'
+        'exam_books_name',
+
+'present_division_name' ,
+            'presernt_DID',
+            'present_district_name' ,
+            'present_desId',
+            'present_thana_name' ,
+            'present_TID' ,
+
+            // New fields for permanent address
+            'parmanent_division_name' ,
+            'parmanent_DID' ,
+            'parmanent_district_name' ,
+            'parmanent_desId' ,
+            'parmanent_thana_name',
+            'parmanent_TID' ,
+            'student_image',
+        'NID_attach'
+
     ];
 }

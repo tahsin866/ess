@@ -126,7 +126,7 @@ const page = usePage()
     মারকায পরিবর্তন
 </Link>
 
-
+<Link :href="route('Markaz.subjectSettings_for_madrasha')" class="block px-4 py-2 text-xl hover:bg-[#123524]">বিষয় সেটাপ</Link>
                         <Link :href="route('Markaz.marhala_change_table')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মারহালা পরিবর্তন</Link>
                         <Link href="route('Takmil.cirtificateProvide')" class="block px-4 py-2 text-xl hover:bg-[#123524]">মন্জুরী পত্র আবেদন</Link>
 

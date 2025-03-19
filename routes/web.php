@@ -6,7 +6,7 @@ use App\Http\Controllers\ExamRegistrationController;
 use App\Http\Controllers\SubjectSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MarkazAgreementController;
+use App\Http\Controllers\MarhalaListController;
 use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
 use App\Http\Controllers\ExamSetupController;
@@ -60,7 +60,27 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
 
 
 
+// সাবজেক্ট সেটিংস
 
+
+
+
+    // Route::put('/subject-settings/{id}', [SubjectSettingsController::class, 'getupdate'])
+    // ->name('subjects_for_Admin.subject_setings_update');
+
+
+
+
+
+    // Route::get('/subject-selection/{marhalaId?}', [MarhalaListController::class, 'getsubjectForMadrasha'])->name('subject.selection');
+
+
+    Route::get('/api/subject-selection/{marhalaId}', [MarhalaListController::class, 'getsubjectForMadrasha'])->name('subject.selection');
+
+    Route::get('/subjects-settings/{id}/edit', [MarhalaListController::class, 'subedit'])
+    ->name('subjects_for_Admin.subject_setings_edit');
+
+    Route::get('/api/subject-settings/{id}', [MarhalaListController::class, 'getSubjectsettings'])->name('api.subject-settings');
 
 
 require __DIR__ . '/auth.php';

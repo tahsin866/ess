@@ -13,6 +13,9 @@ class SubjectSettingsController extends Controller
 {
 
 
+
+
+
     public function getData($marhalaId)
     {
         $marhala = Marhala::select('id', 'marhala_name_bn')->findOrFail($marhalaId);
@@ -29,8 +32,7 @@ class SubjectSettingsController extends Controller
 
 
 
-
-public function store(Request $request)
+public function subjectStore(Request $request)
 {
     $validated = $request->validate([
         'marhala_id' => 'required',
@@ -57,12 +59,66 @@ public function store(Request $request)
 
 
 
+public function show($id)
+    {
+        $subjectSetting = subject_settings::findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'subjectSetting' => $subjectSetting
+        ]);
+    }
+
+    public function subjectupdate(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'marhala_id' => 'required',
+            'subject_id' => 'required',
+            'Marhala_type' => 'required',
+            'Subject_Names' => 'required',
+            'student_type' => 'required',
+            'syllabus_type' => 'required',
+            'markaz_type' => 'required',
+            'subject_type' => 'required',
+            'subject_code' => 'required',
+            'total_marks' => 'required',
+            'pass_marks' => 'required',
+            'status' => 'required|in:active,inactive'
+        ]);
+
+        $subjectSetting = subject_settings::findOrFail($id);
+        $subjectSetting->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'বিষয় তথ্য সফলভাবে আপডেট করা হয়েছে'
+        ]);
+    }
+
+
+
+    public function odit($marhala, $id)
+    {
+        return Inertia::render('SubjectSettings/Form', [
+            'marhala' => $marhala,
+            'id' => $id
+        ]);
+    }
+
+
+
+
+
+
+
+
 public function index()
 {
     $subjects = subject_settings::with('MarhalaSubject')
         ->get()
         ->map(function ($subject) {
             return [
+                'id' => $subject->id,
                 'code' => $subject->MarhalaSubject->subject_code ?? 'N/A',
                 'Subject_Names' => $subject->Subject_Names,
                 'Marhala_type' => $subject->Marhala_type,
@@ -79,6 +135,10 @@ public function index()
         'subjects' => $subjects
     ]);
 }
+
+
+
+
 
 
 

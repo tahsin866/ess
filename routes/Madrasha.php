@@ -31,6 +31,15 @@ Route::get('Markaz/marhala_change_table', function () {
     return Inertia::render('Markaz/marhala_change_table');
 })->name('Markaz.marhala_change_table');
 
+Route::get('Markaz/subjectSettings_for_madrasha', function () {
+    return Inertia::render('Markaz/subjectSettings_for_madrasha');
+})->name('Markaz.subjectSettings_for_madrasha');
+
+Route::get('Markaz/subjectSetting_list', function () {
+    return Inertia::render('Markaz/subjectSetting_list');
+})->name('Markaz.subjectSetting_list');
+
+
 
 Route::get('Markaz/marhala_change', function () {
     return Inertia::render('Markaz/marhala_change');
@@ -159,6 +168,7 @@ Route::get('others/massaging', function () {
     // Route::get('/markaz-agreements', [MarkazAgreementController::class, 'index'])
     // ->name('markaz-agreements.index');
     Route::get('/Markaz/marjaz_detailes_view/{id}', [MarkazAgreementController::class, 'viewDetails'])->name('Markaz.view');
+
     Route::get('/Markaz/markaz_apply_edit/{id}', [MarkazAgreementController::class, 'Edit'])->name('Markaz.edit');
     Route::post('/Markaz/markaz_apply_update/{id}', [MarkazAgreementController::class, 'update'])->name('markaz-agreements.update');
 
@@ -179,4 +189,4 @@ Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStud
 
 // Add this route to update student data
 
-Route::post('/store-student-registration', [ExamRegistrationController::class, 'storeStudentRegistration']);
+

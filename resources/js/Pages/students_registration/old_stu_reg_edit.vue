@@ -479,7 +479,7 @@
               বিভাগ
             </label>
             <div class="relative">
-              <select
+                <select
                 v-model="permanentFilters.division"
                 @change="handleDivisionChange"
                 class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]"
@@ -498,7 +498,7 @@
               জেলা
             </label>
             <div class="relative">
-              <select
+                <select
                 v-model="permanentFilters.district"
                 @change="handleDistrictChange"
                 class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]"
@@ -517,7 +517,7 @@
               থানা/উপজেলা
             </label>
             <div class="relative">
-              <select
+                <select
                 v-model="permanentFilters.thana"
                 class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]"
               >
@@ -536,63 +536,60 @@
 
                         <!-- Attachment Section -->
                         <div class="bg-white rounded-md shadow border border-emerald-100">
-                            <div class="bg-white rounded-md shadow-md border border-emerald-200 p-6">
-                                <h3 class="text-xl text-emerald-800 font-bold mb-6 arabic-font">সংযুক্তি</h3>
+    <div class="bg-white rounded-md shadow-md border border-emerald-200 p-6">
+        <h3 class="text-xl text-emerald-800 font-bold mb-6 arabic-font">সংযুক্তি</h3>
 
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <!-- Student Photo -->
-                                    <div class="space-y-3">
-                                        <label class="block text-lg font-medium text-emerald-700 arabic-font">ছাত্রের
-                                            ছবি (পাসপোর্ট সাইজ এবং নীল ব্যাকগ্রাইন্ড হতে হবে)</label>
-                                        <div class="relative">
-                                            <div
-                                                class="flex items-center justify-between border-2 border-dashed border-emerald-300 rounded-md p-4 hover:border-emerald-500 transition-colors duration-200 bg-emerald-50">
-                                                <span class="text-emerald-600 arabic-font">
-                                                    {{ muhtamimFile ? muhtamimFile.name : 'ফাইল আপলোড করুন' }}
-                                                </span>
-                                                <div v-if="muhtamimPreview"
-                                                    class="flex items-center space-x-2 relative z-10 pointer-events-auto">
-                                                    <a :href="muhtamimPreview" target="_blank"
-                                                        class="text-emerald-600 hover:text-emerald-800">প্রিভিউ</a>
-                                                    <button @click.stop="removeFileMumtahin('muhtamim')"
-                                                        class="text-red-600 hover:text-red-800">মুছুন</button>
-                                                </div>
-                                            </div>
-                                            <input type="file" @change="handleFileUploadMumtahin($event, 'muhtamim')"
-                                                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-0"
-                                                accept="image/*,.pdf,.doc,.docx">
-                                        </div>
-                                    </div>
-
-                                    <!-- Birth Certificate/NID -->
-                                    <div class="space-y-3">
-                                        <label class="block text-lg font-medium text-emerald-700 arabic-font">জন্ম
-                                            নিবন্ধন/এন আইডি সংযুক্তি করুন</label>
-                                        <div class="relative">
-                                            <div
-                                                class="flex items-center justify-between border-2 border-dashed border-emerald-300 rounded-md p-4 hover:border-emerald-500 transition-colors duration-200 bg-emerald-50">
-                                                <span class="text-emerald-600 arabic-font">
-                                                    {{ presidentFile ? presidentFile.name : 'ফাইল আপলোড করুন' }}
-                                                </span>
-                                                <div v-if="presidentPreview"
-                                                    class="flex items-center space-x-2 relative z-10 pointer-events-auto">
-                                                    <a :href="presidentPreview" target="_blank"
-                                                        class="text-emerald-600 hover:text-emerald-800">প্রিভিউ</a>
-                                                    <button @click.stop="removeFileMumtahin('president')"
-                                                        class="text-red-600 hover:text-red-800">মুছুন</button>
-                                                </div>
-                                            </div>
-                                            <input type="file" @change="handleFileUploadMumtahin($event, 'president')"
-                                                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-0"
-                                                accept="image/*,.pdf,.doc,.docx">
-                                        </div>
-                                    </div>
-
-                                    <!-- Marksheet -->
-
-                                </div>
-                            </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Student Photo -->
+            <div class="space-y-3">
+                <label class="block text-lg font-medium text-emerald-700 arabic-font">
+                    ছাত্রের ছবি (পাসপোর্ট সাইজ এবং নীল ব্যাকগ্রাইন্ড হতে হবে)
+                </label>
+                <div class="relative">
+                    <div class="flex items-center justify-between border-2 border-dashed border-emerald-300 rounded-md p-4 hover:border-emerald-500 transition-colors duration-200 bg-emerald-50">
+                        <span class="text-emerald-600 arabic-font">
+                            {{ studentPhoto ? studentPhoto.name : 'ফাইল আপলোড করুন' }}
+                        </span>
+                        <div v-if="studentPhotoPreview" class="flex items-center space-x-2 relative z-10 pointer-events-auto">
+                            <a :href="studentPhotoPreview" target="_blank" class="text-emerald-600 hover:text-emerald-800">প্রিভিউ</a>
+                            <button @click.stop="removeFile('studentPhoto')" class="text-red-600 hover:text-red-800">মুছুন</button>
                         </div>
+                    </div>
+                    <input
+                        type="file"
+                        @change="handleFileUpload($event, 'studentPhoto')"
+                        class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-0"
+                        accept="image/*,.pdf,.doc,.docx"
+                    >
+                </div>
+            </div>
+
+            <!-- Birth Certificate/NID -->
+            <div class="space-y-3">
+                <label class="block text-lg font-medium text-emerald-700 arabic-font">
+                    জন্ম নিবন্ধন/এন আইডি সংযুক্তি করুন
+                </label>
+                <div class="relative">
+                    <div class="flex items-center justify-between border-2 border-dashed border-emerald-300 rounded-md p-4 hover:border-emerald-500 transition-colors duration-200 bg-emerald-50">
+                        <span class="text-emerald-600 arabic-font">
+                            {{ nidAttachment ? nidAttachment.name : 'ফাইল আপলোড করুন' }}
+                        </span>
+                        <div v-if="nidAttachmentPreview" class="flex items-center space-x-2 relative z-10 pointer-events-auto">
+                            <a :href="nidAttachmentPreview" target="_blank" class="text-emerald-600 hover:text-emerald-800">প্রিভিউ</a>
+                            <button @click.stop="removeFile('nidAttachment')" class="text-red-600 hover:text-red-800">মুছুন</button>
+                        </div>
+                    </div>
+                    <input
+                        type="file"
+                        @change="handleFileUpload($event, 'nidAttachment')"
+                        class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-0"
+                        accept="image/*,.pdf,.doc,.docx"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                         <!-- Action Buttons -->
                         <div class="flex justify-end space-x-4">
@@ -627,14 +624,15 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive,watch } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 
 // Student data with initial values
 const props = defineProps({
     roll: String,
     reg_id: String,
-    CID: String
+    CID: String,
+    modelValue: Object
 });
 
 
@@ -698,6 +696,23 @@ const studentInfoForm = useForm({
     student_type: '',
     current_class: '',
     exam_books_name: '',
+
+
+    present_division_name: '',
+    presernt_DID: '',
+    present_district_name: '',
+    present_desId: '',
+    present_thana_name: '',
+    present_TID: '',
+
+    // New fields for permanent address
+    parmanent_division_name: '',
+    parmanent_DID: '',
+    parmanent_district_name: '',
+    parmanent_desId: '',
+    parmanent_thana_name: '',
+    parmanent_TID: '',
+    student_image: '',
 });
 
 
@@ -766,6 +781,26 @@ onMounted(async () => {
             studentInfoForm.exam_books_name = response.data.currentExam.irregular_subjects
         }
 
+        // Populate address fields if they exist in the response
+        if (response.data.studentInfo) {
+            studentInfoForm.present_division_name = response.data.studentInfo.present_division_name || '';
+            studentInfoForm.presernt_DID = response.data.studentInfo.presernt_DID || '';
+            studentInfoForm.present_district_name = response.data.studentInfo.present_district_name || '';
+            studentInfoForm.present_des_id = response.data.studentInfo.present_des_id || '';
+            studentInfoForm.present_thana_name = response.data.studentInfo.present_thana_name || '';
+            studentInfoForm.present_TID = response.data.studentInfo.present_TID || '';
+
+            studentInfoForm.parmanent_division_name = response.data.studentInfo.parmanent_division_name || '';
+            studentInfoForm.parmanent_DID = response.data.studentInfo.parmanent_DID || '';
+            studentInfoForm.parmanent_district_name = response.data.studentInfo.parmanent_district_name || '';
+            studentInfoForm.parmanent_desId = response.data.studentInfo.parmanent_desId || '';
+            studentInfoForm.parmanent_thana_name = response.data.studentInfo.parmanent_thana_name || '';
+            studentInfoForm.parmanent_TID = response.data.studentInfo.parmanent_TID || '';
+        }
+
+
+
+
         loading.value = false;
     } catch (err) {
         error.value = 'ছাত্রের তথ্য লোড করতে সমস্যা হয়েছে';
@@ -780,7 +815,21 @@ onMounted(async () => {
 
 
 const submitStudentInfo = () => {
+    // আগে ঠিকানার ডাটা আপডেট করুন
+    updateFormData();
+
+    // ফাইল যোগ করুন
+    if (studentPhoto.value) {
+        studentInfoForm.student_image = studentPhoto.value;
+    }
+
+    if (nidAttachment.value) {
+        studentInfoForm.NID_attach = nidAttachment.value;
+    }
+
+    // ফর্ম সাবমিট করুন
     studentInfoForm.post('/api/save-student-info', {
+        forceFormData: true, // এটি গুরুত্বপূর্ণ - ফাইল আপলোডের জন্য FormData ব্যবহার করতে বাধ্য করে
         onSuccess: () => {
             alert('Student information saved successfully');
         },
@@ -793,13 +842,100 @@ const submitStudentInfo = () => {
 
 
 
+// Separate filter objects for present and permanent addresses
 
+
+
+// Separate refs for present and permanent address data
+
+
+
+
+// Present address handlers
+
+
+
+
+// Permanent address handlers
+
+
+
+
+
+// Attachment files
+const studentPhoto = ref(null);
+const studentPhotoPreview = ref(null);
+const nidAttachment = ref(null);
+const nidAttachmentPreview = ref(null);
+
+// ফাইল আপলোড হ্যান্ডলার
+const handleFileUpload = (event, type) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // ফাইল টাইপ অনুযায়ী সেট করুন
+    if (type === 'studentPhoto') {
+        studentPhoto.value = file;
+        createFilePreview(file, 'studentPhoto');
+    } else if (type === 'nidAttachment') {
+        nidAttachment.value = file;
+        createFilePreview(file, 'nidAttachment');
+    }
+};
+
+// ফাইল প্রিভিউ তৈরি করুন
+const createFilePreview = (file, type) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        if (type === 'studentPhoto') {
+            studentPhotoPreview.value = e.target.result;
+        } else if (type === 'nidAttachment') {
+            nidAttachmentPreview.value = e.target.result;
+        }
+    };
+    reader.readAsDataURL(file);
+};
+
+// ফাইল রিমুভ করুন
+const removeFile = (type) => {
+    if (type === 'studentPhoto') {
+        studentPhoto.value = null;
+        studentPhotoPreview.value = null;
+    } else if (type === 'nidAttachment') {
+        nidAttachment.value = null;
+        nidAttachmentPreview.value = null;
+    }
+};
+
+// Go back to previous page without using router
+const goBack = () => {
+    window.history.back();
+};
+
+
+
+
+
+
+
+
+
+
+
+
+// const props = defineProps({
+//   modelValue: Object
+// });
+
+const emit = defineEmits(['update:modelValue']);
 
 const divisions = ref([]);
+const presentDistricts = ref([]);
+const presentThanas = ref([]);
 const districts = ref([]);
 const thanas = ref([]);
 
-// Separate filter objects for present and permanent addresses
+// Separate refs for present and permanent address data
 const presentFilters = ref({
   division: '',
   district: '',
@@ -812,16 +948,138 @@ const permanentFilters = ref({
   thana: ''
 });
 
-// Separate refs for present and permanent address data
-const presentDistricts = ref([]);
-const presentThanas = ref([]);
+// Initialize filters from props if they exist
+const initializeFilters = () => {
+  if (props.modelValue && props.modelValue.presernt_DID) {
+    presentFilters.value.division = props.modelValue.presernt_DID;
+  }
+  if (props.modelValue && props.modelValue.present_des_id) {
+    presentFilters.value.district = props.modelValue.present_des_id;
+  }
+  if (props.modelValue && props.modelValue.present_TID) {
+    presentFilters.value.thana = props.modelValue.present_TID;
+  }
+
+  if (props.modelValue && props.modelValue.parmanent_DID) {
+    permanentFilters.value.division = props.modelValue.parmanent_DID;
+  }
+  if (props.modelValue && props.modelValue.parmanent_desId) {
+    permanentFilters.value.district = props.modelValue.parmanent_desId;
+  }
+  if (props.modelValue && props.modelValue.parmanent_TID) {
+    permanentFilters.value.thana = props.modelValue.parmanent_TID;
+  }
+};
+
+// Watch for changes in props.modelValue to initialize filters
+watch(() => props.modelValue, (newValue) => {
+  if (newValue) {
+    initializeFilters();
+  }
+}, { immediate: true });
+
+// Watch for changes in presentFilters and update the form
+watch(presentFilters, async (newValues) => {
+  if (!props.modelValue) return;
+
+  const updatedValue = { ...props.modelValue };
+
+  // Update division
+  if (newValues.division) {
+    const selectedDivision = divisions.value.find(d => d.id == newValues.division);
+    if (selectedDivision) {
+      updatedValue.present_division_name = selectedDivision.Division_U;
+      updatedValue.presernt_DID = selectedDivision.id;
+    }
+  }
+
+  // Update district
+  if (newValues.district) {
+    const selectedDistrict = presentDistricts.value.find(d => d.DesID == newValues.district);
+    if (selectedDistrict) {
+      updatedValue.present_district_name = selectedDistrict.District_U;
+      updatedValue.present_des_id = selectedDistrict.DesID;
+    }
+  }
+
+  // Update thana
+  if (newValues.thana) {
+    const selectedThana = presentThanas.value.find(t => t.TID == newValues.thana);
+    if (selectedThana) {
+      updatedValue.present_thana_name = selectedThana.Thana_U;
+      updatedValue.present_TID = selectedThana.TID;
+    }
+  }
+
+  emit('update:modelValue', updatedValue);
+}, { deep: true });
+
+// Watch for changes in permanentFilters and update the form
+watch(permanentFilters, async (newValues) => {
+  if (!props.modelValue) return;
+
+  const updatedValue = { ...props.modelValue };
+
+  // Update division
+  if (newValues.division) {
+    const selectedDivision = divisions.value.find(d => d.id == newValues.division);
+    if (selectedDivision) {
+      updatedValue.parmanent_division_name = selectedDivision.Division_U;
+      updatedValue.parmanent_DID = selectedDivision.id;
+    }
+  }
+
+  // Update district
+  if (newValues.district) {
+    const selectedDistrict = districts.value.find(d => d.DesID == newValues.district);
+    if (selectedDistrict) {
+      updatedValue.parmanent_district_name = selectedDistrict.District_U;
+      updatedValue.parmanent_desId = selectedDistrict.DesID;
+    }
+  }
+
+  // Update thana
+  if (newValues.thana) {
+    const selectedThana = thanas.value.find(t => t.TID == newValues.thana);
+    if (selectedThana) {
+      updatedValue.parmanent_thana_name = selectedThana.Thana_U;
+      updatedValue.parmanent_TID = selectedThana.TID;
+    }
+  }
+
+  emit('update:modelValue', updatedValue);
+}, { deep: true });
+
+onMounted(async () => {
+  await loadDivisions();
+  initializeFilters();
+
+  // If we have saved values, load the related districts and thanas
+  if (presentFilters.value.division) {
+    await presentHandleDivisionChange();
+
+    if (presentFilters.value.district) {
+      await presentHandleDistrictChange();
+    }
+  }
+
+  if (permanentFilters.value.division) {
+    await handleDivisionChange();
+
+    if (permanentFilters.value.district) {
+      await handleDistrictChange();
+    }
+  }
+});
 
 const loadDivisions = async () => {
   try {
     const response = await axios.get('/api/divisions');
     divisions.value = response.data;
+    return true;
   } catch (error) {
     console.error('Error loading divisions:', error);
+    return false;
   }
 };
 
@@ -829,33 +1087,34 @@ const loadDivisions = async () => {
 const presentHandleDivisionChange = async () => {
   presentFilters.value.district = '';
   presentFilters.value.thana = '';
+  presentDistricts.value = [];
+  presentThanas.value = [];
 
-  if (presentFilters.value.division) {
-    try {
-      const response = await axios.get(`/api/districts/${presentFilters.value.division}`);
-      presentDistricts.value = response.data;
-    } catch (error) {
-      console.error('Error loading districts:', error);
-      presentDistricts.value = [];
-    }
-  } else {
-    presentDistricts.value = [];
+  if (!presentFilters.value.division) {
+    return;
+  }
+
+  try {
+    const response = await axios.get(`/api/districts/${presentFilters.value.division}`);
+    presentDistricts.value = response.data;
+  } catch (error) {
+    console.error('Error loading districts:', error);
   }
 };
 
 const presentHandleDistrictChange = async () => {
   presentFilters.value.thana = '';
+  presentThanas.value = [];
 
-  if (presentFilters.value.district) {
-    try {
-      const response = await axios.get(`/api/thanas/${presentFilters.value.district}`);
-      presentThanas.value = response.data;
-    } catch (error) {
-      console.error('Error loading thanas:', error);
-      presentThanas.value = [];
-    }
-  } else {
-    presentThanas.value = [];
+  if (!presentFilters.value.district) {
+    return;
+  }
+
+  try {
+    const response = await axios.get(`/api/thanas/${presentFilters.value.district}`);
+    presentThanas.value = response.data;
+  } catch (error) {
+    console.error('Error loading thanas:', error);
   }
 };
 
@@ -863,101 +1122,96 @@ const presentHandleDistrictChange = async () => {
 const handleDivisionChange = async () => {
   permanentFilters.value.district = '';
   permanentFilters.value.thana = '';
+  districts.value = [];
+  thanas.value = [];
 
-  if (permanentFilters.value.division) {
-    try {
-      const response = await axios.get(`/api/districts/${permanentFilters.value.division}`);
-      districts.value = response.data;
-    } catch (error) {
-      console.error('Error loading districts:', error);
-      districts.value = [];
-    }
-  } else {
-    districts.value = [];
+  if (!permanentFilters.value.division) {
+    return;
+  }
+
+  try {
+    const response = await axios.get(`/api/districts/${permanentFilters.value.division}`);
+    districts.value = response.data;
+  } catch (error) {
+    console.error('Error loading districts:', error);
   }
 };
 
 const handleDistrictChange = async () => {
   permanentFilters.value.thana = '';
+  thanas.value = [];
 
-  if (permanentFilters.value.district) {
-    try {
-      const response = await axios.get(`/api/thanas/${permanentFilters.value.district}`);
-      thanas.value = response.data;
-    } catch (error) {
-      console.error('Error loading thanas:', error);
-      thanas.value = [];
-    }
-  } else {
-    thanas.value = [];
+  if (!permanentFilters.value.district) {
+    return;
+  }
+
+  try {
+    const response = await axios.get(`/api/thanas/${permanentFilters.value.district}`);
+    thanas.value = response.data;
+  } catch (error) {
+    console.error('Error loading thanas:', error);
   }
 };
 
 
-// Attachment files
-const muhtamimFile = ref(null);
-const muhtamimPreview = ref(null);
-const presidentFile = ref(null);
-const presidentPreview = ref(null);
-const committeeFile = ref(null);
-const committeePreview = ref(null);
 
-// Handle file upload for attachments
-const handleFileUploadMumtahin = (event, type) => {
-    const file = event.target.files[0];
-    if (!file) return;
 
-    // Set the file based on type
-    if (type === 'muhtamim') {
-        muhtamimFile.value = file;
-        createFilePreview(file, 'muhtamim');
-    } else if (type === 'president') {
-        presidentFile.value = file;
-        createFilePreview(file, 'president');
-    } else if (type === 'committee') {
-        committeeFile.value = file;
-        createFilePreview(file, 'committee');
+
+
+
+const updateFormData = () => {
+  // বর্তমান ঠিকানার ডাটা আপডেট
+  if (presentFilters.value.division) {
+    const selectedDivision = divisions.value.find(d => d.id == presentFilters.value.division);
+    if (selectedDivision) {
+      studentInfoForm.present_division_name = selectedDivision.Division_U;
+      studentInfoForm.presernt_DID = selectedDivision.id;
     }
-};
+  }
 
-// Create file preview
-const createFilePreview = (file, type) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        if (type === 'muhtamim') {
-            muhtamimPreview.value = e.target.result;
-        } else if (type === 'president') {
-            presidentPreview.value = e.target.result;
-        } else if (type === 'committee') {
-            committeePreview.value = e.target.result;
-        }
-    };
-    reader.readAsDataURL(file);
-};
-
-// Remove file
-const removeFileMumtahin = (type) => {
-    if (type === 'muhtamim') {
-        muhtamimFile.value = null;
-        muhtamimPreview.value = null;
-    } else if (type === 'president') {
-        presidentFile.value = null;
-        presidentPreview.value = null;
-    } else if (type === 'committee') {
-        committeeFile.value = null;
-        committeePreview.value = null;
+  if (presentFilters.value.district) {
+    const selectedDistrict = presentDistricts.value.find(d => d.DesID == presentFilters.value.district);
+    if (selectedDistrict) {
+      studentInfoForm.present_district_name = selectedDistrict.District_U;
+      studentInfoForm.present_desId = selectedDistrict.DesID;
     }
-};
+  }
 
-// Go back to previous page without using router
-const goBack = () => {
-    window.history.back();
-};
+  if (presentFilters.value.thana) {
+    const selectedThana = presentThanas.value.find(t => t.TID == presentFilters.value.thana);
+    if (selectedThana) {
+      studentInfoForm.present_thana_name = selectedThana.Thana_U;
+      studentInfoForm.present_TID = selectedThana.TID;
+    }
+  }
+
+  // স্থায়ী ঠিকানার ডাটা আপডেট
+  if (permanentFilters.value.division) {
+    const selectedDivision = divisions.value.find(d => d.id == permanentFilters.value.division);
+    if (selectedDivision) {
+      studentInfoForm.parmanent_division_name = selectedDivision.Division_U;
+      studentInfoForm.parmanent_DID = selectedDivision.id;
+    }
+  }
+
+  if (permanentFilters.value.district) {
+    const selectedDistrict = districts.value.find(d => d.DesID == permanentFilters.value.district);
+    if (selectedDistrict) {
+      studentInfoForm.parmanent_district_name = selectedDistrict.District_U;
+      studentInfoForm.parmanent_desId = selectedDistrict.DesID;
+    }
+  }
+
+  if (permanentFilters.value.thana) {
+    const selectedThana = thanas.value.find(t => t.TID == permanentFilters.value.thana);
+    if (selectedThana) {
+      studentInfoForm.parmanent_thana_name = selectedThana.Thana_U;
+      studentInfoForm.parmanent_TID = selectedThana.TID;
+    }
+  }
+}
 
 
-onMounted(() => {
-  loadDivisions();
-});
 
 
 </script>
