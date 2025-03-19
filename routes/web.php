@@ -64,21 +64,8 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
 
 
 
+Route::post('/save-subject-selection', [MarhalaListController::class, 'saveSubjectSelection'])->name('api.save-subject-selection');
 
-    // Route::put('/subject-settings/{id}', [SubjectSettingsController::class, 'getupdate'])
-    // ->name('subjects_for_Admin.subject_setings_update');
-
-
-
-
-
-    // Route::get('/subject-selection/{marhalaId?}', [MarhalaListController::class, 'getsubjectForMadrasha'])->name('subject.selection');
-
-
-    Route::get('/api/subject-selection/{marhalaId}', [MarhalaListController::class, 'getsubjectForMadrasha'])->name('subject.selection');
-
-    Route::get('/subjects-settings/{id}/edit', [MarhalaListController::class, 'subedit'])
-    ->name('subjects_for_Admin.subject_setings_edit');
 
     Route::get('/api/subject-settings/{id}', [MarhalaListController::class, 'getSubjectsettings'])->name('api.subject-settings');
 

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 use App\Models\admin\marhala_for_admin\MarhalaSubject;
 use App\Models\admin\marhala_for_admin\subject_settings;
+use App\Models\optionalSubjects;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
+
 class MarhalaListController extends Controller
 {
 
@@ -70,73 +74,45 @@ public function getSubjects($marhalaId)
 
 
 // =====================================================================
-
-public function subedit($id)
+public function saveSubjectSelection(Request $request)
 {
-    return Inertia::render('subjects_for_Admin/subject_setings_edit', [
-        'id' => $id
+    $validated = $request->validate([
+        'marhalaId' => 'required',
+        'selectedSubjects' => 'required|array',
+        'selectedSubjects.*' => 'string'
     ]);
-}
 
+    $user = Auth::user();
+    $marhalaId = $validated['marhalaId'];
 
+    // Get the selected subject details
+    foreach ($validated['selectedSubjects'] as $subjectCode) {
+        // Find the subject details from marhala_subjects table
+        $subject = MarhalaSubject::where('subject_code', $subjectCode)
+            ->where('marhala_id', $marhalaId)
+            ->first();
 
-public function editSubject($id)
-{
-    $subject = subject_settings::findOrFail($id);
-    return Inertia::render('subjects_for_Admin/subject_setings_edit', [
-        'subject' => $subject
-    ]);
-}
-
-
-
-public function getSubjectsettings($id)
-{
-    $subjectsettings = subject_settings::where('id', $id)->first();
-
-    if (!$subjectsettings) {
-        return response()->json(['error' => 'Subject settings not found'], 404);
+        if ($subject) {
+            // Create or update the optional subject selection
+            optionalSubjects::updateOrCreate(
+                [
+                    'user_id' => $user->id,  // Changed from 'user' to 'user_id'
+                    'marhala_id' => $marhalaId,
+                    'subject_code' => $subjectCode,
+                ],
+                [
+                    'name_bangla' => $subject->name_bangla ?? $subject->name ?? '',
+                    'is_selected' => 1  // Mark as selected
+                ]
+            );
+        }
     }
 
-    return response()->json($subjectsettings);
-}
-
-
-
-public function updateSubjectSettings(Request $request, $id)
-{
-    $request->validate([
-
-        'syllabus_type' => 'required',
-        'markaz_type' => 'required',
-        'subject_type' => 'required',
-        'student_type' => 'required',
-        'total_marks' => 'required|numeric',
-        'pass_marks' => 'required|numeric',
-        'status' => 'required',
-    ]);
-
-    $subjectSetting = subject_settings::findOrFail($id);
-
-    $subjectSetting->update([
-
-        'syllabus_type' => $request->syllabus_type,
-        'markaz_type' => $request->markaz_type,
-        'subject_type' => $request->subject_type,
-        'student_type' => $request->student_type,
-        'total_marks' => $request->total_marks,
-        'pass_marks' => $request->pass_marks,
-        'status' => $request->status,
-    ]);
-
     return response()->json([
-        'success' => true,
-        'message' => 'বিষয় সফলভাবে আপডেট করা হয়েছে।'
+        'message' => 'বিষয় নির্বাচন সফলভাবে সংরক্ষণ করা হয়েছে।',
+        'status' => 'success'
     ]);
 }
-
-
-
 
 
 

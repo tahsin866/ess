@@ -89,7 +89,11 @@ Route::post('/save-student-info', [ExamRegistrationController::class, 'saveStude
 // মাদরাসা পেনেলের সাবজেক্ট সেটিংস
 
 Route::get('/subjects/{marhalaId}', [MarhalaListController::class, 'getSubjects'])->name('api.subjects');
-Route::get('/api/subject-selection/{marhalaId}', [MarhalaListController::class, 'getsubjectForMadrasha'])->name('subject.selection');
+
+
+Route::post('/save-subject-selection', [MarhalaListController::class, 'saveSubjectSelection'])->name('api.save-subject-selection');
+
+
 
 });
 

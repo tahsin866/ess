@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\admin\marhala_for_admin\Marhala;
 use App\Http\Controllers\ScheduleSetupController;
-use App\Http\Controllers\ExamRegistrationController;
+use App\Http\Controllers\MarhalaListController;
 use App\Http\Controllers\MadrashaController;
 use App\Http\Controllers\SubjectSettingsController;
 use App\Http\Controllers\ExamSetupController;
@@ -187,6 +187,6 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
 
 
 
-
+    Route::post('/save-subject-selection', [MarhalaListController::class, 'saveSubjectSelection'])->name('api.save-subject-selection');
 
 

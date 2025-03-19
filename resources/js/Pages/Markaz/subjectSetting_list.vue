@@ -58,49 +58,55 @@
 
             <!-- ঐচ্ছিক বিষয় -->
             <div class="mb-8" v-if="optionalSubjects.length > 0">
-              <div class="flex items-center mb-3">
-                <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-white mr-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                    <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-amber-800">ঐচ্ছিক বিষয়সমূহ</h3>
-              </div>
+    <div class="flex items-center mb-3">
+      <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-white mr-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+          <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-amber-800">ঐচ্ছিক বিষয়সমূহ</h3>
+    </div>
 
-              <div class="bg-white rounded-lg border border-amber-200 overflow-hidden">
-                <div class="bg-amber-600 text-white py-2 px-4 font-medium flex items-center justify-between">
-
-                  <span class="bg-white text-amber-700 px-3 py-1 rounded-full text-sm font-bold">
-                 যে কোন একটি ১ টি নির্বাচন করুন
-                  </span>
+    <div class="bg-white rounded-lg border border-amber-200 overflow-hidden">
+      <div class="bg-amber-600 text-white py-2 px-4 font-medium flex items-center justify-between">
+        <span class="bg-white text-amber-700 px-3 py-1 rounded-full text-sm font-bold">
+          যে কোন একটি ১ টি নির্বাচন করুন
+        </span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="bg-amber-50">
+              <th class="border-b border-amber-200 p-3 text-left text-sm font-medium text-amber-800 w-16">নির্বাচন</th>
+              <th class="border-b border-amber-200 p-3 text-left text-sm font-medium text-amber-800 w-32">কোড</th>
+              <th class="border-b border-amber-200 p-3 text-left text-sm font-medium text-amber-800">বিষয়</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(subject, index) in optionalSubjects" :key="index" class="hover:bg-amber-50 transition-colors">
+              <td class="border-b border-amber-100 p-3 text-center">
+                <div class="flex justify-center">
+                  <label class="inline-flex items-center" :class="{ 'opacity-50': isDisabled(subject.code) }">
+                    <input
+                      type="checkbox"
+                      :value="subject.code"
+                      :checked="selectedOptionalSubject === subject.code"
+                      @change="toggleSubject(subject.code)"
+                      :disabled="isDisabled(subject.code)"
+                      class="form-checkbox h-5 w-5 text-amber-600 rounded border-amber-300 focus:ring-amber-500"
+                    >
+                  </label>
                 </div>
-                <div class="overflow-x-auto">
-                  <table class="w-full border-collapse">
-                    <thead>
-                      <tr class="bg-amber-50">
-                        <th class="border-b border-amber-200 p-3 text-left text-sm font-medium text-amber-800 w-16">নির্বাচন</th>
-                        <th class="border-b border-amber-200 p-3 text-left text-sm font-medium text-amber-800 w-32">কোড</th>
-                        <th class="border-b border-amber-200 p-3 text-left text-sm font-medium text-amber-800">বিষয়</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(subject, index) in optionalSubjects" :key="index" class="hover:bg-amber-50 transition-colors">
-                        <td class="border-b border-amber-100 p-3 text-center">
-                          <div class="flex justify-center">
-                            <label class="inline-flex items-center">
-                              <input type="checkbox" v-model="selectedSubjects" :value="subject.code" class="form-checkbox h-5 w-5 text-amber-600 rounded border-amber-300 focus:ring-amber-500">
-                            </label>
-                          </div>
-                        </td>
-                        <td class="border-b border-amber-100 p-3 text-sm font-medium text-amber-700">{{ subject.code }}</td>
-                        <td class="border-b border-amber-100 p-3 text-sm text-gray-700">{{ subject.name }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+              </td>
+              <td class="border-b border-amber-100 p-3 text-sm font-medium text-amber-700">{{ subject.code }}</td>
+              <td class="border-b border-amber-100 p-3 text-sm text-gray-700">{{ subject.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
             <!-- সাবমিট বাটন -->
             <div class="flex justify-end mt-8" v-if="optionalSubjects.length > 0">
@@ -134,7 +140,7 @@ const getMarhalaId = () => {
 const marhalaId = getMarhalaId();
 
 const mandatorySubjects = ref([]);
-const optionalSubjects = ref([]);
+// const optionalSubjects = ref([]);
 const selectedSubjects = ref([]);
 const loading = ref(true);
 
@@ -168,7 +174,7 @@ const fetchSubjects = async () => {
   }
 };
 
-const submitSelection = () => {
+const submitSelection = async () => {
   if (selectedSubjects.value.length === 0) {
     alert("দয়া করে কমপক্ষে একটি ঐচ্ছিক বিষয় নির্বাচন করুন।");
     return;
@@ -179,20 +185,69 @@ const submitSelection = () => {
     return;
   }
 
-  alert("আপনি নির্বাচিত বিষয়সমূহ: " + selectedSubjects.value.join(", "));
+  try {
+    // Use Axios to make a POST request
+    const response = await axios({
+      method: 'post',
+      url: '/api/save-subject-selection',
+      data: {
+        marhalaId: marhalaId,
+        selectedSubjects: selectedSubjects.value
+      },
+    //   headers: {
+    //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    //   }
+    });
 
-  // Here you can send data to the server
-  // axios.post('/api/save-subject-selection', {
-  //   marhalaId: marhalaId,
-  //   selectedSubjects: selectedSubjects.value
-  // })
-  // .then(response => {
-  //   // Handle success
-  // })
-  // .catch(error => {
-  //   // Handle error
-  // });
+    alert(response.data.message || "আপনি নির্বাচিত বিষয়সমূহ সফলভাবে সংরক্ষণ করা হয়েছে।");
+  } catch (error) {
+    console.error("Error saving subject selection:", error);
+    if (error.response) {
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+    }
+    alert("বিষয় নির্বাচন সংরক্ষণ করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
+  }
 };
+
+
+
+
+
+// Props (if needed)
+// const props = defineProps(['yourPropName']);
+
+// Emits (if needed)
+// const emit = defineEmits(['update:selectedSubject']);
+
+// Reactive state
+const optionalSubjects = ref([
+  // Your optional subjects array here
+  // Example: { code: '101', name: 'Subject 1' }
+]);
+const selectedOptionalSubject = ref(null);
+
+// Methods
+const toggleSubject = (code) => {
+  // If the clicked checkbox is already selected, unselect it
+  if (selectedOptionalSubject.value === code) {
+    selectedOptionalSubject.value = null;
+  } else {
+    // Otherwise, select the clicked checkbox
+    selectedOptionalSubject.value = code;
+  }
+
+  // If you need to emit the change to a parent component
+  // emit('update:selectedSubject', selectedOptionalSubject.value);
+};
+
+const isDisabled = (code) => {
+  // Return true if another subject is selected (not this one)
+  return selectedOptionalSubject.value !== null && selectedOptionalSubject.value !== code;
+};
+
+
+
 </script>
 <style>
 /* Add this to your CSS to import Noto Sans Bengali font */
