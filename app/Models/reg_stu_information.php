@@ -24,11 +24,11 @@ class reg_stu_information extends Model
         'present_division_name',
         'present_DID',
         'present_district_name',
-        // 'present_district_id',
+        'board_name',
         'present_thana_name',
         // 'present_thana_id',
-        // 'exam_id',
-        'exam_name_bn',
+        'exam_id',
+        'exam_name_Bn',
         'roll',
         'reg_id',
         'past_Roll',
@@ -42,6 +42,7 @@ class reg_stu_information extends Model
         'current_markaz',
         'current_class',
         'exam_books_name',
+        'mobile_no',
 
 'present_division_name' ,
             'presernt_DID',
@@ -58,7 +59,18 @@ class reg_stu_information extends Model
             'parmanent_thana_name',
             'parmanent_TID' ,
             'student_image',
-        'NID_attach'
-
+        'NID_attach',
+         'is_old_student',
+'madrasha_id',
+'marhala_id'
     ];
+
+
+    public function logs()
+    {
+        return $this->hasMany(reg_stu_information_log::class, 'reg_student_id');
+    }
+
+
+
 }

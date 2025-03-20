@@ -74,16 +74,26 @@ public function getSubjects($marhalaId)
 
 
 // =====================================================================
+
+
 public function saveSubjectSelection(Request $request)
 {
     $validated = $request->validate([
         'marhalaId' => 'required',
         'selectedSubjects' => 'required|array',
-        'selectedSubjects.*' => 'string'
+        'selectedSubjects.*' => 'string',
+        'previousSelection' => 'nullable|string'
     ]);
 
     $user = Auth::user();
     $marhalaId = $validated['marhalaId'];
+    $previousSelection = $validated['previousSelection'] ?? null;
+
+    // First, unselect all previously selected optional subjects for this user and marhala
+    optionalSubjects::where('user_id', $user->id)
+        ->where('marhala_id', $marhalaId)
+        ->where('is_selected', 1)
+        ->update(['is_selected' => 0]);
 
     // Get the selected subject details
     foreach ($validated['selectedSubjects'] as $subjectCode) {
@@ -96,7 +106,7 @@ public function saveSubjectSelection(Request $request)
             // Create or update the optional subject selection
             optionalSubjects::updateOrCreate(
                 [
-                    'user_id' => $user->id,  // Changed from 'user' to 'user_id'
+                    'user_id' => $user->id,
                     'marhala_id' => $marhalaId,
                     'subject_code' => $subjectCode,
                 ],
@@ -113,6 +123,27 @@ public function saveSubjectSelection(Request $request)
         'status' => 'success'
     ]);
 }
+
+
+
+public function getUserSubjectSelection($marhalaId)
+{
+    $user = Auth::user();
+
+    $selection = optionalSubjects::where('user_id', $user->id)
+        ->where('marhala_id', $marhalaId)
+        ->where('is_selected', 1)
+        ->first();
+
+    return response()->json([
+        'selection' => $selection
+    ]);
+}
+
+
+
+
+
 
 
 

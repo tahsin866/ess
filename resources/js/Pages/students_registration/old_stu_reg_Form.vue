@@ -142,40 +142,42 @@ const getEditUrl = (student) => {
 
 <template>
  <AuthenticatedLayout>
-    <div class="mb-8 mx-5 mt-5">
+    <div class="mb-8 mt-5 mx-5">
     <div class="bg-white rounded-md shadow-md">
       <!-- Header Section with Islamic Pattern -->
       <header class="bg-emerald-900 p-3 rounded-t-md islamic-pattern">
         <div class="flex justify-between items-center">
-            <h2 class="text-white text-2xl font-medium flex items-center gap-2">
+            <h2 class="flex text-2xl text-white font-medium gap-2 items-center">
                 {{ examName }}: {{ marhalaName }}
             </h2>
 
           <div class="flex gap-4">
             <Link
-              :href="route('students_registration.new_stu_reg_Form')"
-              class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-sm transition-colors duration-200 flex items-center gap-2"
-            >
-              <i class="fas fa-user-plus"></i>
-              <span>নতুন ছাত্র নিবন্ধন</span>
-            </Link>
+  :href="route('students_registration.new_stu_reg_Form', { marhalaId: currentMarhalaId })"
+  class="flex bg-emerald-600 rounded-sm text-white duration-200 gap-2 hover:bg-emerald-700 items-center px-4 py-2 transition-colors"
+>
+  <i class="fa-user-plus fas"></i>
+  <span>নতুন ছাত্র নিবন্ধন</span>
+</Link>
 
-            <button class="inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-sm hover:bg-teal-700 transition-colors">
-              <i class="fas fa-list-ul mr-2"></i>
+            <Link
+            :href="route('students_registration.student_reg_table')"
+            class="bg-teal-600 rounded-sm text-white hover:bg-teal-700 inline-flex items-center px-4 py-2 transition-colors">
+              <i class="fa-list-ul fas mr-2"></i>
               নিবন্ধন তালিকা
-            </button>
+            </Link>
           </div>
         </div>
       </header>
 
       <!-- Search Section with Islamic Design -->
-      <div class="p-6 bg-emerald-50">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+      <div class="bg-emerald-50 p-6">
+        <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-4">
           <div class="relative">
-            <i class="fas fa-school absolute left-3 top-1/2 -translate-y-1/2 text-emerald-600"></i>
+            <i class="text-emerald-600 -translate-y-1/2 absolute fa-school fas left-3 top-1/2"></i>
             <select
               v-model="selectedMarhala"
-              class="w-full pl-10 pr-4 py-2 border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              class="border-emerald-200 rounded-sm w-full focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 pl-10 pr-4 py-2"
             >
               <option value="">মারহালা নির্বাচন করুন</option>
               <option
@@ -189,10 +191,10 @@ const getEditUrl = (student) => {
           </div>
 
           <div class="relative">
-            <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-emerald-600"></i>
+            <i class="text-emerald-600 -translate-y-1/2 absolute fa-calendar-alt fas left-3 top-1/2"></i>
             <select
               v-model="selectedYear"
-              class="w-full pl-10 pr-4 py-2 border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              class="border-emerald-200 rounded-sm w-full focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 pl-10 pr-4 py-2"
             >
               <option value="">পাশের সন নির্বাচন করুন</option>
               <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
@@ -200,50 +202,50 @@ const getEditUrl = (student) => {
           </div>
 
           <div class="relative">
-            <i class="fas fa-id-card absolute left-3 top-1/2 -translate-y-1/2 text-emerald-600"></i>
+            <i class="text-emerald-600 -translate-y-1/2 absolute fa-id-card fas left-3 top-1/2"></i>
             <input
               v-model="rollNumber"
               type="text"
               placeholder="রোল নম্বর"
-              class="w-full pl-10 pr-4 py-2 border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              class="border-emerald-200 rounded-sm w-full focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 pl-10 pr-4 py-2"
             >
           </div>
 
           <div class="relative">
-            <i class="fas fa-address-card absolute left-3 top-1/2 -translate-y-1/2 text-emerald-600"></i>
+            <i class="text-emerald-600 -translate-y-1/2 absolute fa-address-card fas left-3 top-1/2"></i>
             <input
               v-model="registrationNumber"
               type="text"
               placeholder="রেজিস্ট্রেশন নম্বর"
-              class="w-full pl-10 pr-4 py-2 border-emerald-200 rounded-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              class="border-emerald-200 rounded-sm w-full focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 pl-10 pr-4 py-2"
             >
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
-          <div class="md:col-start-4 flex gap-4">
+        <div class="grid grid-cols-1 gap-6 items-start md:grid-cols-4">
+          <div class="flex gap-4 md:col-start-4">
             <button
               @click="searchStudents"
-              class="px-4 py-2 bg-emerald-600 text-white rounded-sm hover:bg-emerald-700 transition-colors flex items-center gap-2"
+              class="flex bg-emerald-600 rounded-sm text-white gap-2 hover:bg-emerald-700 items-center px-4 py-2 transition-colors"
               :disabled="loading"
             >
-              <i class="fas fa-search"></i>
+              <i class="fa-search fas"></i>
               <span v-if="loading">অপেক্ষা করুন...</span>
               <span v-else>সার্চ করুন</span>
             </button>
             <button
               @click="resetSearch"
-              class="px-4 py-2 bg-red-600 text-white rounded-sm hover:bg-red-700 transition-colors flex items-center gap-2"
+              class="flex bg-red-600 rounded-sm text-white gap-2 hover:bg-red-700 items-center px-4 py-2 transition-colors"
             >
-              <i class="fas fa-undo"></i>
+              <i class="fa-undo fas"></i>
               রেসেট
             </button>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="students.length > 0" class="w-full p-6 bg-emerald-50 border border-emerald-200 mt-8">
-    <table class="w-full border-collapse">
+    <div v-if="students.length > 0" class="bg-emerald-50 border border-emerald-200 p-6 w-full mt-8">
+    <table class="border-collapse w-full">
       <thead class="bg-emerald-700 text-white">
         <tr>
           <th class="p-4 text-left">ছাত্রের তথ্য</th>
@@ -255,9 +257,9 @@ const getEditUrl = (student) => {
         <tr v-for="student in students" :key="student.id" class="border-b border-emerald-200">
           <td class="p-4">
             <div class="space-y-2">
-              <div class="flex items-center gap-2">
-                <i class="fas fa-user-graduate text-emerald-700"></i>
-                <span class="font-semibold text-xl">{{ student.Name }}</span>
+              <div class="flex gap-2 items-center">
+                <i class="text-emerald-700 fa-user-graduate fas"></i>
+                <span class="text-xl font-semibold">{{ student.Name }}</span>
               </div>
               <p class="text-xl">পিতা - {{ student.Father }}</p>
               <p class="text-xl">মাতা - {{ student.Mother || '' }}</p>
@@ -298,23 +300,14 @@ const getEditUrl = (student) => {
           </td>
           <td class="p-4 text-center">
             <div class="flex flex-col gap-3">
-                <!-- <Link
-  :href="route('students_registration.old_stu_reg_edit', {
-    roll: student.Roll,
-    reg_id: student.reg_id,
-    CID: student.CID
-  })"
-  class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
-  <i class="fas fa-edit"></i>
-  সংশোধন
-</Link> -->
+
 
 
 
 <Link
     :href="getEditUrl(student)"
-    class="bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto">
-    <i class="fas fa-edit"></i>
+    class="flex bg-emerald-700 justify-center rounded-md text-white duration-200 gap-2 hover:bg-emerald-800 items-center mx-auto px-6 py-2 transition-colors">
+    <i class="fa-edit fas"></i>
     সংশোধন
   </Link>
 
@@ -327,11 +320,11 @@ const getEditUrl = (student) => {
     </table>
   </div>
 
-    <div v-else-if="loading" class="w-full p-6 bg-emerald-50 border border-emerald-200 mt-8 text-center">
+    <div v-else-if="loading" class="bg-emerald-50 border border-emerald-200 p-6 text-center w-full mt-8">
       <p class="text-lg">ডাটা লোড হচ্ছে...</p>
     </div>
 
-    <div v-else-if="rollNumber || registrationNumber || selectedMarhala || selectedYear" class="w-full p-6 bg-emerald-50 border border-emerald-200 mt-8 text-center">
+    <div v-else-if="rollNumber || registrationNumber || selectedMarhala || selectedYear" class="bg-emerald-50 border border-emerald-200 p-6 text-center w-full mt-8">
       <p class="text-lg">কোন ডাটা পাওয়া যায়নি</p>
     </div>
   </div>

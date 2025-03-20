@@ -83,4 +83,41 @@ public function updateStudentInfo(Request $request)
     return redirect()->back()->with('success', 'ছাত্রের তথ্য সফলভাবে আপডেট করা হয়েছে');
 }
 
+
+
+
+
+
+
+
+
+public function getStudents()
+{
+    $students = reg_stu_information::select(
+        'id',
+        'student_image',
+        'name_bn',
+        'father_name_bn',
+        'current_madrasha',
+        'Date_of_birth',
+        'student_type',
+        'exam_name_Bn'
+    )->get();
+
+    return response()->json($students);
+}
+
+public function view($id)
+{
+    $student = reg_stu_information::findOrFail($id);
+    return Inertia::render('Students/View', ['student' => $student]);
+}
+
+
+
+
+
+
+
+
 }

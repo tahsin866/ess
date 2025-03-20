@@ -2,7 +2,7 @@
 use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ExamRegistrationController;
+use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\SubjectSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -64,10 +64,24 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
 
 
 
-Route::post('/save-subject-selection', [MarhalaListController::class, 'saveSubjectSelection'])->name('api.save-subject-selection');
+
 
 
     Route::get('/api/subject-settings/{id}', [MarhalaListController::class, 'getSubjectsettings'])->name('api.subject-settings');
+
+
+
+
+
+    Route::get('/students-registration', [StudentRegistrationController::class, 'getStudentdata'])->name('students_registration.index');
+    Route::get('/students-registration/{id}', [StudentRegistrationController::class, 'view'])->name('students_registration.stu_reg_view');
+
+
+
+
+
+
+
 
 
 require __DIR__ . '/auth.php';

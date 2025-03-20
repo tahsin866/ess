@@ -3,6 +3,7 @@
 use App\Http\Controllers\MarhalaController;
 use App\Http\Controllers\ExamRegistrationController;
 use App\Http\Controllers\MarkazAgreementController;
+use App\Http\Controllers\StudentRegistrationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -190,3 +191,5 @@ Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStud
 // Add this route to update student data
 
 
+Route::get('/students-registration', [StudentRegistrationController::class, 'index'])->name('students_registration.index');
+Route::get('/students-registration/{id}', [StudentRegistrationController::class, 'view'])->name('students_registration.stu_reg_view');
