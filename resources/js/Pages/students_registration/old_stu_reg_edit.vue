@@ -425,148 +425,148 @@
 
                         <!-- Address Section -->
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-  <!-- Present Address -->
-  <div class="bg-white border border-emerald-100 rounded-md shadow">
-    <div class="bg-gradient-to-r rounded-t-md from-emerald-800 overflow-hidden px-6 py-3 relative to-emerald-600">
-      <div class="bg-pattern absolute inset-0 opacity-10"></div>
-      <div class="flex gap-3 items-center relative z-10">
-        <i class="text-2xl text-white fa-map-marker-alt fas"></i>
-        <h5 class="text-white text-xl font-arabic">বর্তমান ঠিকানা</h5>
-      </div>
-    </div>
+                <!-- Present Address -->
+                <div class="bg-white border border-emerald-100 rounded-md shadow">
+                    <div
+                        class="bg-gradient-to-r rounded-t-md from-emerald-800 overflow-hidden px-6 py-3 relative to-emerald-600">
+                        <div class="bg-pattern absolute inset-0 opacity-10"></div>
+                        <div class="flex gap-3 items-center relative z-10">
+                            <i class="text-2xl text-white fa-map-marker-alt fas"></i>
+                            <h5 class="text-white text-xl font-arabic">বর্তমান ঠিকানা</h5>
+                        </div>
+                    </div>
 
-    <div class="bg-opacity-5 bg-white p-6">
-      <div class="grid grid-cols-1 gap-4">
-        <div class="relative">
-          <label class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
-            বিভাগ
-          </label>
-          <div class="relative">
-            <select
-              v-model="presentFilters.division"
-              @change="presentHandleDivisionChange"
-              class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2"
-            >
-              <option value="">সকল</option>
-              <option v-for="division in divisions" :key="division.id" :value="division.id">
-                {{ division.Division_U }}
-              </option>
-            </select>
-            <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0"></div>
-          </div>
-        </div>
+                    <div class="bg-opacity-5 bg-white p-6">
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="relative">
+                                <label
+                                    class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
+                                    বিভাগ
+                                </label>
+                                <div class="relative">
+                                    <select v-model="presentFilters.division" @change="presentHandleDivisionChange"
+                                        class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
+                                        <option value="">সকল</option>
+                                        <option v-for="division in divisions" :key="division.id" :value="division.id">
+                                            {{ division.Division }}
+                                        </option>
+                                    </select>
+                                    <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="relative">
-          <label class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
-            জেলা
-          </label>
-          <div class="relative">
-            <select
-              v-model="presentFilters.district"
-              @change="presentHandleDistrictChange"
-              class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2"
-            >
-              <option value="">সকল</option>
-              <option v-for="district in presentDistricts" :key="district.DesID" :value="district.DesID">
-                {{ district.District_U }}
-              </option>
-            </select>
-            <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0"></div>
-          </div>
-        </div>
+                            <div class="relative">
+                                <label
+                                    class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
+                                    জেলা
+                                </label>
+                                <div class="relative">
+                                    <select v-model="presentFilters.district" @change="presentHandleDistrictChange"
+                                        class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
+                                        <option value="">সকল</option>
+                                        <option v-for="district in presentDistricts" :key="district.DesID"
+                                            :value="district.DesID">
+                                            {{ district.District }}
+                                        </option>
+                                    </select>
+                                    <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="relative">
-          <label class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
-            থানা/উপজেলা
-          </label>
-          <div class="relative">
-            <select
-              v-model="presentFilters.thana"
-              class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2"
-            >
-              <option value="">সকল</option>
-              <option v-for="thana in presentThanas" :key="thana.TID" :value="thana.TID">
-                {{ thana.Thana_U }}
-              </option>
-            </select>
-            <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                            <div class="relative">
+                                <label
+                                    class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
+                                    থানা/উপজেলা
+                                </label>
+                                <div class="relative">
+                                    <select v-model="presentFilters.thana"
+                                        class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
+                                        <option value="">সকল</option>
+                                        <option v-for="thana in presentThanas" :key="thana.TID" :value="thana.TID">
+                                            {{ thana.Thana }}
+                                        </option>
+                                    </select>
+                                    <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-  <!-- Permanent Address -->
-  <div class="bg-white border border-emerald-100 rounded-md shadow">
-    <div class="bg-gradient-to-r rounded-t-md from-emerald-800 overflow-hidden px-6 py-3 relative to-emerald-600">
-      <div class="bg-pattern absolute inset-0 opacity-10"></div>
-      <div class="flex gap-3 items-center relative z-10">
-        <i class="text-2xl text-white fa-home fas"></i>
-        <h5 class="text-white text-xl font-arabic">স্থায়ী ঠিকানা</h5>
-      </div>
-    </div>
+                <!-- Permanent Address -->
+                <div class="bg-white border border-emerald-100 rounded-md shadow">
+                    <div
+                        class="bg-gradient-to-r rounded-t-md from-emerald-800 overflow-hidden px-6 py-3 relative to-emerald-600">
+                        <div class="bg-pattern absolute inset-0 opacity-10"></div>
+                        <div class="flex gap-3 items-center relative z-10">
+                            <i class="text-2xl text-white fa-home fas"></i>
+                            <h5 class="text-white text-xl font-arabic">স্থায়ী ঠিকানা</h5>
+                        </div>
+                    </div>
 
-    <div class="bg-opacity-5 bg-white p-6">
-      <div class="grid grid-cols-1 gap-4">
-        <div class="relative">
-          <label class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
-            বিভাগ
-          </label>
-          <div class="relative">
-            <select
-              v-model="permanentFilters.division"
-              @change="handleDivisionChange"
-              class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2"
-            >
-              <option value="">সকল</option>
-              <option v-for="division in divisions" :key="division.id" :value="division.id">
-                {{ division.Division_U }}
-              </option>
-            </select>
-            <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0"></div>
-          </div>
-        </div>
+                    <div class="bg-opacity-5 bg-white p-6">
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="relative">
+                                <label
+                                    class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
+                                    বিভাগ
+                                </label>
+                                <div class="relative">
+                                    <select v-model="permanentFilters.division" @change="handleDivisionChange"
+                                        class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
+                                        <option value="">সকল</option>
+                                        <option v-for="division in divisions" :key="division.id" :value="division.id">
+                                            {{ division.Division }}
+                                        </option>
+                                    </select>
+                                    <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="relative">
-          <label class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
-            জেলা
-          </label>
-          <div class="relative">
-            <select
-              v-model="permanentFilters.district"
-              @change="handleDistrictChange"
-              class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2"
-            >
-              <option value="">সকল</option>
-              <option v-for="district in districts" :key="district.DesID" :value="district.DesID">
-                {{ district.District_U }}
-              </option>
-            </select>
-            <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0"></div>
-          </div>
-        </div>
+                            <div class="relative">
+                                <label
+                                    class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
+                                    জেলা
+                                </label>
+                                <div class="relative">
+                                    <select v-model="permanentFilters.district" @change="handleDistrictChange"
+                                        class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
+                                        <option value="">সকল</option>
+                                        <option v-for="district in districts" :key="district.DesID"
+                                            :value="district.DesID">
+                                            {{ district.District }}
+                                        </option>
+                                    </select>
+                                    <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="relative">
-          <label class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
-            থানা/উপজেলা
-          </label>
-          <div class="relative">
-            <select
-              v-model="permanentFilters.thana"
-              class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2"
-            >
-              <option value="">সকল</option>
-              <option v-for="thana in thanas" :key="thana.TID" :value="thana.TID">
-                {{ thana.Thana_U }}
-              </option>
-            </select>
-            <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                            <div class="relative">
+                                <label
+                                    class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
+                                    থানা/উপজেলা
+                                </label>
+                                <div class="relative">
+                                    <select v-model="permanentFilters.thana"
+                                        class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
+                                        <option value="">সকল</option>
+                                        <option v-for="thana in thanas" :key="thana.TID" :value="thana.TID">
+                                            {{ thana.Thana }}
+                                        </option>
+                                    </select>
+                                    <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
                         <!-- Attachment Section -->
                         <div class="bg-white border border-emerald-100 rounded-md shadow">
@@ -731,6 +731,8 @@ const studentInfoForm = useForm({
     current_class: '',
     exam_books_name: '',
     mobile_no: '',
+    user_name: '',
+    user_id: '',
 
 
     present_division_name: '',
@@ -1199,7 +1201,7 @@ const updateFormData = () => {
   if (presentFilters.value.division) {
     const selectedDivision = divisions.value.find(d => d.id == presentFilters.value.division);
     if (selectedDivision) {
-      studentInfoForm.present_division_name = selectedDivision.Division_U;
+      studentInfoForm.present_division_name = selectedDivision.Division;
       studentInfoForm.presernt_DID = selectedDivision.id;
     }
   }
@@ -1207,7 +1209,7 @@ const updateFormData = () => {
   if (presentFilters.value.district) {
     const selectedDistrict = presentDistricts.value.find(d => d.DesID == presentFilters.value.district);
     if (selectedDistrict) {
-      studentInfoForm.present_district_name = selectedDistrict.District_U;
+      studentInfoForm.present_district_name = selectedDistrict.District;
       studentInfoForm.present_desId = selectedDistrict.DesID;
     }
   }
@@ -1215,7 +1217,7 @@ const updateFormData = () => {
   if (presentFilters.value.thana) {
     const selectedThana = presentThanas.value.find(t => t.TID == presentFilters.value.thana);
     if (selectedThana) {
-      studentInfoForm.present_thana_name = selectedThana.Thana_U;
+      studentInfoForm.present_thana_name = selectedThana.Thana;
       studentInfoForm.present_TID = selectedThana.TID;
     }
   }
@@ -1224,7 +1226,7 @@ const updateFormData = () => {
   if (permanentFilters.value.division) {
     const selectedDivision = divisions.value.find(d => d.id == permanentFilters.value.division);
     if (selectedDivision) {
-      studentInfoForm.parmanent_division_name = selectedDivision.Division_U;
+      studentInfoForm.parmanent_division_name = selectedDivision.Division;
       studentInfoForm.parmanent_DID = selectedDivision.id;
     }
   }
@@ -1232,7 +1234,7 @@ const updateFormData = () => {
   if (permanentFilters.value.district) {
     const selectedDistrict = districts.value.find(d => d.DesID == permanentFilters.value.district);
     if (selectedDistrict) {
-      studentInfoForm.parmanent_district_name = selectedDistrict.District_U;
+      studentInfoForm.parmanent_district_name = selectedDistrict.District;
       studentInfoForm.parmanent_desId = selectedDistrict.DesID;
     }
   }
@@ -1240,7 +1242,7 @@ const updateFormData = () => {
   if (permanentFilters.value.thana) {
     const selectedThana = thanas.value.find(t => t.TID == permanentFilters.value.thana);
     if (selectedThana) {
-      studentInfoForm.parmanent_thana_name = selectedThana.Thana_U;
+      studentInfoForm.parmanent_thana_name = selectedThana.Thana;
       studentInfoForm.parmanent_TID = selectedThana.TID;
     }
   }

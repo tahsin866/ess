@@ -6,7 +6,7 @@ use App\Models\student;
 use Illuminate\Http\Request;
 use MirazMac\BanglaString\Translator\BijoyToAvro\Translator;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Auth;
 
 class StudentRegistrationController extends Controller
 {
@@ -93,7 +93,7 @@ public function updateStudentInfo(Request $request)
 
 public function getStudents()
 {
-    $students = reg_stu_information::select(
+    $students = reg_stu_information::where('user_id', Auth::id())->select(
         'id',
         'student_image',
         'name_bn',
@@ -110,7 +110,7 @@ public function getStudents()
 public function view($id)
 {
     $student = reg_stu_information::findOrFail($id);
-    return Inertia::render('Students/View', ['student' => $student]);
+    return Inertia::render('students_registration/student_reg_table', ['student' => $student]);
 }
 
 

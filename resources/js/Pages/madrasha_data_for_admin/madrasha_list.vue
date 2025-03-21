@@ -89,7 +89,7 @@
     <select v-model="filters.division" @change="handleDivisionChange" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
       <option value="">সকল</option>
       <option v-for="division in divisions" :key="division.id" :value="division.id">
-        {{ division.Division_U }}
+        {{ division.Division }}
       </option>
     </select>
   </div>
@@ -100,7 +100,7 @@
     <select v-model="filters.district" @change="handleDistrictChange" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
       <option value="">সকল</option>
       <option v-for="district in districts" :key="district.DesID" :value="district.DesID">
-        {{ district.District_U }}
+        {{ district.District }}
       </option>
     </select>
   </div>
@@ -111,7 +111,7 @@
     <select v-model="filters.thana" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
       <option value="">সকল</option>
       <option v-for="thana in thanas" :key="thana.TID" :value="thana.TID">
-        {{ thana.Thana_U }}
+        {{ thana.Thana }}
       </option>
     </select>
   </div>
@@ -149,43 +149,32 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="(application, index) in applications.data" :key="application.id"
-                                    class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ index + 1 }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.name }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{
-                                        application.Elhaq_no }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.MType
-                                        }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{
-                                        application.markaz_serial }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.id }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{
-                                        application.mobile_no }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{
-                                        application.division }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{
-                                        application.district }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.thana
-                                        }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                        <div class="flex gap-2">
-                                            <button @click="viewApplication(application)"
-                                                class="text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button @click="editApplication(application)"
-                                                class="text-green-600 hover:text-green-800 flex items-center gap-2">
-
-                                                <i class="fas fa-envelope"></i>
-                                            </button>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
+    <tr v-for="(application, index) in applications.data" :key="application.id"
+        class="hover:bg-gray-50">
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ index + 1 }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.name }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.Elhaq_no }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.MType }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.markaz_serial }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.id }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.mobile_no }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.division_name }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.district_name }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-900">{{ application.thana_name }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
+            <div class="flex gap-2">
+                <button @click="viewApplication(application)"
+                    class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button @click="editApplication(application)"
+                    class="text-green-600 hover:text-green-800 flex items-center gap-2">
+                    <i class="fas fa-envelope"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+</tbody>
                         </table>
                     </div>
 

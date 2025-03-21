@@ -360,10 +360,10 @@ const setSelected = (item) => {
                         <Link href="" class="text-lg block hover:bg-[#123524] px-4 py-2">প্রস্তাবিত তালিকা</Link>
                         <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">নিরিক্ষক সেটাপ</Link>
                         <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">মুমতাহিন তালিকা</Link>
-                        <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">দরসিয়াত মুমতাহিন ‍</Link>
-                        <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">হিফজ মুমতাহিন নির্বাচন ‍</Link>
-                        <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">কিরাত মুমতাহিন নির্বাচন ‍</Link>
-                        <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">মুমতাহিন ট্রেনিং ‍</Link>
+                        <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">দরসিয়াত মুমতাহিন</Link>
+                        <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">হিফজ মুমতাহিন নির্বাচন</Link>
+                        <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">কিরাত মুমতাহিন নির্বাচন</Link>
+                        <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">মুমতাহিন ট্রেনিং</Link>
                     </div>
                 </div>
 

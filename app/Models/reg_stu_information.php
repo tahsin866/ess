@@ -62,7 +62,10 @@ class reg_stu_information extends Model
         'NID_attach',
          'is_old_student',
 'madrasha_id',
-'marhala_id'
+'marhala_id',
+'user_id',
+'user_name'
+
     ];
 
 

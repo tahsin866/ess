@@ -6,6 +6,9 @@ use App\Models\MarkazAgreement;
 use App\Models\MarkazAgreementMadrasa;
 use App\Models\admin\marhala_for_admin\ExamSetup;
 use App\Models\Madrasha;
+use App\Models\Division;
+use App\Models\District;
+use App\Models\Thana;
 use App\Models\schedule_setups;
 use App\Models\activity_log;
 use Illuminate\Http\Request;
@@ -31,102 +34,127 @@ class MarkazAgreementController extends Controller
     // মাদরাসার মারকায আবেদন
 
     public function store(Request $request)
-    {
-        // Get user with madrasha relationship
-        $user = Auth::user();
-        $madrashaData = Madrasha::where('id', $user->madrasha_id)->first();
+{
+    // Get user with madrasha relationship
+    $user = Auth::user();
+    $madrashaData = Madrasha::where('id', $user->madrasha_id)->first();
+
+    // Get exam setup data
+    $examSetup = ExamSetup::select('id', 'exam_name')->latest()->first();
+
+    // Create main agreement
+    $markazAgreement = new MarkazAgreement();
+
+    // User and Exam related data
+    $markazAgreement->user_id = $user->id;
+    $markazAgreement->madrasha_Name = $user->madrasha_name;
+    $markazAgreement->madrasha_code = $user->custom_code;
+    $markazAgreement->exam_id = $examSetup->id;
+    $markazAgreement->exam_name = $examSetup->exam_name;
+
+    // Madrasha related data - using relationships to get the actual names
+    if ($madrashaData) {
+        // Get division name using Eloquent relationship
+        // Division table has primary key 'ID' which matches with Madrasha's DID
+        $division = Division::where('ID', $madrashaData->DID)->first();
+        $markazAgreement->division = $division ? $division->Division : '';
+        $markazAgreement->division_id = $madrashaData->DID ?? 0;
+
+        // Get district name using Eloquent relationship
+        // District table has primary key 'DesID' which matches with Madrasha's DISID
+        $district = District::where('DesID', $madrashaData->DISID)->first();
+        $markazAgreement->district = $district ? $district->District : '';
+        $markazAgreement->district_id = $madrashaData->DISID ?? 0;
+
+        // Get thana name using Eloquent relationship
+        // Thana table has primary key 'TID' which matches with Madrasha's TID
+        $thana = Thana::where('Thana_ID', $madrashaData->TID)->first();
+        $markazAgreement->thana_uni = $thana ? $thana->Thana : '';
+        $markazAgreement->tid = $madrashaData->TID ?? 0;
+
+        $markazAgreement->mtype = $madrashaData->MType ?? 0;
+        $markazAgreement->Stage = $madrashaData->Stage ?? 0;
+        $markazAgreement->Elhaq_no = $madrashaData->ElhaqNo ?? '';
+    } else {
+        // Set default values if madrasha data is not found
+        $markazAgreement->division = '';
+        $markazAgreement->division_id = 0;
+        $markazAgreement->district = '';
+        $markazAgreement->district_id = 0;
+        $markazAgreement->thana_uni = '';
+        $markazAgreement->tid = 0;
+        $markazAgreement->mtype = 0;
+        $markazAgreement->Stage = 0;
+        $markazAgreement->Elhaq_no = '';
+    }
 
 
-        // Get exam setup data
-        $examSetup = ExamSetup::select('id', 'exam_name')->latest()->first();
+    // Student counts
+    $markazAgreement->markaz_type = $request->markaz_type;
+    $markazAgreement->fazilat = $request->fazilat;
+    $markazAgreement->sanabiya_ulya = $request->sanabiya_ulya;
+    $markazAgreement->sanabiya = $request->sanabiya;
+    $markazAgreement->mutawassita = $request->mutawassita;
+    $markazAgreement->ibtedaiyyah = $request->ibtedaiyyah;
+    $markazAgreement->hifzul_quran = $request->hifzul_quran;
 
-        // Create main agreement
-        $markazAgreement = new MarkazAgreement();
+    // File handling
+    if ($request->hasFile('noc_file')) {
+        $markazAgreement->noc_file = $request->file('noc_file')->store('markaz/noc');
+    }
 
-        // User and Exam related data
-        $markazAgreement->user_id = $user->id;
-        $markazAgreement->madrasha_Name = $user->madrasha_name;
-        // $markazAgreement->user_name = $user->name;
-        $markazAgreement->madrasha_code = $user->custom_code;
-        $markazAgreement->exam_id = $examSetup->id;
-        $markazAgreement->exam_name = $examSetup->exam_name;
+    if ($request->hasFile('resolution_file')) {
+        $markazAgreement->resolution_file = $request->file('resolution_file')->store('markaz/resolution');
+    }
 
-        // Madrasha related data
-        $markazAgreement->division = $madrashaData?->division ?? '';
-        $markazAgreement->division_id = $madrashaData?->division_id ?? 0;
-        $markazAgreement->district = $madrashaData?->district ?? '';
-        $markazAgreement->district_id = $madrashaData?->district_Id ?? 0;
-        $markazAgreement->mtype = $madrashaData?->MType ?? 0;
-        $markazAgreement->Stage = $madrashaData?->Stage ?? 0;  // Set default to 0 for Stage column
-        $markazAgreement->thana_uni = $madrashaData?->Thana_uni ?? '';
-        $markazAgreement->tid = $madrashaData?->TID ?? 0;
-        $markazAgreement->Elhaq_no = $madrashaData?->ElhaqNo ?? '';
+    // Requirements
+    $markazAgreement->requirements = $request->requirements;
+
+    // Consent files
+    if ($request->hasFile('muhtamim_consent')) {
+        $markazAgreement->muhtamim_consent = $request->file('muhtamim_consent')->store('markaz/consent');
+    }
+
+    if ($request->hasFile('president_consent')) {
+        $markazAgreement->president_consent = $request->file('president_consent')->store('markaz/consent');
+    }
+
+    if ($request->hasFile('committee_resolution')) {
+        $markazAgreement->committee_resolution = $request->file('committee_resolution')->store('markaz/consent');
+    }
+
+    $markazAgreement->save();
+
+    // Handle associated madrasas
+    foreach ($request->associated_madrasas as $madrasaData) {
+        $associatedMadrasa = new MarkazAgreementMadrasa();
+        $associatedMadrasa->markaz_agreement_id = $markazAgreement->id;
+        $associatedMadrasa->madrasa_Name = $madrasaData['madrasa_Name'];
 
         // Student counts
-        $markazAgreement->markaz_type = $request->markaz_type;
-        $markazAgreement->fazilat = $request->fazilat;
-        $markazAgreement->sanabiya_ulya = $request->sanabiya_ulya;
-        $markazAgreement->sanabiya = $request->sanabiya;
-        $markazAgreement->mutawassita = $request->mutawassita;
-        $markazAgreement->ibtedaiyyah = $request->ibtedaiyyah;
-        $markazAgreement->hifzul_quran = $request->hifzul_quran;
+        $associatedMadrasa->fazilat = $madrasaData['fazilat'];
+        $associatedMadrasa->sanabiya_ulya = $madrasaData['sanabiya_ulya'];
+        $associatedMadrasa->sanabiya = $madrasaData['sanabiya'];
+        $associatedMadrasa->mutawassita = $madrasaData['mutawassita'];
+        $associatedMadrasa->ibtedaiyyah = $madrasaData['ibtedaiyyah'];
+        $associatedMadrasa->hifzul_quran = $madrasaData['hifzul_quran'];
 
         // File handling
-        if ($request->hasFile('noc_file')) {
-            $markazAgreement->noc_file = $request->file('noc_file')->store('markaz/noc');
+        if (isset($madrasaData['noc_file'])) {
+            $associatedMadrasa->noc_file = $madrasaData['noc_file']->store('markaz/associated/noc');
         }
 
-        if ($request->hasFile('resolution_file')) {
-            $markazAgreement->resolution_file = $request->file('resolution_file')->store('markaz/resolution');
+        if (isset($madrasaData['resolution_file'])) {
+            $associatedMadrasa->resolution_file = $madrasaData['resolution_file']->store('markaz/associated/resolution');
         }
 
-        // Requirements
-        $markazAgreement->requirements = $request->requirements;
-
-        // Consent files
-        if ($request->hasFile('muhtamim_consent')) {
-            $markazAgreement->muhtamim_consent = $request->file('muhtamim_consent')->store('markaz/consent');
-        }
-
-        if ($request->hasFile('president_consent')) {
-            $markazAgreement->president_consent = $request->file('president_consent')->store('markaz/consent');
-        }
-
-        if ($request->hasFile('committee_resolution')) {
-            $markazAgreement->committee_resolution = $request->file('committee_resolution')->store('markaz/consent');
-        }
-
-        $markazAgreement->save();
-
-        // Handle associated madrasas
-        foreach ($request->associated_madrasas as $madrasaData) {
-            $associatedMadrasa = new MarkazAgreementMadrasa();
-            $associatedMadrasa->markaz_agreement_id = $markazAgreement->id;
-            $associatedMadrasa->madrasa_Name = $madrasaData['madrasa_Name'];
-
-            // Student counts
-            $associatedMadrasa->fazilat = $madrasaData['fazilat'];
-            $associatedMadrasa->sanabiya_ulya = $madrasaData['sanabiya_ulya'];
-            $associatedMadrasa->sanabiya = $madrasaData['sanabiya'];
-            $associatedMadrasa->mutawassita = $madrasaData['mutawassita'];
-            $associatedMadrasa->ibtedaiyyah = $madrasaData['ibtedaiyyah'];
-            $associatedMadrasa->hifzul_quran = $madrasaData['hifzul_quran'];
-
-            // File handling
-            if (isset($madrasaData['noc_file'])) {
-                $associatedMadrasa->noc_file = $madrasaData['noc_file']->store('markaz/associated/noc');
-            }
-
-            if (isset($madrasaData['resolution_file'])) {
-                $associatedMadrasa->resolution_file = $madrasaData['resolution_file']->store('markaz/associated/resolution');
-            }
-
-            $associatedMadrasa->save();
-        }
-
-        return redirect()->route('markaz-agreements.index')
-            ->with('success', 'মারকায চুক্তি সফলভাবে সংরক্ষণ করা হয়েছে');
+        $associatedMadrasa->save();
     }
+
+    return redirect()->route('markaz-agreements.index')
+        ->with('success', 'মারকায চুক্তি সফলভাবে সংরক্ষণ করা হয়েছে');
+}
+
 
 
 
@@ -136,8 +164,8 @@ class MarkazAgreementController extends Controller
 
     public function getMadrashas()
     {
-        $madrashas = Madrasha::select('id', 'MName_uni as name', 'ElhaqNo')
-            ->orderBy('MName_uni')
+        $madrashas = Madrasha::select('id', 'MName as name', 'ElhaqNo')
+            ->orderBy('MName')
             ->get();
 
         return response()->json($madrashas);

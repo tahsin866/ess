@@ -28,4 +28,25 @@ public function users()
 }
 
 
+
+public function division()
+{
+    return $this->belongsTo(Division::class, 'DID', 'ID');
+}
+
+public function district()
+{
+    return $this->belongsTo(District::class, 'DISID', 'DesID');
+}
+
+public function thana()
+{
+    return $this->belongsTo(Thana::class, 'TID', 'Thana_ID');
+}
+
+
+
+
+
+
 }

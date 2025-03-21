@@ -26,13 +26,13 @@ onMounted(async () => {
   }
 
   // Add click outside listener
-  document.addEventListener('click', closeDropdownOnClickOutside);
+//   document.addEventListener('click', closeDropdownOnClickOutside);
 });
 
-onUnmounted(() => {
-  // Remove click outside listener
-  document.removeEventListener('click', closeDropdownOnClickOutside);
-});
+// onUnmounted(() => {
+//   // Remove click outside listener
+//   document.removeEventListener('click', closeDropdownOnClickOutside);
+// });
 
 const handleSearch = () => {
   // Implement search logic
@@ -81,7 +81,7 @@ onUnmounted(() => {
                 <p class="text-emerald-900 font-medium">মোট নিবন্ধিত শিক্ষার্থী সংখ্যা</p>
             </div>
             <div class="bg-emerald-100 p-3 rounded-xl">
-                <i class="text-2xl text-emerald-600 fa-users-class fas"></i>
+                <i class="text-2xl text-amber-600 fa-female fas"></i>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@ onUnmounted(() => {
                 <p class="text-teal-900 font-medium">বোর্ড ফেরত শিক্ষার্থী সংখ্যা</p>
             </div>
             <div class="bg-teal-100 p-3 rounded-xl">
-                <i class="text-2xl text-teal-600 fa-graduation-cap fas"></i>
+                <i class="text-2xl text-amber-600 fa-female fas"></i>
             </div>
         </div>
         <div class="border-t border-teal-100 mt-4 pt-4"></div>
@@ -109,7 +109,7 @@ onUnmounted(() => {
                 <div class="flex items-baseline space-x-2">
                     <span class="text-amber-600 text-sm font-semibold">জন</span>
                 </div>
-                <p class="text-amber-900 font-medium">ছাত্রী সংখ্যা</p>
+                <p class="text-amber-900 font-medium">নিয়মিত ছাত্র সংখ্যা</p>
             </div>
             <div class="bg-amber-100 p-3 rounded-xl">
                 <i class="text-2xl text-amber-600 fa-female fas"></i>
@@ -125,10 +125,10 @@ onUnmounted(() => {
                 <div class="flex items-baseline space-x-2">
                     <span class="text-emerald-600 text-sm font-semibold">জন</span>
                 </div>
-                <p class="text-emerald-900 font-medium">{{ selectedYear }} সালের মোট</p>
+                <p class="text-emerald-900 font-medium">{{ selectedYear }} অনিয়মিত ছাত্র সংখ্যা</p>
             </div>
             <div class="bg-emerald-100 p-3 rounded-xl">
-                <i class="text-2xl text-emerald-600 fa-mosque fas"></i>
+                <i class="text-2xl text-amber-600 fa-female fas"></i>
             </div>
         </div>
         <div class="border-emerald-100 border-t mt-4 pt-4"></div>
@@ -158,7 +158,7 @@ onUnmounted(() => {
       </h3>
 
       <h3 class="text-center text-lg text-white">
-         ৪৮তম কেন্দ্রীয় পরীক্ষা: নেগরান মুমতাহিন
+         <!-- ৪৮তম কেন্দ্রীয় পরীক্ষা: নেগরান মুমতাহিন -->
       </h3>
 
       <div class="flex justify-end gap-3">
@@ -280,7 +280,7 @@ onUnmounted(() => {
       </h3>
 
       <h3 class="text-amber-300 text-center text-lg">
-    ৪৮তম কেন্দ্রীয় পরীক্ষা: মুতাওয়াসসিতা
+    <!-- ৪৮তম কেন্দ্রীয় পরীক্ষা: মুতাওয়াসসিতা -->
       </h3>
 
       <div class="flex justify-end gap-3">
@@ -372,9 +372,9 @@ onUnmounted(() => {
         </Link>
 
         <button
-  class="flex text-left text-blue-600 text-sm w-full hover:bg-blue-50 items-center px-4 py-2"
+  class="flex text-blue-600 text-left text-sm w-full hover:bg-blue-50 items-center px-4 py-2"
 >
-  <i class="fas fa-info-circle mr-2"></i> বিস্তারিত দেখুন
+  <i class="fa-info-circle fas mr-2"></i> বিস্তারিত দেখুন
 </button>
 
         <button

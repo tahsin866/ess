@@ -456,7 +456,7 @@ const updateFormData = () => {
     if (presentFilters.value.division) {
         const selectedDivision = divisions.value.find(d => d.id == presentFilters.value.division);
         if (selectedDivision) {
-            studentInfoForm.present_division_name = selectedDivision.Division_U;
+            studentInfoForm.present_division_name = selectedDivision.Division;
             studentInfoForm.presernt_DID = selectedDivision.id;
         }
     }
@@ -464,7 +464,7 @@ const updateFormData = () => {
     if (presentFilters.value.district) {
         const selectedDistrict = presentDistricts.value.find(d => d.DesID == presentFilters.value.district);
         if (selectedDistrict) {
-            studentInfoForm.present_district_name = selectedDistrict.District_U;
+            studentInfoForm.present_district_name = selectedDistrict.District;
             studentInfoForm.present_desId = selectedDistrict.DesID;
         }
     }
@@ -472,7 +472,7 @@ const updateFormData = () => {
     if (presentFilters.value.thana) {
         const selectedThana = presentThanas.value.find(t => t.TID == presentFilters.value.thana);
         if (selectedThana) {
-            studentInfoForm.present_thana_name = selectedThana.Thana_U;
+            studentInfoForm.present_thana_name = selectedThana.Thana;
             studentInfoForm.present_TID = selectedThana.TID;
         }
     }
@@ -481,7 +481,7 @@ const updateFormData = () => {
     if (permanentFilters.value.division) {
         const selectedDivision = divisions.value.find(d => d.id == permanentFilters.value.division);
         if (selectedDivision) {
-            studentInfoForm.parmanent_division_name = selectedDivision.Division_U;
+            studentInfoForm.parmanent_division_name = selectedDivision.Division;
             studentInfoForm.parmanent_DID = selectedDivision.id;
         }
     }
@@ -489,7 +489,7 @@ const updateFormData = () => {
     if (permanentFilters.value.district) {
         const selectedDistrict = districts.value.find(d => d.DesID == permanentFilters.value.district);
         if (selectedDistrict) {
-            studentInfoForm.parmanent_district_name = selectedDistrict.District_U;
+            studentInfoForm.parmanent_district_name = selectedDistrict.District;
             studentInfoForm.parmanent_desId = selectedDistrict.DesID;
         }
     }
@@ -497,7 +497,7 @@ const updateFormData = () => {
     if (permanentFilters.value.thana) {
         const selectedThana = thanas.value.find(t => t.TID == permanentFilters.value.thana);
         if (selectedThana) {
-            studentInfoForm.parmanent_thana_name = selectedThana.Thana_U;
+            studentInfoForm.parmanent_thana_name = selectedThana.Thana;
             studentInfoForm.parmanent_TID = selectedThana.TID;
         }
     }
@@ -810,7 +810,7 @@ const currentMarhalaId = ref(null);
                                         class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
                                         <option value="">সকল</option>
                                         <option v-for="division in divisions" :key="division.id" :value="division.id">
-                                            {{ division.Division_U }}
+                                            {{ division.Division }}
                                         </option>
                                     </select>
                                     <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
@@ -829,7 +829,7 @@ const currentMarhalaId = ref(null);
                                         <option value="">সকল</option>
                                         <option v-for="district in presentDistricts" :key="district.DesID"
                                             :value="district.DesID">
-                                            {{ district.District_U }}
+                                            {{ district.District }}
                                         </option>
                                     </select>
                                     <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
@@ -847,7 +847,7 @@ const currentMarhalaId = ref(null);
                                         class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
                                         <option value="">সকল</option>
                                         <option v-for="thana in presentThanas" :key="thana.TID" :value="thana.TID">
-                                            {{ thana.Thana_U }}
+                                            {{ thana.Thana }}
                                         </option>
                                     </select>
                                     <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
@@ -881,7 +881,7 @@ const currentMarhalaId = ref(null);
                                         class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
                                         <option value="">সকল</option>
                                         <option v-for="division in divisions" :key="division.id" :value="division.id">
-                                            {{ division.Division_U }}
+                                            {{ division.Division }}
                                         </option>
                                     </select>
                                     <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
@@ -900,7 +900,7 @@ const currentMarhalaId = ref(null);
                                         <option value="">সকল</option>
                                         <option v-for="district in districts" :key="district.DesID"
                                             :value="district.DesID">
-                                            {{ district.District_U }}
+                                            {{ district.District }}
                                         </option>
                                     </select>
                                     <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
@@ -918,7 +918,7 @@ const currentMarhalaId = ref(null);
                                         class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
                                         <option value="">সকল</option>
                                         <option v-for="thana in thanas" :key="thana.TID" :value="thana.TID">
-                                            {{ thana.Thana_U }}
+                                            {{ thana.Thana }}
                                         </option>
                                     </select>
                                     <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">

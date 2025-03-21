@@ -674,6 +674,8 @@ class ExamRegistrationController extends Controller
             // ['student_id' => $request->IDs], // Find by student_id
             [
 
+                'user_id' => Auth::user()->id,
+            'user_name' => Auth::user()->name,
                 'madrasha_id' => Auth::user()->madrasha_id,
                   // Add exam information from exam_setups table
             'exam_id' => $examSetup ? $examSetup->id : null,
@@ -801,6 +803,8 @@ class ExamRegistrationController extends Controller
         reg_stu_information::create([
             'current_madrasha' => Auth::user()->madrasha_name,
             'madrasha_id' => Auth::user()->madrasha_id,
+            'user_id' => Auth::user()->id,
+            'user_name' => Auth::user()->name,
             // 'marhala_id' => Auth::user()->marhala_id,
 
             // Add exam information from exam_setups table

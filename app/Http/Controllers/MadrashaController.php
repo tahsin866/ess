@@ -14,39 +14,100 @@ use Maatwebsite\Excel\Facades\Excel;
 class MadrashaController extends Controller
 {
     //
+    // public function getMadrashaList(Request $request)
+    // {
+    //     $perPage = $request->input('per_page', 10);
+    //     $page = $request->input('page', 1);
+
+    //     $applications = Madrasha::query()
+    //         ->select(/* your fields */)
+    //         ->paginate($perPage);
+
+    //     // Calculate proper from-to values
+    //     $applications->from = ($page - 1) * $perPage + 1;
+    //     $applications->to = min($page * $perPage, $applications->total());
+
+
+    //     $applications = madrasha::select(
+    //         'id',
+    //         'MName as name',
+    //         'ElhaqNo as Elhaq_no',
+    //         'MType',
+    //         'markaz_serial',
+    //         'Mobile as mobile_no',
+    //         'DID',
+    //         // 'district',
+    //         // 'Thana_uni as thana'
+    //     )->paginate($perPage);
+
+    //     $applications->getCollection()->transform(function ($app) {
+    //         $app->MType = $app->MType == 0 ? 'ছাত্রী' : 'ছাত্র';
+    //         return $app;
+    //     });
+
+    //     return response()->json($applications);
+    // }
+
+
+
+
+
+
+
+
     public function getMadrashaList(Request $request)
     {
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
 
-        $applications = Madrasha::query()
-            ->select(/* your fields */)
+        $applications = Madrasha::with(['division', 'district', 'thana'])
+            ->select(
+                'id',
+                'MName as name',
+                'ElhaqNo as Elhaq_no',
+                'MType',
+                'markaz_serial',
+                'Mobile as mobile_no',
+                'DID',
+                'DISID',
+                'TID'
+            )
             ->paginate($perPage);
 
         // Calculate proper from-to values
         $applications->from = ($page - 1) * $perPage + 1;
         $applications->to = min($page * $perPage, $applications->total());
 
-
-        $applications = madrasha::select(
-            'id',
-            'MName_uni as name',
-            'ElhaqNo as Elhaq_no',
-            'MType',
-            'markaz_serial',
-            'Mobile as mobile_no',
-            'division',
-            'district',
-            'Thana_uni as thana'
-        )->paginate($perPage);
-
         $applications->getCollection()->transform(function ($app) {
             $app->MType = $app->MType == 0 ? 'ছাত্রী' : 'ছাত্র';
+            $app->division_name = $app->division ? $app->division->Division : null;
+            $app->district_name = $app->district ? $app->district->District : null;
+            $app->thana_name = $app->thana ? $app->thana->Thana : null;
+
+            // রিলেশনশিপ অবজেক্টগুলো অপসারণ করে শুধু নামগুলো রাখা
+            unset($app->division);
+            unset($app->district);
+            unset($app->thana);
+
             return $app;
         });
 
         return response()->json($applications);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -93,21 +154,21 @@ class MadrashaController extends Controller
     public function getDivisions()
     {
         // Shows: ID=3, Division_U="সিলেট"
-        return Division::select('id', 'divisionUni as Division_U')->get();
+        return Division::select('id', 'Division as Division')->get();
     }
 
     public function getDistricts($divisionId)
     {
         // Shows districts where DID=3 (Sylhet Division)
         // Example: District_U="সুনামগঞ্জ", "মৌলভীবাজার", "হবিগঞ্জ", "সিলেট"
-        return District::select('DesID', 'District_U')
+        return District::select('DesID', 'District')
             ->where('DID', $divisionId)  // DID=3 for Sylhet
             ->get();
     }
 
     public function getThanas($district_Id)
     {
-        return Thana::select('TID', 'Thana_U')
+        return Thana::select('TID', 'Thana')
             ->where('Des_ID', $district_Id)  // This matches thana.Des_ID with district.DesID
             ->get();
     }
