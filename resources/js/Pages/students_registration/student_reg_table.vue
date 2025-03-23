@@ -337,21 +337,21 @@ const submitApplication = () => {
     <table class="w-full">
   <thead class="bg-emerald-50">
     <tr>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">রেজিস্ট্রেশ নং</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">ছবি</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">নাম</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">পিতার নাম</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">মাদরাসার নাম</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">পরিক্ষার নাম</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">মারহালা</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">জন্ম-তারিখ</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">পরিক্ষার্থীর ধরন</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">পেমেন্ট স্ট্যাটাস</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">আবেদন অবস্থা</th>
-      <th class="text-center text-emerald-800 text-md font-medium px-6 py-3 uppercase">করনীয়</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">রেজিস্ট্রেশ নং</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">ছবি</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">নাম</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">পিতার নাম</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">মাদরাসার নাম</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">পরিক্ষার নাম</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">মারহালা</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">জন্ম-তারিখ</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">পরিক্ষার্থীর ধরন</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">পেমেন্ট স্ট্যাটাস</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">আবেদন অবস্থা</th>
+      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">করনীয়</th>
     </tr>
   </thead>
-  <tbody class="bg-white divide-emerald-100 divide-y">
+  <tbody class="bg-white divide-emerald-100 divide-y text-xl">
     <tr v-for="student in students" :key="student.id">
       <td class="text-center px-6 py-4">{{ student.id }}</td>
       <td class="text-center px-6 py-4">

@@ -307,14 +307,23 @@ public function getMarkazStudents()
 
 public function getMarkazMadrasaList($markaz_id)
 {
-    // মারকাজ আইডি অনুযায়ী শুধু মাদরাসার নাম ও আইডি সিলেক্ট করা
-    $madrashaList = MarkazAgreementMadrasa::where('markaz_agreement_id', $markaz_id)
-        ->select('id', 'madrasa_Name')
+    // Get all MRID values from stu_rledger_p table where MDID matches the markaz ID
+    $mridValues = DB::table('stu_rledger_p')
+        ->where('MDID', $markaz_id)
+        ->pluck('MRID')
+        ->unique()
+        ->toArray();
+
+    // Get madrashas where id matches any of the MRID values
+    $madrashaList = DB::table('madrasha')
+        ->whereIn('id', $mridValues)
+        ->select('id', 'MName as name', 'ElhaqNo as Elhaq_no', 'Mobile as mobile_no')
         ->get();
 
-    // মারকাজের নাম পাওয়া
-    $markazName = MarkazAgreement::where('id', $markaz_id)
-        ->value('madrasha_Name');
+    // Get the markaz name
+    $markazName = DB::table('madrasha')
+        ->where('id', $markaz_id)
+        ->value('MName');
 
     return response()->json([
         'madrashaList' => $madrashaList,
@@ -322,9 +331,10 @@ public function getMarkazMadrasaList($markaz_id)
     ]);
 }
 
+
 public function abandonStuList($markaz_id)
 {
-    // শুধু ভিউ রেন্ডার করা, ডাটা ফেচ করা হবে ক্লায়েন্ট সাইডে
+    // Just render the view, data will be fetched on the client side
     return Inertia::render('nibondon_for_admin/abandon_stu_list', [
         'markaz_id' => $markaz_id
     ]);
@@ -335,17 +345,39 @@ public function abandonStuList($markaz_id)
 
 
 
-public function getMadrashaStudents($madrasha_id)
+public function madrashaWariStuNibondList($madrasha_id = null)
 {
-    $students = reg_stu_information::where('madrasha_id', $madrasha_id)
-        ->select('id', 'name_bn as name')
-        ->get();
+    // মাদরাসা আইডি অনুসারে ছাত্রদের তালিকা পাওয়া
+    $students = [];
+
+    if ($madrasha_id) {
+        // reg_stu_informations টেবিল থেকে ছাত্রদের তথ্য সংগ্রহ করা
+        $students = DB::table('reg_stu_informations')
+            ->where('madrasha_id', $madrasha_id)
+            ->select('id', 'name_bn','Date_of_birth','father_name_bn', 'mother_name_bn')
+            ->get();
+    }
 
     return Inertia::render('nibondon_for_admin/madrashaWari_stu_nibond_list', [
         'students' => $students,
         'madrasha_id' => $madrasha_id
     ]);
 }
+
+
+
+
+// public function getMadrashaStudents($madrasha_id)
+// {
+//     $students = reg_stu_information::where('madrasha_id', $madrasha_id)
+//         ->select('id', 'name_bn as name')
+//         ->get();
+
+//     return Inertia::render('nibondon_for_admin/madrashaWari_stu_nibond_list', [
+//         'students' => $students,
+//         'madrasha_id' => $madrasha_id
+//     ]);
+// }
 
 
 

@@ -522,7 +522,7 @@ const currentMarhalaId = ref(null);
 
 <template>
     <AuthenticatedLayout>
-        <div class="mb-5 mt-5 mx-5 space-y-6">
+        <div class="mb-5 mt-5 mx-5 space-y-6 text-xl">
             <!-- Personal Information Card -->
             <div class="bg-white rounded-sm shadow-md">
                 <div class="flex bg-gradient-to-r rounded-t-md from-emerald-800 gap-3 items-center px-6 py-3 to-emerald-600">
@@ -541,7 +541,7 @@ const currentMarhalaId = ref(null);
 
                                     </span>
                                     <input v-model="studentInfoForm.name_bn" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl  w-full  focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
 
@@ -553,7 +553,7 @@ const currentMarhalaId = ref(null);
 
                                     </span>
                                     <input v-model="studentInfoForm.name_en" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
 
@@ -565,7 +565,7 @@ const currentMarhalaId = ref(null);
 
                                     </span>
                                     <input v-model="studentInfoForm.name_ar" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
                         </div>
@@ -578,7 +578,7 @@ const currentMarhalaId = ref(null);
                                 <div>
 
                                     <input v-model="studentInfoForm.mother_name_bn" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
 
@@ -588,7 +588,7 @@ const currentMarhalaId = ref(null);
                                 <div class="relative">
 
                                     <input v-model="studentInfoForm.mother_name_en" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
 
@@ -598,7 +598,7 @@ const currentMarhalaId = ref(null);
                                 <div class="relative">
 
                                     <input v-model="studentInfoForm.mother_name_ar" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
                         </div>
@@ -611,7 +611,7 @@ const currentMarhalaId = ref(null);
                                 <div>
 
                                     <input v-model="studentInfoForm.father_name_bn" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
 
@@ -621,7 +621,7 @@ const currentMarhalaId = ref(null);
                                 <div class="relative">
 
                                     <input v-model="studentInfoForm.father_name_en" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
 
@@ -631,7 +631,7 @@ const currentMarhalaId = ref(null);
                                 <div class="relative">
 
                                     <input v-model="studentInfoForm.father_name_ar" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
                         </div>
@@ -647,7 +647,7 @@ const currentMarhalaId = ref(null);
                                         <i class="text-emerald-600 fa-calendar-alt fas"></i>
                                     </span>
                                     <input v-model="studentInfoForm.Date_of_birth" type="date"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
 
@@ -659,7 +659,7 @@ const currentMarhalaId = ref(null);
                                         <i class="text-emerald-600 fa-id-card fas"></i>
                                     </span>
                                     <input v-model="studentInfoForm.BRN_no" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
 
@@ -671,7 +671,7 @@ const currentMarhalaId = ref(null);
                                         <i class="text-emerald-600 fa-address-card fas"></i>
                                     </span>
                                     <input v-model="studentInfoForm.NID_no" type="text"
-                                        class="border border-emerald-200 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
+                                        class="border border-emerald-200 rounded-sm text-xl w-full focus:outline-none focus:ring-2 focus:ring-emerald-500 pl-10 pr-3 py-2">
                                 </div>
                             </div>
                         </div>

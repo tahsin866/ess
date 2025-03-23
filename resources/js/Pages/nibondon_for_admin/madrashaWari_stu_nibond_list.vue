@@ -62,21 +62,21 @@
         <th class="p-2">অ্যাকশন</th>
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
+    <tbody class="bg-white divide-y divide-gray-200 text-xl">
       <tr v-for="(student, index) in students" :key="index">
         <td class="p-2 text-center">{{ index + 1 }}</td>
         <td class="p-2 text-center">
-          <img :src="student.photo" alt="Student" class="w-10 h-10 rounded-full mx-auto" />
+          <img :src="student.student_image" alt="Student" class="w-10 h-10 rounded-full mx-auto" />
         </td>
-        <td class="p-2 text-center">{{ student.name }}</td>
-        <td class="p-2 text-center">{{ student.class }}</td>
-        <td class="p-2 text-center">{{ student.roll }}</td>
-        <td class="p-2 text-center">{{ student.registration }}</td>
-        <td class="p-2 text-center">{{ student.birthDate }}</td>
-        <td class="p-2 text-center">{{ student.father }}</td>
-        <td class="p-2 text-center">{{ student.mother }}</td>
+        <td class="p-2 text-center">{{ student.name_bn }}</td>
+        <td class="p-2 text-center">{{ }}</td>
+        <td class="p-2 text-center">{{}}</td>
+        <td class="p-2 text-center">{{ student.id  }}</td>
+        <td class="p-2 text-center">{{ student.Date_of_birth }}</td>
+        <td class="p-2 text-center">{{  student.father_name_bn  }}</td>
+        <td class="p-2 text-center">{{  student.mother_name_bn  }}</td>
         <td class="p-2 text-center">
-          <span :class="statusClass(student.status)">{{ student.status }}</span>
+          <!-- <span :class="statusClass(student.status)">{{  }}</span> -->
         </td>
         <td class="p-2 text-center">
           <Link

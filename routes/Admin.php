@@ -202,3 +202,9 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
 
     Route::get('/markaz/{id}/madrashas', [MadrashaController::class, 'madrashaListUnderMarkaz'])
     ->name('markaz_for_admin.madrasha_list_underMarkaz');
+
+    Route::get('/nibondon/madrashaWari-stu-nibond-list/{madrasha_id?}', [StudentRegistrationController::class, 'madrashaWariStuNibondList'])
+    ->name('nibondon_for_admin.madrashaWari_stu_nibond_list');
+
+// Route::get('/nibondon/student-detiles-for-nibondon/{student_id?}', [StudentRegistrationController::class, 'studentDetilesForNibondon'])
+//     ->name('nibondon_for_admin.student_detiles_For_nibondon');

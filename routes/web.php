@@ -82,7 +82,8 @@ Route::get('Mrahala_for_Admin/marhala_edit/{marhala}', [MarhalaController::class
     Route::get('/madrasha/students/{madrasha_id}', [StudentRegistrationController::class, 'getMadrashaStudents'])
     ->name('nibondon_for_admin.madrashaWari_stu_nibond_list');
 
-
+    Route::get('/nibondon/abandon-stu-list/{markaz_id}', [StudentRegistrationController::class, 'abandonStuList'])
+    ->name('nibondon_for_admin.abandon_stu_list');
 
 
 

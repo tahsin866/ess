@@ -121,9 +121,10 @@ Route::get('/markaz-students', [StudentRegistrationController::class, 'getMarkaz
 Route::get('/markaz-madrasa-list/{markaz_id}', [StudentRegistrationController::class, 'getMarkazMadrasaList'])
     ->name('api.markaz_madrasa_list');
 
+
+
     Route::get('/nibondon/abandon-stu-list/{markaz_id}', [StudentRegistrationController::class, 'abandonStuList'])
     ->name('nibondon_for_admin.abandon_stu_list');
-
 
 
 
