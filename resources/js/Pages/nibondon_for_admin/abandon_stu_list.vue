@@ -42,7 +42,7 @@
               <tr>
                 <th class="p-4 text-left">ক্রমিক</th>
                 <th class="p-4 text-left">মাদ্রাসার নাম</th>
-                <th class="p-4 text-left">ইআইআইএন</th>
+                <th class="p-4 text-left">ইলহাক নম্বর</th>
                 <th class="p-4 text-left">কোড</th>
                 <th class="p-4 text-left">নির্ধারিত ছাত্র সংখ্যা</th>
                 <th class="p-4 text-left">মোবাইল নম্বর</th>
@@ -54,39 +54,39 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-emerald-100">
-  <tr v-for="(madrasha, index) in madrashaList"
-      :key="index"
-      class="hover:bg-emerald-50 transition-colors">
-    <td class="p-4">{{ index + 1 }}</td>
+                  <tr v-for="(madrasha, index) in madrashaList"
+                      :key="index"
+                      class="hover:bg-emerald-50 transition-colors">
+                    <td class="p-4">{{ index + 1 }}</td>
 
-    <!-- This is the corrected part - Link inside td -->
-    <td class="p-4">
-      <Link
-        :href="route('nibondon_for_admin.madrashaWari_stu_nibond_list', { madrasha_id: madrasha.id })"
-        class="text-blue-600 hover:underline">
-        {{ madrasha.name }}
-      </Link>
-    </td>
+                    <!-- মাদরাসার নাম লিংক -->
+                    <td class="p-4">
+                        <Link :href="route('nibondon_for_admin.madrashaWari_stu_nibond_list', { madrasha_id: madrasha.id })" class="text-blue-600 hover:underline">
+  {{ madrasha.madrasa_Name }}
+</Link>
 
-    <td class="p-4">{{ madrasha.eiin }}</td>
-    <td class="p-4">{{ madrasha.code }}</td>
-    <td class="p-4">{{ madrasha.studentCount }}</td>
-    <td class="p-4">{{ madrasha.phone }}</td>
-    <td class="p-4">{{ madrasha.division }}</td>
-    <td class="p-4">{{ madrasha.district }}</td>
-    <td class="p-4">{{ madrasha.upazila }}</td>
-    <td class="p-4">
-      <span class="bg-emerald-500 text-white px-3 py-1 rounded-sm text-sm">
-        অনুমোদন
-      </span>
-    </td>
-    <td class="p-4">
-      <button class="bg-emerald-900 hover:bg-emerald-800 text-white px-6 py-2 rounded-sm transition-colors">
-        বিস্তারিত
-      </button>
-    </td>
-  </tr>
-</tbody>
+
+                    </td>
+
+                    <td class="p-4">-</td>
+                    <td class="p-4">-</td>
+                    <td class="p-4">-</td>
+                    <td class="p-4">-</td>
+                    <td class="p-4">-</td>
+                    <td class="p-4">-</td>
+                    <td class="p-4">-</td>
+                    <td class="p-4">
+                      <span class="bg-emerald-500 text-white px-3 py-1 rounded-sm text-sm">
+                        অনুমোদন
+                      </span>
+                    </td>
+                    <td class="p-4">
+                      <button class="bg-emerald-900 hover:bg-emerald-800 text-white px-6 py-2 rounded-sm transition-colors">
+                        বিস্তারিত
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
 
           </table>
         </div>
@@ -110,42 +110,42 @@
     </AuthenticatedLayout>
   </template>
 
-  <script setup>
-  import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue'
+<script setup>
+import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue'
 import { Link } from '@inertiajs/vue3'
-import { ref, computed } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
+// প্রপস ডিফাইন করা
+const props = defineProps({
+  markaz_id: Number
+})
 
-  const selectedMadrasha = ref('')
-  const status = ref('অনুমোদন হয়েছে')
-  const currentPage = ref(1)
-  const totalPages = ref(8)
+// স্টেট ভেরিয়েবল
+const madrashaList = ref([])
+const markazName = ref('')
+const loading = ref(true)
+const error = ref(null)
 
-  const madrashaList = ref([
-    {
-      name: 'আরিয়া আরবিয়া ইসলামিয়া উচ্চ মাদ্রাসা ঢাকা সুপার',
-      eiin: '12345678',
-      code: 'W12365',
-      studentCount: '৫৬৫ জন',
-      phone: '০১৫৫৫৬৬৬৭৪',
-      division: 'ঢাকা',
-      district: 'ঢাকা',
-      upazila: 'যাত্রাবাড়ী'
-    },
-    {
-      name: 'আরিয়া শরীয়াহ মাদ্রাসা',
-      eiin: '12345679',
-      code: 'W12365',
-      studentCount: '৫৬৫ জন',
-      phone: '০১৫৫৫৬৬৬৭৪',
-      division: 'ঢাকা',
-      district: 'ঢাকা',
-      upazila: 'যাত্রাবাড়ী'
-    }
-  ])
+// ডাটা ফেচ করার ফাংশন
+const fetchData = async () => {
+  try {
+    loading.value = true
+    error.value = null
 
-  const searchMadrasha = () => {
-    // Implement search logic here
-    console.log('Searching:', { selectedMadrasha: selectedMadrasha.value, status: status.value })
+    const response = await axios.get(`/api/markaz-madrasa-list/${props.markaz_id}`)
+    madrashaList.value = response.data.madrashaList
+    markazName.value = response.data.markazName
+  } catch (err) {
+    console.error('Error fetching data:', err)
+    error.value = 'ডাটা লোড করতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।'
+  } finally {
+    loading.value = false
   }
-  </script>
+}
+
+// কম্পোনেন্ট মাউন্ট হওয়ার সময় ডাটা ফেচ করা
+onMounted(() => {
+  fetchData()
+})
+</script>

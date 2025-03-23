@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link } from '@inertiajs/vue3'
+import { Link,router } from '@inertiajs/vue3'
 import { ref, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
 
@@ -61,6 +61,43 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener('click', closeAllMenus);
 });
+
+
+const showModal = ref(false);
+let submitId = null;
+const showToast = ref(false);
+
+const openModal = (id) => {
+    submitId = id;
+    showModal.value = true;
+};
+
+
+
+
+const submitApplication = () => {
+    router.post(route('student_reg.submit', submitId), {}, {
+        preserveScroll: true,
+        onSuccess: () => {
+            showModal.value = false;
+            showToast.value = true;
+            setTimeout(() => window.location.reload(), 2000);
+        },
+        onError: (errors) => {
+            if (errors.error) {
+                alert(errors.error);
+            }
+        }
+    });
+};
+
+
+
+
+
+
+
+
 </script>
 
 <template>
@@ -331,14 +368,20 @@ onUnmounted(() => {
       <td class="text-center px-6 py-4">{{ student.Date_of_birth }}</td>
 
       <td class="text-center px-6 py-4">{{ student.student_type }}</td>
-      <td class="text-center px-6 py-4"></td>
+      <td class="text-center px-6 py-4">
+
+
+      </td>
 
       <td class="text-center px-6 py-4">
         <div class="flex justify-center">
-          <span class="bg-yellow-100 rounded-full text-xs text-yellow-800 px-2 py-1">
-            <i class="fa-clock fas mr-1"></i>
-            পেন্ডিং
-          </span>
+            <span :class="{
+                                            'bg-yellow-300 text-black px-4 py-2 text-sm font-medium rounded-full': student.status === 'বোর্ড দাখিল',
+                                            'bg-red-100 text-red-700 px-4 py-2 text-sm font-medium rounded-full': student.status === 'বোর্ড ফেরত',
+                                            'bg-green-600 text-white px-4 py-2 text-sm font-medium rounded-full': student.status === 'অনুমোদন'
+                                        }">
+                                            {{ student.status }}
+                                        </span>
         </div>
       </td>
       <td class="text-center px-6 py-4">
@@ -358,11 +401,11 @@ onUnmounted(() => {
       class="bg-white rounded-md shadow-lg w-48 absolute mt-2 origin-top-right right-0 ring-1 ring-black ring-opacity-5 z-10"
     >
       <div class="py-1" role="menu" aria-orientation="vertical">
-        <button
-          class="flex text-emerald-600 text-left text-sm w-full hover:bg-emerald-50 items-center px-4 py-2"
-        >
-          <i class="fa-paper-plane fas mr-2"></i> বোর্ড দাখিল
-        </button>
+        <a @click="openModal(student.id)"
+                        class="group flex items-center px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 cursor-pointer">
+                        <i class="fas fa-upload mr-3 text-emerald-400 group-hover:text-emerald-700"></i>
+                        বোর্ড দাখিল করুন
+                    </a>
 
         <Link
           :href="route('students_registration.stu_reg_view', student.id)"
@@ -388,13 +431,60 @@ onUnmounted(() => {
 </td>
 
 
-
-
-
-
     </tr>
   </tbody>
 </table>
+
+
+
+
+
+
+
+<div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60 z-50">
+        <div class="bg-white rounded-lg shadow-2xl w-[450px] mx-auto transform transition-all">
+            <div class="bg-emerald-600 rounded-t-lg p-4">
+                <div class="flex justify-center">
+                    <i class="fas fa-paper-plane text-4xl text-white mb-2"></i>
+                </div>
+                <h2 class="text-xl font-bold text-white text-center">বোর্ড দাখিল করুন</h2>
+            </div>
+            <div class="p-6 border-t border-emerald-100">
+                <p class="text-gray-700 text-center text-lg">আপনি কি নিশ্চিত যে এই আবেদনটি সাবমিট করতে চান?</p>
+                <div class="mt-6 flex justify-center space-x-4">
+                    <button @click="showModal = false"
+                        class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200">
+                        বাতিল করুন
+                    </button>
+                    <button @click="submitApplication"
+                        class="px-6 py-2 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 transition-colors duration-200 flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        সাবমিট করুন
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div v-if="showToast"
+        class="fixed top-20 -right-96 flex items-center w-full max-w-md p-6 text-white bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg shadow-2xl border-l-4 border-emerald-400 transition-all duration-300 ease-out transform translate-x-[-512px]">
+        <div class="flex items-center space-x-4">
+            <div class="bg-white bg-opacity-20 rounded-full p-3">
+                <i class="fas fa-check-circle text-2xl"></i>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xl">আবেদন সফলভাবে সাবমিট হয়েছে!</span>
+            </div>
+        </div>
+        <button @click="showToast = false" class="ml-auto text-white hover:text-emerald-200 text-xl">&times;</button>
+    </div>
+
+
+
+
+
+
   </div>
 </div>
 

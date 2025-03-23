@@ -796,6 +796,25 @@ class ExamRegistrationController extends Controller
         ->first();
 
 
+        // $markaz = DB::table('markaz_agreements')
+        // ->where('user_id', Auth::user()->id)
+        // ->latest('id')  // সর্বশেষ রেকর্ড প্রথমে আনবে
+        // ->first();
+
+
+  // Directly look up the MDID in stu_rledger_p table
+$markazId = null;
+$markazFromRledger = DB::table('stu_rledger_p')
+    ->where('MRID', Auth::user()->madrasha_id)
+    ->select('MDID')
+    ->first();
+
+if ($markazFromRledger) {
+    $markazId = $markazFromRledger->MDID;
+}
+
+
+
 
 
 
@@ -814,6 +833,10 @@ class ExamRegistrationController extends Controller
           'current_class' => $marhala ? $marhala->marhala_name_bn : null,
         'marhala_id' => $marhalaId,
 
+// 'markaz_id' => $markaz ? $markaz->id : null,
+'markaz_id' => $markazId,
+
+// 'markaz_id' => $markazId,
 
             'name_bn' => $request->name_bn,
             'name_en' => $request->name_en,

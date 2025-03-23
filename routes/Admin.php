@@ -6,6 +6,7 @@ use App\Http\Controllers\ScheduleSetupController;
 use App\Http\Controllers\MarhalaListController;
 use App\Http\Controllers\MadrashaController;
 use App\Http\Controllers\SubjectSettingsController;
+use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\ExamSetupController;
 use App\Http\Controllers\MarkazAgreementController;
 // মারহালা সেটাপ
@@ -103,8 +104,13 @@ Route::get('markaz_for_admin/markaz_setup', function () {
     return Inertia::render('markaz_for_admin/markaz_setup');
 })->name('markaz_for_admin.markaz_setup');
 
+Route::get('markaz_for_admin/all_markaz_list', function () {
+    return Inertia::render('markaz_for_admin/all_markaz_list');
+})->name('markaz_for_admin.all_markaz_list');
 
-
+Route::get('markaz_for_admin/madrasha_list_underMarkaz', function () {
+    return Inertia::render('markaz_for_admin/madrasha_list_underMarkaz');
+})->name('markaz_for_admin.madrasha_list_underMarkaz');
 
 // মাদরাসা ডাটা
 
@@ -190,3 +196,9 @@ Route::get('/subject-settings', [SubjectSettingsController::class, 'index'])->na
     Route::post('/save-subject-selection', [MarhalaListController::class, 'saveSubjectSelection'])->name('api.save-subject-selection');
 
 
+
+    // Route::get('/madrasha/{madrasha_id}/students', [StudentRegistrationController::class, 'getMadrashaStudents'])
+    // ->name('nibondon_for_admin.madrashaWari_stu_nibond_list');
+
+    Route::get('/markaz/{id}/madrashas', [MadrashaController::class, 'madrashaListUnderMarkaz'])
+    ->name('markaz_for_admin.madrasha_list_underMarkaz');

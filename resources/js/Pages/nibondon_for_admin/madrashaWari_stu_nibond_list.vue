@@ -101,33 +101,16 @@
   <script setup>
   import AuthenticatedLayout from '@/Layouts/admin/AuthenticatedLayout.vue'
 import { Link } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
+import { defineProps } from 'vue';
+import axios from 'axios';
+
+const props = defineProps({
+  students: Array,
+  madrasha_id: Number
+});
 
 
-  const students = ref([
-    {
-      photo: 'https://via.placeholder.com/40',
-      name: 'আহমেদ হাসান',
-      class: 'ফাজিল',
-      roll: '12345',
-      registration: '54321',
-      birthDate: '01/01/2000',
-      father: 'মোঃ আব্দুল হক',
-      mother: 'মোছাঃ ফাতিমা বেগম',
-      status: 'উত্তীর্ণ'
-    },
-    {
-      photo: 'https://www.pexels.com/photo/brown-and-green-mountain-view-photo-842711/',
-      name: 'মোঃ রশিদ',
-      class: 'ফাজিল',
-      roll: '12346',
-      registration: '54322',
-      birthDate: '02/01/2000',
-      father: 'মোঃ আব্দুল মালেক',
-      mother: 'মোছাঃ রোকেয়া বেগম',
-      status: 'অনুত্তীর্ণ'
-    }
-  ])
 
   const statusClass = (status) => {
     return status === 'উত্তীর্ণ'

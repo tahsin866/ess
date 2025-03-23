@@ -64,7 +64,8 @@ class reg_stu_information extends Model
 'madrasha_id',
 'marhala_id',
 'user_id',
-'user_name'
+'user_name',
+'markaz_id'
 
     ];
 
@@ -75,5 +76,10 @@ class reg_stu_information extends Model
     }
 
 
+
+    public function markazAgreement()
+    {
+        return $this->belongsTo(MarkazAgreement::class, 'markaz_id', 'id');
+    }
 
 }

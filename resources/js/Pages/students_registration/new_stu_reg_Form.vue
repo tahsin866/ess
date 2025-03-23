@@ -62,6 +62,7 @@ const studentInfoForm = useForm({
     parmanent_thana_name: '',
     parmanent_TID: '',
     student_image: '',
+    markaz_id: ''
 });
 
 

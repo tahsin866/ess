@@ -131,6 +131,10 @@ class MarkazAgreementController extends Controller
         $associatedMadrasa->markaz_agreement_id = $markazAgreement->id;
         $associatedMadrasa->madrasa_Name = $madrasaData['madrasa_Name'];
 
+$associatedMadrasa->madrasa_id = $madrasaData['madrasa_id'];
+
+
+
         // Student counts
         $associatedMadrasa->fazilat = $madrasaData['fazilat'];
         $associatedMadrasa->sanabiya_ulya = $madrasaData['sanabiya_ulya'];

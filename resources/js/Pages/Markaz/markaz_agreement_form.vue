@@ -52,6 +52,7 @@ const rows = ref([{
     ibtedaiyyah: "",
     hifzul_quran: "",
     madrasa_Name: "",
+    madrasa_id: "",
     searchQuery: "",
     isOpen: false,
     files: {
@@ -74,6 +75,7 @@ const addRow = () => {
     ibtedaiyyah: "",
     hifzul_quran: "",
     madrasa_Name: "",
+    madrasa_id: "",
     searchQuery: "",
     isOpen: false,
     files: {
@@ -205,7 +207,8 @@ const submitForm = () => {
 
     // Map rows data to associated_madrasas
     form.associated_madrasas = rows.value.map(row => ({
-        madrasa_Name: row.madrasa_Name, // Use the stored madrasa name
+        madrasa_Name: row.madrasa_Name,
+        madrasa_id: row.madrasa_id, // Use the stored madrasa name
         fazilat: row.fazilat,
         sanabiya_ulya: row.sanabiya_ulya,
         sanabiya: row.sanabiya,
@@ -290,9 +293,11 @@ const filteredOptions = computed(() => (row) => {
 
 const selectOption = (madrasha, row) => {
     row.madrasa_Name = madrasha.name;  // Store the madrasa name
+    row.madrasa_id = madrasha.id;  // এই লাইনটি যোগ করুন - মাদরাসার আইডি সেট করুন
     row.searchQuery = `${madrasha.name} (ইলহাক: ${madrasha.ElhaqNo})`; // Display formatted name with Elhaq
     row.isOpen = false;
 };
+
 
 // Add click outside to close dropdown
 const closeDropdown = (row) => {

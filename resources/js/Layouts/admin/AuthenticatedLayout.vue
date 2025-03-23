@@ -229,7 +229,7 @@ const setSelected = (item) => {
                     <div v-if="dropdownOpen.sanawia" class="pl-6">
                         <Link :href="route('markaz_for_admin.markaz_setup')" class="text-lg block hover:bg-[#123524] px-4 py-2">মারকায আবেদন তালিকা</Link>
                         <Link href="route('OntorVukti.softDelete_draft_list')" class="text-lg block hover:bg-[#123524] px-4 py-2">প্রস্তাবিত মারকায</Link>
-                        <Link href="route('OntorVukti.stu_admit_card')" class="text-lg block hover:bg-[#123524] px-4 py-2">মারকায তালিকা</Link>
+                        <Link :href="route('markaz_for_admin.all_markaz_list')" class="text-lg block hover:bg-[#123524] px-4 py-2">মারকায তালিকা</Link>
                         <Link href="route('OntorVukti.stu_payment')" class="text-lg block hover:bg-[#123524] px-4 py-2">মারকায পরিবর্তনের আবেদন</Link>
                         <Link href="route('OntorVukti.stu_payment')" class="text-lg block hover:bg-[#123524] px-4 py-2">মারকায এডমিন</Link>
                         <Link href="route('OntorVukti.stu_payment')" class="text-lg block hover:bg-[#123524] px-4 py-2">মারকায এডমিন ট্রেনিং</Link>
@@ -273,7 +273,7 @@ const setSelected = (item) => {
                     <div v-if="dropdownOpen.ibtedaia" class="pl-6">
                         <Link href="route('About_markaj.madrasha_list')" class="text-lg block hover:bg-[#123524] px-4 py-2">মাদরাসার তালিকা</Link>
                         <Link :href="route('nibondon_for_admin.nibondon_Markaz_list')" class="text-lg block hover:bg-[#123524] px-4 py-2">নিবন্ধন তালিকা</Link>
-                        <Link :href="route('nibondon_for_admin.abandon_stu_list')" class="text-lg block hover:bg-[#123524] px-4 py-2">বাতিলকৃত নিবন্ধন তালিকা</Link>
+                        <Link href="route('nibondon_for_admin.abandon_stu_list')" class="text-lg block hover:bg-[#123524] px-4 py-2">বাতিলকৃত নিবন্ধন তালিকা</Link>
                         <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">পেমেন্ট তালিকা</Link>
                         <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">বোর্ড ফেরত তালিকা</Link>
                         <Link href="#" class="text-lg block hover:bg-[#123524] px-4 py-2">নিবন্ধন পত্র তৈরি</Link>

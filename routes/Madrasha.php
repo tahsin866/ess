@@ -174,6 +174,7 @@ Route::get('others/massaging', function () {
     Route::post('/Markaz/markaz_apply_update/{id}', [MarkazAgreementController::class, 'update'])->name('markaz-agreements.update');
 
     Route::post('/markaz/submit/{id}', [MarkazAgreementController::class, 'submitApplication'])->name('markaz.submit');
+    Route::post('/student_reg/submit/{id}', [StudentRegistrationController::class, 'reg_submitApplication'])->name('student_reg.submit');
 
     Route::delete('/markaz/delete/{id}', [MarkazAgreementController::class, 'deleteAgreement'])->name('markaz.delete');
 
@@ -191,5 +192,4 @@ Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStud
 // Add this route to update student data
 
 
-Route::get('/students-registration', [StudentRegistrationController::class, 'index'])->name('students_registration.index');
-Route::get('/students-registration/{id}', [StudentRegistrationController::class, 'view'])->name('students_registration.stu_reg_view');
+

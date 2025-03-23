@@ -30,6 +30,7 @@ class MarkazAgreement extends Model
         'feedback_image',
         'submitted_at',
         'admin_name',
+        'madrasha_id',
     ];
 
     // public function associatedMadrasas()
@@ -60,6 +61,13 @@ class MarkazAgreement extends Model
     {
         return $this->belongsTo(schedule_setups::class, 'exam_setup_id'); // Assuming the foreign key is 'markaz_agreement_id'
     }
+
+
+    public function regStuInformations()
+    {
+        return $this->hasMany(reg_stu_information::class, 'markaz_agreement_id');
+    }
+
 
 
 }

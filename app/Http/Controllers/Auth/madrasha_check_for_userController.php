@@ -61,9 +61,9 @@ class madrasha_check_for_userController extends Controller
             // Store in session
             session([
                 'madrasha_id' => $madrasha->id,
-                'madrasha_name' => $madrasha->MName_uni,
-                'thana' => $madrasha->Thana_uni,
-                'post' => $madrasha->Post_uni,
+                'madrasha_name' => $madrasha->MName,
+                'thana' => $madrasha->Vill,
+                'post' => $madrasha->Post,
                 'markaz_serial' => $madrasha->markaz_serial,
                 'custom_code' => $customCode
             ]);

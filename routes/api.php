@@ -62,6 +62,16 @@ Route::post('/schedule-setups', [ScheduleSetupController::class, 'store']);
 
 
 Route::get('/madrasha-list', [MadrashaController::class, 'getMadrashaList']);
+
+Route::get('/markaz-list', [MadrashaController::class, 'getMarkazList']);
+// এডমিনের মারকায ফিল্টার
+Route::get('/madrashas/filter', [MadrashaController::class, 'filterMadrashas']);
+
+// Route::get('/markaz/{id}/madrashas', [MadrashaController::class, 'getMadrashasUnderMarkaz'])
+//     ->name('markaz_for_admin.madrasha_list_underMarkaz');
+
+
+
 Route::get('/madrasa-list', [MadrashaController::class, 'index']);
 Route::get('/divisions', [MadrashaController::class, 'getDivisions']);
 Route::get('/districts/{division}', [MadrashaController::class, 'getDistricts']);
@@ -101,6 +111,27 @@ Route::get('/user-subject-selection/{marhalaId}', [MarhalaListController::class,
 
 
 Route::get('/students-registration', [StudentRegistrationController::class, 'getStudents']);
+
+
+
+
+Route::get('/markaz-students', [StudentRegistrationController::class, 'getMarkazStudents']);
+
+
+Route::get('/markaz-madrasa-list/{markaz_id}', [StudentRegistrationController::class, 'getMarkazMadrasaList'])
+    ->name('api.markaz_madrasa_list');
+
+    Route::get('/nibondon/abandon-stu-list/{markaz_id}', [StudentRegistrationController::class, 'abandonStuList'])
+    ->name('nibondon_for_admin.abandon_stu_list');
+
+
+
+
+    // Route::get('/madrasha/students/{madrasha_id}', [StudentRegistrationController::class, 'getMadrashaStudents'])
+    // ->name('api.madrasha_students');
+
+
+
 
 
 
