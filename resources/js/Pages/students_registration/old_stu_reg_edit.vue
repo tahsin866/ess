@@ -733,6 +733,7 @@ const studentInfoForm = useForm({
     mobile_no: '',
     user_name: '',
     user_id: '',
+    markaz_id:'',
 
 
     present_division_name: '',

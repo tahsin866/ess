@@ -138,6 +138,3 @@ Route::get('/markaz-madrasa-list/{markaz_id}', [StudentRegistrationController::c
 
 
 });
-
-
-

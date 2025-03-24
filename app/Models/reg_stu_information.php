@@ -77,9 +77,6 @@ class reg_stu_information extends Model
 
 
 
-    public function markazAgreement()
-    {
-        return $this->belongsTo(MarkazAgreement::class, 'markaz_id', 'id');
-    }
+
 
 }

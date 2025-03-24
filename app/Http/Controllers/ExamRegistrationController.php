@@ -91,16 +91,6 @@ class ExamRegistrationController extends Controller
 
 
 
-    // public function getStudentYears()
-    // {
-    //     // Get distinct years from students table using ORM
-    //     $years = Student::distinct()
-    //         ->whereNotNull('years')
-    //         ->pluck('years');
-
-    //     return response()->json($years);
-    // }
-
 
     public function getStudentYears()
     {
@@ -408,7 +398,7 @@ class ExamRegistrationController extends Controller
             'currentExam' => [
                 'Madrasha' => Auth::user()->madrasha_name, // From authenticated user
                 'Markaj' => $student->Markaj, // Assuming this is the same
-                'Class' => $this->getClassNameByMarhalaId($marhalaId), // Based on marhalaId
+
                 'marhalaId' => $marhalaId
             ]
         ];
@@ -419,21 +409,7 @@ class ExamRegistrationController extends Controller
         return response()->json($response);
     }
 
-    /**
-     * Get class name based on marhalaId
-     */
-    private function getClassNameByMarhalaId($marhalaId)
-    {
-        $classNames = [
-            '9' => 'ফযিলত',
-            '10' => 'সানাবিয়া উলইয়া',
-            '11' => 'সানাবিয়া',
-            '12' => 'মুতাওয়াসসিতাহ',
-            '14' => 'ইবতেদাইয়্যাহ'
-        ];
 
-        return $classNames[$marhalaId] ?? '';
-    }
 
     /**
      * Determine the student type based on grades and other criteria
@@ -669,6 +645,16 @@ class ExamRegistrationController extends Controller
         ->latest('id')
         ->first();
 
+        $markazId = null;
+$markazFromRledger = DB::table('stu_rledger_p')
+    ->where('MRID', Auth::user()->madrasha_id)
+    ->select('MDID')
+    ->first();
+
+if ($markazFromRledger) {
+    $markazId = $markazFromRledger->MDID;
+}
+
         // Create new record in reg_stu_informations table
         reg_stu_information::updateOrCreate(
             // ['student_id' => $request->IDs], // Find by student_id
@@ -678,6 +664,7 @@ class ExamRegistrationController extends Controller
             'user_name' => Auth::user()->name,
                 'madrasha_id' => Auth::user()->madrasha_id,
                   // Add exam information from exam_setups table
+                  'markaz_id' => $markazId,
             'exam_id' => $examSetup ? $examSetup->id : null,
             'exam_name_Bn' => $examSetup ? $examSetup->exam_name : null,
                 'name_bn' => $request->name_bn,
