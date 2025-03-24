@@ -372,12 +372,26 @@ class ExamRegistrationController extends Controller
         // Fetch the student data based on roll and registration ID using Eloquent
         $student = Student::where('Roll', $roll)
             ->where('reg_id', $reg_id)
-
             ->where('CID', $CID)
             ->first();
 
         if (!$student) {
             return response()->json(['message' => 'Student not found'], 404);
+        }
+
+        // Get the markaz name for current exam based on MID from Student table
+        $markazName = $student->Markaj; // Default to student's markaz
+
+        // Try to find the markaz from stu_rledger_p table using MID
+        $markazFromRledger = DB::table('stu_rledger_p')
+            ->where('MDID', $student->MDID) // Using student's MID to find matching record
+            ->select('MDID')
+            ->first();
+
+        if ($markazFromRledger) {
+            // If found MDID, use the same markaz name from student table
+            // Since you mentioned MDID equals MID but stu_rledger_p only has codes
+            $markazName = $student->Markaj;
         }
 
         // Create response structure with both past and current exam info
@@ -397,8 +411,7 @@ class ExamRegistrationController extends Controller
             ],
             'currentExam' => [
                 'Madrasha' => Auth::user()->madrasha_name, // From authenticated user
-                'Markaj' => $student->Markaj, // Assuming this is the same
-
+                'Markaj' => $markazName, // Now using the markaz name we found
                 'marhalaId' => $marhalaId
             ]
         ];
@@ -408,6 +421,7 @@ class ExamRegistrationController extends Controller
 
         return response()->json($response);
     }
+
 
 
 
