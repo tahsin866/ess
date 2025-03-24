@@ -702,7 +702,7 @@ const currentMarhalaId = ref(null);
 
                                 </span>
                                 <input type="text" disabled
-                                    class="bg-emerald-50 border border-emerald-200 rounded-md text-emerald-800 w-full pl-10 pr-3 py-2"
+                                    class="bg-emerald-50 border border-emerald-200 rounded-md text-emerald-800 text-xl w-full pl-10 pr-3 py-2"
                                     placeholder="নিয়মিত">
                             </div>
                         </div>
@@ -713,10 +713,10 @@ const currentMarhalaId = ref(null);
                                 বোর্ড
                             </label>
                             <div class="relative">
-                                <span class="flex absolute inset-y-0 items-center left-0 pl-3 pointer-events-none">
+                                <span class="flex absolute inset-y-0 items-center left-0 pl-3  pointer-events-none">
                                 </span>
                                 <select v-model="studentInfoForm.board_name"
-                                    class="bg-white border border-emerald-200 rounded-md text-emerald-800 w-full appearance-none pl-10 pr-3 py-2">
+                                    class="bg-white border border-emerald-200 rounded-md text-emerald-800 w-full appearance-none text-xl pl-10 pr-3 py-2">
                                     <option value="">বোর্ড নির্বাচন করুন</option>
                                     <option value="বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ">বেফাকুল মাদারিসিল আরাবিয়া
                                         বাংলাদেশ</option>
@@ -738,14 +738,7 @@ const currentMarhalaId = ref(null);
 
                                     </option>
                                 </select>
-                                <div class="flex absolute inset-y-0 items-center pointer-events-none pr-3 right-0">
-                                    <svg class="h-5 text-emerald-600 w-5" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -337,7 +337,7 @@ const submitApplication = () => {
     <table class="w-full">
   <thead class="bg-emerald-50">
     <tr>
-      <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">রেজিস্ট্রেশ নং</th>
+      <th class="text-center text-emerald-800 text-x font-medium px-6 py-3 uppercase">রেজিস্ট্রেশ নং</th>
       <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">ছবি</th>
       <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">নাম</th>
       <th class="text-center text-emerald-800 text-xl font-medium px-6 py-3 uppercase">পিতার নাম</th>
@@ -408,7 +408,7 @@ const submitApplication = () => {
                     </a>
 
         <Link
-          :href="route('students_registration.stu_reg_view', student.id)"
+          :href="route('students_registration.student_registration_edit', student.id)"
           class="flex text-amber-600 text-left text-sm w-full hover:bg-amber-50 items-center px-4 py-2"
         >
           <i class="fa-pencil-alt fas mr-2"></i> এডিট

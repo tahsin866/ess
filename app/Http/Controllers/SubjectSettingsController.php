@@ -118,7 +118,7 @@ public function index()
         ->get()
         ->map(function ($subject) {
             return [
-                'id' => $subject->id,
+
                 'code' => $subject->MarhalaSubject->subject_code ?? 'N/A',
                 'Subject_Names' => $subject->Subject_Names,
                 'Marhala_type' => $subject->Marhala_type,

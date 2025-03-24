@@ -66,8 +66,17 @@
       <tr v-for="(student, index) in students" :key="index">
         <td class="p-2 text-center">{{ index + 1 }}</td>
         <td class="p-2 text-center">
-          <img :src="student.student_image" alt="Student" class="w-10 h-10 rounded-full mx-auto" />
-        </td>
+  <img
+    v-if="student.student_image"
+    :src="'/storage/' + student.student_image"
+    alt="Student"
+    class="w-20 h-20 rounded-sm mx-auto object-cover"
+  />
+  <div v-else class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mx-auto">
+    <span class="text-gray-500 text-xs">No Image</span>
+  </div>
+</td>
+
         <td class="p-2 text-center">{{ student.name_bn }}</td>
         <td class="p-2 text-center">{{ }}</td>
         <td class="p-2 text-center">{{}}</td>
@@ -117,6 +126,21 @@ const props = defineProps({
       ? 'bg-green-500 text-white px-2 py-1 rounded-sm text-xs'
       : 'bg-red-500 text-white px-2 py-1 rounded-sm text-xs'
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </script>
 
   <style scoped>

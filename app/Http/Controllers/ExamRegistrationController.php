@@ -360,14 +360,12 @@ class ExamRegistrationController extends Controller
 
 
 
-
     public function getStudentForEdit(Request $request)
     {
         $roll = $request->query('roll');
         $reg_id = $request->query('reg_id');
         $CID = $request->query('CID');
-
-        $marhalaId = $request->header('marhalaId');
+        $marhalaId = $request->header('marhalaId'); // Get marhalaId from query parameter
 
         // Fetch the student data based on roll and registration ID using Eloquent
         $student = Student::where('Roll', $roll)
@@ -382,17 +380,19 @@ class ExamRegistrationController extends Controller
         // Get the markaz name for current exam based on MID from Student table
         $markazName = $student->Markaj; // Default to student's markaz
 
-        // Try to find the markaz from stu_rledger_p table using MID
+        // Try to find the markaz from stu_rledger_p table using MRID
         $markazFromRledger = DB::table('stu_rledger_p')
-            ->where('MDID', $student->MDID) // Using student's MID to find matching record
+            ->where('MRID', $student->MID)
             ->select('MDID')
             ->first();
 
         if ($markazFromRledger) {
             // If found MDID, use the same markaz name from student table
-            // Since you mentioned MDID equals MID but stu_rledger_p only has codes
             $markazName = $student->Markaj;
         }
+
+        // Get current class name based on marhalaId
+        $currentClass = $this->getClassNameFromMarhalaId($marhalaId);
 
         // Create response structure with both past and current exam info
         $response = [
@@ -404,14 +404,15 @@ class ExamRegistrationController extends Controller
                 'DateofBirth' => $student->DateofBirth,
                 'Roll' => $student->Roll,
                 'reg_id' => $student->reg_id,
-                'Madrasha' => $student->Madrasha, // From students table
+                'Madrasha' => $student->Madrasha,
                 'Markaj' => $student->Markaj,
-                'Class' => $student->Class, // From students table
+                'Class' => $student->Class,
                 'Division' => $student->Division
             ],
             'currentExam' => [
-                'Madrasha' => Auth::user()->madrasha_name, // From authenticated user
-                'Markaj' => $markazName, // Now using the markaz name we found
+                'Madrasha' => Auth::user()->madrasha_name,
+                'Markaj' => $markazName,
+                'Class' => $currentClass,
                 'marhalaId' => $marhalaId
             ]
         ];
@@ -420,6 +421,31 @@ class ExamRegistrationController extends Controller
         $this->determineStudentType($response['currentExam'], $marhalaId, $student);
 
         return response()->json($response);
+    }
+
+
+
+
+    /**
+     * Get class name from marhalaId
+     */
+    private function getClassNameFromMarhalaId($marhalaId)
+    {
+        // Map marhalaId to class names
+        $marhalaToClassMap = [
+            '1' => 'ইবতিদাইয়া',
+            '2' => 'মুতাওয়াসসিতাহ',
+            '3' => 'সানাবিয়া আম্মাহ',
+            '4' => 'সানাবিয়া খাসসাহ',
+            '5' => 'আলিয়া',
+            '6' => 'মুতাখাসসিস',
+            '7' => 'তাকমিল',
+            '8' => 'কামিল',
+            '9' => 'ফযিলত',
+            // Add more mappings as needed
+        ];
+
+        return $marhalaToClassMap[$marhalaId] ?? 'অন্যান্য';
     }
 
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\reg_stu_information;
 use App\Models\reg_stu_information_log;
 use App\Models\MarkazAgreementMadrasa;
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\student;
 use Illuminate\Http\Request;
 use MirazMac\BanglaString\Translator\BijoyToAvro\Translator;
@@ -344,7 +346,6 @@ public function abandonStuList($markaz_id)
 
 
 
-
 public function madrashaWariStuNibondList($madrasha_id = null)
 {
     // মাদরাসা আইডি অনুসারে ছাত্রদের তালিকা পাওয়া
@@ -354,7 +355,7 @@ public function madrashaWariStuNibondList($madrasha_id = null)
         // reg_stu_informations টেবিল থেকে ছাত্রদের তথ্য সংগ্রহ করা
         $students = DB::table('reg_stu_informations')
             ->where('madrasha_id', $madrasha_id)
-            ->select('id', 'name_bn','Date_of_birth','father_name_bn', 'mother_name_bn')
+            ->select('id', 'name_bn','Date_of_birth','father_name_bn', 'mother_name_bn','student_image')
             ->get();
     }
 
@@ -378,6 +379,108 @@ public function madrashaWariStuNibondList($madrasha_id = null)
 //         'madrasha_id' => $madrasha_id
 //     ]);
 // }
+
+
+
+
+
+
+
+public function editStudentRegistration($id)
+{
+    // Find the student record
+    $student = reg_stu_information::findOrFail($id);
+
+    // Get marhalas for dropdown
+    $marhalas = DB::table('marhalas')->get();
+
+    // Return Inertia response to render Vue component
+    return Inertia::render('students_registration/student_registration_edit', [
+        'student' => $student,
+        'marhalas' => $marhalas
+    ]);
+}
+
+    public function updateStudentRegistration(Request $request, $id)
+    {
+        $request->validate([
+            'name_bn' => 'required|string|max:255',
+            'name_en' => 'nullable|string|max:255',
+            'name_ar' => 'nullable|string|max:255',
+            'father_name_bn' => 'required|string|max:255',
+            'father_name_en' => 'nullable|string|max:255',
+            'father_name_ar' => 'nullable|string|max:255',
+            'mother_name_bn' => 'nullable|string|max:255',
+            'mother_name_en' => 'nullable|string|max:255',
+            'mother_name_ar' => 'nullable|string|max:255',
+            'BRN_no' => 'nullable|string|max:255',
+            'NID_no' => 'nullable|string|max:255',
+            'mobile_no' => 'nullable|string|max:255',
+
+        ]);
+
+        // Find the student record
+        $student = reg_stu_information::findOrFail($id);
+
+        // Handle file uploads
+        if ($request->hasFile('student_image')) {
+            // Delete old image if exists
+            if ($student->student_image) {
+                Storage::disk('public')->delete($student->student_image);
+            }
+            $studentImagePath = $request->file('student_image')->store('student_images', 'public');
+            $student->student_image = $studentImagePath;
+        }
+
+        if ($request->hasFile('NID_attach')) {
+            // Delete old attachment if exists
+            if ($student->NID_attach) {
+                Storage::disk('public')->delete($student->NID_attach);
+            }
+            $nidAttachmentPath = $request->file('NID_attach')->store('nid_attachments', 'public');
+            $student->NID_attach = $nidAttachmentPath;
+        }
+
+        // Get marhala information
+        $marhala = null;
+        if ($request->marhala_id) {
+            $marhala = DB::table('marhalas')
+                ->select('id', 'marhala_name_bn')
+                ->where('id', $request->marhala_id)
+                ->first();
+        }
+
+        // Update student information
+        $student->name_bn = $request->name_bn;
+        $student->name_en = $request->name_en;
+        $student->name_ar = $request->name_ar;
+        $student->father_name_bn = $request->father_name_bn;
+        $student->father_name_en = $request->father_name_en;
+        $student->father_name_ar = $request->father_name_ar;
+        $student->mother_name_bn = $request->mother_name_bn;
+        $student->mother_name_en = $request->mother_name_en;
+        $student->mother_name_ar = $request->mother_name_ar;
+        $student->BRN_no = $request->BRN_no;
+        $student->NID_no = $request->NID_no;
+        $student->mobile_no = $request->mobile_no;
+        $student->Date_of_birth = $request->Date_of_birth;
+        $student->student_type = $request->student_type ?? 'নিয়মিত';
+
+        // Update marhala/class information if provided
+        if ($marhala) {
+            $student->current_class = $marhala->marhala_name_bn;
+            $student->marhala_id = $marhala->id;
+        }
+
+        // Update address information
+
+
+        $student->save();
+
+        return redirect()->route('students_registration.index')
+            ->with('success', 'Student information updated successfully');
+    }
+
 
 
 

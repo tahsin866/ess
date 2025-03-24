@@ -481,13 +481,14 @@
                                     থানা/উপজেলা
                                 </label>
                                 <div class="relative">
-                                    <select v-model="presentFilters.thana"
-                                        class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
-                                        <option value="">সকল</option>
-                                        <option v-for="thana in presentThanas" :key="thana.TID" :value="thana.TID">
-                                            {{ thana.Thana }}
-                                        </option>
-                                    </select>
+                                    <select v-model="presentFilters.Thana" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
+  <option value="">সকল</option>
+  <option v-for="Thana in presentThanas" :key="Thana.Thana_ID" :value="Thana.Thana_ID">
+    {{ Thana.Thana }}
+  </option>
+</select>
+
+
                                     <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
                                     </div>
                                 </div>
@@ -551,17 +552,15 @@
                                     class="flex text-emerald-700 text-lg font-arabic font-medium gap-2 items-center mb-1">
                                     থানা/উপজেলা
                                 </label>
-                                <div class="relative">
-                                    <select v-model="permanentFilters.thana"
-                                        class="bg-white border border-gray-200 rounded-sm w-full block focus:ring-[#2d6a4f] focus:ring-2 px-4 py-2">
-                                        <option value="">সকল</option>
-                                        <option v-for="thana in thanas" :key="thana.TID" :value="thana.TID">
-                                            {{ thana.Thana }}
-                                        </option>
-                                    </select>
-                                    <div class="flex absolute inset-y-0 items-center pointer-events-none px-2 right-0">
-                                    </div>
-                                </div>
+
+
+    <select v-model="permanentFilters.Thana" class="block w-full px-4 py-2 bg-white border border-gray-200 rounded-sm focus:ring-2 focus:ring-[#2d6a4f]">
+      <option value="">সকল</option>
+      <option v-for="Thana in thanas" :key="Thana.Thana_ID" :value="Thana.Thana_ID">
+        {{ Thana.Thana }}
+      </option>
+    </select>
+
                             </div>
                         </div>
                     </div>
@@ -734,6 +733,8 @@ const studentInfoForm = useForm({
     user_name: '',
     user_id: '',
     markaz_id:'',
+    NID_attach:'',
+
 
 
     present_division_name: '',
@@ -762,18 +763,16 @@ const studentInfoForm = useForm({
 onMounted(async () => {
     try {
         // Get marhalaId from localStorage or another source
-        const marhalaId = localStorage.getItem('marhalaId') || '';
+
 
         const response = await axios.get('/api/get-student-for-edit', {
-            params: {
-                roll: props.roll,
-                reg_id: props.reg_id,
-                CID: props.CID
-            },
-            headers: {
-                'marhalaId': marhalaId
-            }
-        });
+    params: {
+        roll: props.roll,
+        reg_id: props.reg_id,
+        CID: props.CID,
+        marhalaId: localStorage.getItem('marhalaId') || ''
+    }
+});
 
         student.value = response.data;
 
@@ -815,7 +814,7 @@ onMounted(async () => {
             studentInfoForm.current_madrasha = response.data.currentExam.Madrasha
             studentInfoForm.current_markaz = response.data.currentExam.Markaj
             studentInfoForm.student_type = response.data.currentExam.student_type
-            studentInfoForm.current_class = response.data.currentExam.marhalaId
+            studentInfoForm.current_class = response.data.currentExam.Class
             studentInfoForm.exam_books_name = response.data.currentExam.irregular_subjects
         }
 
@@ -977,13 +976,13 @@ const thanas = ref([]);
 const presentFilters = ref({
   division: '',
   district: '',
-  thana: ''
+  Thana: '' // 'T' uppercase করে দিন
 });
 
 const permanentFilters = ref({
   division: '',
   district: '',
-  thana: ''
+  Thana: '' // 'T' uppercase করে দিন
 });
 
 // Initialize filters from props if they exist
@@ -995,7 +994,7 @@ const initializeFilters = () => {
     presentFilters.value.district = props.modelValue.present_des_id;
   }
   if (props.modelValue && props.modelValue.present_TID) {
-    presentFilters.value.thana = props.modelValue.present_TID;
+    presentFilters.value.Thana = props.modelValue.present_TID;
   }
 
   if (props.modelValue && props.modelValue.parmanent_DID) {
@@ -1005,7 +1004,7 @@ const initializeFilters = () => {
     permanentFilters.value.district = props.modelValue.parmanent_desId;
   }
   if (props.modelValue && props.modelValue.parmanent_TID) {
-    permanentFilters.value.thana = props.modelValue.parmanent_TID;
+    permanentFilters.value.Thana = props.modelValue.parmanent_TID;
   }
 };
 
@@ -1041,11 +1040,11 @@ watch(presentFilters, async (newValues) => {
   }
 
   // Update thana
-  if (newValues.thana) {
-    const selectedThana = presentThanas.value.find(t => t.TID == newValues.thana);
+  if (newValues.Thana) {
+    const selectedThana = presentThanas.value.find(t => t.Thana_ID == newValues.Thana);
     if (selectedThana) {
       updatedValue.present_thana_name = selectedThana.Thana_U;
-      updatedValue.present_TID = selectedThana.TID;
+      updatedValue.present_TID = selectedThana.Thana_ID;
     }
   }
 
@@ -1077,11 +1076,11 @@ watch(permanentFilters, async (newValues) => {
   }
 
   // Update thana
-  if (newValues.thana) {
-    const selectedThana = thanas.value.find(t => t.TID == newValues.thana);
+  if (newValues.Thana) {
+    const selectedThana = thanas.value.find(t => t.Thana_ID == newValues.Thana);
     if (selectedThana) {
       updatedValue.parmanent_thana_name = selectedThana.Thana_U;
-      updatedValue.parmanent_TID = selectedThana.TID;
+      updatedValue.parmanent_TID = selectedThana.Thana_ID;
     }
   }
 
@@ -1124,7 +1123,7 @@ const loadDivisions = async () => {
 // Present address handlers
 const presentHandleDivisionChange = async () => {
   presentFilters.value.district = '';
-  presentFilters.value.thana = '';
+  presentFilters.value.Thana = '';
   presentDistricts.value = [];
   presentThanas.value = [];
 
@@ -1141,7 +1140,7 @@ const presentHandleDivisionChange = async () => {
 };
 
 const presentHandleDistrictChange = async () => {
-  presentFilters.value.thana = '';
+  presentFilters.value.Thana = '';
   presentThanas.value = [];
 
   if (!presentFilters.value.district) {
@@ -1159,7 +1158,7 @@ const presentHandleDistrictChange = async () => {
 // Permanent address handlers
 const handleDivisionChange = async () => {
   permanentFilters.value.district = '';
-  permanentFilters.value.thana = '';
+  permanentFilters.value.Thana = '';
   districts.value = [];
   thanas.value = [];
 
@@ -1176,7 +1175,7 @@ const handleDivisionChange = async () => {
 };
 
 const handleDistrictChange = async () => {
-  permanentFilters.value.thana = '';
+  permanentFilters.value.Thana = '';
   thanas.value = [];
 
   if (!permanentFilters.value.district) {
@@ -1215,11 +1214,11 @@ const updateFormData = () => {
     }
   }
 
-  if (presentFilters.value.thana) {
-    const selectedThana = presentThanas.value.find(t => t.TID == presentFilters.value.thana);
+  if (presentFilters.value.Thana) {
+    const selectedThana = presentThanas.value.find(t => t.Thana_ID == presentFilters.value.Thana);
     if (selectedThana) {
       studentInfoForm.present_thana_name = selectedThana.Thana;
-      studentInfoForm.present_TID = selectedThana.TID;
+      studentInfoForm.present_TID = selectedThana.Thana_ID;
     }
   }
 
@@ -1240,11 +1239,11 @@ const updateFormData = () => {
     }
   }
 
-  if (permanentFilters.value.thana) {
-    const selectedThana = thanas.value.find(t => t.TID == permanentFilters.value.thana);
+  if (permanentFilters.value.Thana) {
+    const selectedThana = thanas.value.find(t => t.Thana_ID == permanentFilters.value.Thana);
     if (selectedThana) {
       studentInfoForm.parmanent_thana_name = selectedThana.Thana;
-      studentInfoForm.parmanent_TID = selectedThana.TID;
+      studentInfoForm.parmanent_TID = selectedThana.Thana_ID;
     }
   }
 }

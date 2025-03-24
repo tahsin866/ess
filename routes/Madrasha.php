@@ -89,6 +89,11 @@ Route::get('students_registration/old_stu_reg_edit', function () {
     return Inertia::render('students_registration/old_stu_reg_edit');
 })->name('students_registration.old_stu_reg_edit');
 
+Route::get('students_registration/student_registration_edit', function () {
+    return Inertia::render('students_registration/student_registration_edit');
+})->name('students_registration.student_registration_edit');
+
+
 // অন্তর্ভুক্তি রাউট
 
 Route::get('OntorVukti/ontorvukti_table', function () {
@@ -192,4 +197,9 @@ Route::get('/get-student-for-edit', [ExamRegistrationController::class, 'getStud
 // Add this route to update student data
 
 
+Route::get('/students-registration/{id}/edit', [StudentRegistrationController::class, 'editStudentRegistration'])
+    ->name('students_registration.student_registration_edit');
+
+Route::put('/students-registration/{id}', [StudentRegistrationController::class, 'updateStudentRegistration'])
+    ->name('students_registration.student_registration_update');
 
