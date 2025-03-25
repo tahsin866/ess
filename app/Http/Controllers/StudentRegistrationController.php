@@ -108,6 +108,7 @@ public function updateStudentInfo(Request $request)
 
 
 
+
 public function getStudents()
 {
     $students = reg_stu_information::where('user_id', Auth::id())->select(
@@ -460,6 +461,22 @@ public function editStudentRegistration($id)
         $student->mother_name_bn = $request->mother_name_bn;
         $student->mother_name_en = $request->mother_name_en;
         $student->mother_name_ar = $request->mother_name_ar;
+        $student->board_name = $request->board_name;
+
+        $student->present_division_name = $request->present_division_name;
+        $student->present_district_name = $request->present_district_name;
+        $student->present_thana_name = $request->present_thana_name;
+        $student->presernt_DID = $request->presernt_DID;
+        $student->present_desId = $request->present_desId;
+        $student->present_TID = $request->present_TID;
+
+        $student->parmanent_division_name = $request->parmanent_division_name;
+        $student->parmanent_district_name = $request->parmanent_district_name;
+        $student->parmanent_thana_name = $request->parmanent_thana_name;
+        $student->parmanent_DID = $request->parmanent_DID;
+        $student->parmanent_desId = $request->parmanent_desId;
+        $student->parmanent_TID = $request->parmanent_TID;
+
         $student->BRN_no = $request->BRN_no;
         $student->NID_no = $request->NID_no;
         $student->mobile_no = $request->mobile_no;
@@ -477,9 +494,12 @@ public function editStudentRegistration($id)
 
         $student->save();
 
-        return redirect()->route('students_registration.index')
-            ->with('success', 'Student information updated successfully');
+        return redirect()->back()
+        ->with('success', 'Student information updated successfully');
+
     }
+
+
 
 
 

@@ -94,6 +94,11 @@ Route::get('students_registration/student_registration_edit', function () {
 })->name('students_registration.student_registration_edit');
 
 
+
+Route::get('students_registration/student_registraion_view', function () {
+    return Inertia::render('students_registration/student_registraion_view');
+})->name('students_registration.student_registraion_view');
+
 // অন্তর্ভুক্তি রাউট
 
 Route::get('OntorVukti/ontorvukti_table', function () {

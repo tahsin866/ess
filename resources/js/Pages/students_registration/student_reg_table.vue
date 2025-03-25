@@ -354,11 +354,17 @@ const submitApplication = () => {
   <tbody class="bg-white divide-emerald-100 divide-y text-xl">
     <tr v-for="student in students" :key="student.id">
       <td class="text-center px-6 py-4">{{ student.id }}</td>
-      <td class="text-center px-6 py-4">
-        <div class="flex justify-center">
-          <img :src="student.student_image" class="border-2 border-emerald-200 h-10 rounded-full w-10" />
-        </div>
-      </td>
+      <td class="p-2 text-center">
+  <img
+    v-if="student.student_image"
+    :src="'/storage/' + student.student_image"
+    alt="Student"
+    class="w-20 h-20 rounded-sm mx-auto object-cover"
+  />
+  <div v-else class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mx-auto">
+    <span class="text-gray-500 text-xs">No Image</span>
+  </div>
+</td>
       <td class="text-center px-6 py-4">{{ student.name_bn }}</td>
       <td class="text-center px-6 py-4">{{ student.father_name_bn }}</td>
       <td class="text-center px-6 py-4">{{ student.current_madrasha }}</td>
@@ -414,11 +420,13 @@ const submitApplication = () => {
           <i class="fa-pencil-alt fas mr-2"></i> এডিট
         </Link>
 
-        <button
+        <Link
+
+             :href="route('students_registration.student_registraion_view')"
   class="flex text-blue-600 text-left text-sm w-full hover:bg-blue-50 items-center px-4 py-2"
 >
   <i class="fa-info-circle fas mr-2"></i> বিস্তারিত দেখুন
-</button>
+</Link>
 
         <button
           class="flex text-left text-red-600 text-sm w-full hover:bg-red-50 items-center px-4 py-2"

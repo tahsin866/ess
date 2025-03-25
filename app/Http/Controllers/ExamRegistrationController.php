@@ -841,10 +841,6 @@ if ($markazFromRledger) {
 }
 
 
-
-
-
-
         // Create new record in reg_stu_informations table
         reg_stu_information::create([
             'current_madrasha' => Auth::user()->madrasha_name,
