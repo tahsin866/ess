@@ -41,9 +41,15 @@
             <!-- Photo Section -->
             <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm mb-6">
               <div class="aspect-[3/4] bg-gray-100 rounded-md flex flex-col items-center justify-center border border-dashed border-gray-300 mb-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                </svg> -->
+                  <img
+    v-if="student.student_image"
+    :src="'/storage/' + student.student_image"
+    alt="Student"
+    class="w-200 h-200 rounded-sm mx-auto object-cover"
+  />
                 <p class="text-gray-500 text-sm mt-2">কোনো ছবি নেই</p>
               </div>
               <p class="text-xs text-center text-gray-500 italic">* ছাত্রীদের ক্ষেত্রে ছবি প্রযোজ্য নয়</p>
@@ -113,12 +119,12 @@
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4">
                 <div class="flex items-start">
-                  <span class="text-emerald-700 font-semibold w-32">পরীক্ষার নাম:</span>
-                  <span class="text-gray-700">ফযীলত</span>
-                </div>
+      <span class="text-emerald-700 font-semibold w-32">পরীক্ষার নাম:</span>
+  <span class="text-gray-700">{{ student.exam_name_Bn }}</span>
+    </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">পরীক্ষার্থী নাম:</span>
-                  <span class="text-gray-700">শিখা আক্তার</span>
+                  <span class="text-gray-700">{{ student.name_bn }}</span>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">লিঙ্গ:</span>
@@ -126,23 +132,31 @@
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">পিতার নাম:</span>
-                  <span class="text-gray-700">হাবিবুর রহমান</span>
+                  <span class="text-gray-700">{{ student.father_name_bn }}</span>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">রোল নং:</span>
-                  <span class="text-gray-700">২৫৮৬</span>
+                  <span class="text-gray-700">{{ student.past_Roll}}</span>
+                </div>
+                 <div class="flex items-start">
+                  <span class="text-emerald-700 font-semibold w-32">রেজিস্ট্রেসন নং:</span>
+                  <span class="text-gray-700">{{ student.past_reg_id}}</span>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">পাশের সন:</span>
-                  <span class="text-gray-700">১৪৪৫ হিজরী</span>
+                  <span class="text-gray-700">{{ student.passing_year}}</span>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">প্রাপ্ত বিভাগ:</span>
-                  <span class="text-gray-700">মাকবূল</span>
+                  <span class="text-gray-700">{{ student.division}}</span>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">মাদরাসা:</span>
-                  <span class="text-gray-700">বেগম লুৎফুন্নেছা মহিলা মাদরাসা, মনুয়া, ভেদরগঞ্জ, শরীয়তপুর, g-1/143</span>
+                  <span class="text-gray-700">{{ student.madrasha_name}}</span>
+                </div>
+                 <div class="flex items-start">
+                  <span class="text-emerald-700 font-semibold w-32">মারকায:</span>
+                  <span class="text-gray-700">{{ student.madrasha_name}}</span>
                 </div>
                 <div class="flex items-start col-span-2">
                   <span class="text-emerald-700 font-semibold w-32">বোর্ড:</span>
@@ -154,7 +168,7 @@
             <!-- Personal Info Section -->
             <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
               <h2 class="text-xl font-bold text-emerald-800 mb-4 flex items-center">
-                <span class="inline-block w-8 h-8 bg-emerald-700 text-white rounded-full mr-2 flex items-center justify-center">
+                <span class=" w-8 h-8 bg-emerald-700 text-white rounded-full mr-2 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
@@ -166,31 +180,31 @@
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">নাম:</span>
                   <div>
-                    <span class="text-gray-700 block">শিখা আক্তার</span>
-                    <span class="text-gray-500 text-xs">shikha akter</span>
-                    <span class="text-gray-500 text-xs block font-[Noto_Naskh_Arabic]">شيكا اختر</span>
+                    <span class="text-gray-700 block">{{ student.name_bn}}</span>
+                    <span class="text-gray-500 text-xs">{{ student.name_en}}</span>
+                    <span class="text-gray-500 text-xs block ">{{ student.name_ar}}</span>
                   </div>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">পিতার নাম:</span>
                   <div>
-                    <span class="text-gray-700 block">হাবিবুর রহমান খান</span>
-                    <span class="text-gray-700 block">হাবিবুর রহমান খান</span>
-                    <span class="text-gray-500 text-xs">habibur rahman khan</span>
-                    <span class="text-gray-500 text-xs block font-[Noto_Naskh_Arabic]">حبيب الرحمن خان</span>
+                    <span class="text-gray-700 block">{{ student.father_name_bn}}</span>
+                    <span class="text-gray-700 block">{{ student.father_name_en}}</span>
+                    <span class="text-gray-500 text-xs">{{ student.father_name_ar}}</span>
+
                   </div>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">মাতার নাম:</span>
                   <div>
-                    <span class="text-gray-700 block">হাসিদা বেগম</span>
-                    <span class="text-gray-500 text-xs">hasida begum</span>
-                    <span class="text-gray-500 text-xs block font-[Noto_Naskh_Arabic]">حشيده بيغم</span>
+                    <span class="text-gray-700 block">{{ student.mother_name_bn}}</span>
+                    <span class="text-gray-500 text-xs">{{ student.mother_name_en}}</span>
+                    <span class="text-gray-500 text-xs block ">{{ student.mother_name_ar}}</span>
                   </div>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">জন্ম তারিখ:</span>
-                  <span class="text-gray-700">২০ অক্টোবর ২০০৬</span>
+                  <span class="text-gray-700">{{ student.Date_of_birth}}</span>
                 </div>
                 <div class="flex items-start">
                   <span class="text-emerald-700 font-semibold w-32">জাতীয়তা:</span>
@@ -204,7 +218,7 @@
                   <span class="text-emerald-700 font-semibold w-32">পরিচয়পত্র:</span>
                   <div>
                     <span class="text-gray-700 block">জন্মসনদ</span>
-                    <span class="text-gray-700 block text-sm">২০০৬৮৬১৯৪৭৩১০১৩৯৪</span>
+                    <span class="text-gray-700 block text-sm">{{ student.NID_no}}</span>
                     <button
                       @click="showIdModal = true"
                       class="mt-1 text-xs text-emerald-600 hover:text-emerald-800 flex items-center"
@@ -341,6 +355,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { ref } from 'vue';
 
+
+const props = defineProps({
+  student: Object
+});
 // State for modal
 const showIdModal = ref(false);
   // No additional script needed for this view component

@@ -23,8 +23,8 @@ class StudentRegistrationController extends Controller
     {
         // Find the student from students table
         $student = Student::where('Roll', $roll)
-                         ->where('reg_id', $reg_id)
-                         ->first();
+            ->where('reg_id', $reg_id)
+            ->first();
 
         if (!$student) {
             return redirect()->back()->with('error', 'ছাত্র খুঁজে পাওয়া যায়নি');
@@ -32,8 +32,8 @@ class StudentRegistrationController extends Controller
 
         // Check if student already has data in reg_stu_informations table
         $studentInfo = reg_stu_information::where('roll', $roll)
-                                       ->where('reg_id', $reg_id)
-                                       ->first();
+            ->where('reg_id', $reg_id)
+            ->first();
 
         // Create translator instance for displaying Bengali data
         $translator = new Translator();
@@ -56,39 +56,40 @@ class StudentRegistrationController extends Controller
 
 
 
-public function updateStudentInfo(Request $request)
-{
-    $validated = $request->validate([
-        'roll' => 'required',
-        'reg_id' => 'required',
-        'name_bn' => 'required',
-        'name_en' => 'nullable',
-        'name_ar' => 'nullable',
-        'father_name_bn' => 'required',
-        'father_name_en' => 'nullable',
-        'father_name_ar' => 'nullable',
-        'mother_name_bn' => 'nullable',
-        'mother_name_en' => 'nullable',
-        'mother_name_ar' => 'nullable',
-        'BRN_no' => 'nullable',
-        'NID_no' => 'nullable',
-    ]);
+    public function updateStudentInfo(Request $request)
+    {
+        $validated = $request->validate([
+            'roll' => 'required',
+            'reg_id' => 'required',
+            'name_bn' => 'required',
+            'name_en' => 'nullable',
+            'name_ar' => 'nullable',
+            'father_name_bn' => 'required',
+            'father_name_en' => 'nullable',
+            'father_name_ar' => 'nullable',
+            'mother_name_bn' => 'nullable',
+            'mother_name_en' => 'nullable',
+            'mother_name_ar' => 'nullable',
+            'BRN_no' => 'nullable',
+            'NID_no' => 'nullable',
+        ]);
 
-    // Update or create record in reg_stu_informations table
-    reg_stu_information::updateOrCreate(
-        ['roll' => $validated['roll'], 'reg_id' => $validated['reg_id']],
-        $validated
-    );
+        // Update or create record in reg_stu_informations table
+        reg_stu_information::updateOrCreate(
+            ['roll' => $validated['roll'], 'reg_id' => $validated['reg_id']],
+            $validated
+        );
 
-    // Update mother's name in students table if provided
-    if (!empty($validated['mother_name_bn'])) {
-        Student::where('Roll', $validated['roll'])
-              ->where('reg_id', $validated['reg_id'])
-              ->update(['Mother' => $validated['mother_name_bn']]);
+        // Update mother's name in students table if provided
+        if (!empty($validated['mother_name_bn'])) {
+            Student::where('Roll', $validated['roll'])
+                ->where('reg_id', $validated['reg_id'])
+                ->update(['Mother' => $validated['mother_name_bn']]);
+        }
+
+        return redirect()->back()->with('success', 'ছাত্রের তথ্য সফলভাবে আপডেট করা হয়েছে');
     }
 
-    return redirect()->back()->with('success', 'ছাত্রের তথ্য সফলভাবে আপডেট করা হয়েছে');
-}
 
 
 
@@ -108,92 +109,91 @@ public function updateStudentInfo(Request $request)
 
 
 
+    public function getStudents()
+    {
+        $students = reg_stu_information::where('user_id', Auth::id())->select(
+            'id',
+            'student_image',
+            'name_bn',
+            'father_name_bn',
+            'current_madrasha',
+            'Date_of_birth',
+            'student_type',
+            'exam_name_Bn'
+        )->get();
 
-public function getStudents()
-{
-    $students = reg_stu_information::where('user_id', Auth::id())->select(
-        'id',
-        'student_image',
-        'name_bn',
-        'father_name_bn',
-        'current_madrasha',
-        'Date_of_birth',
-        'student_type',
-        'exam_name_Bn'
-    )->get();
-
-    // প্রতিটি ছাত্রের জন্য status যোগ করা
-    foreach ($students as $student) {
-        $log = reg_stu_information_log::where('reg_student_id', $student->id)
+        // প্রতিটি ছাত্রের জন্য status যোগ করা
+        foreach ($students as $student) {
+            $log = reg_stu_information_log::where('reg_student_id', $student->id)
                 ->latest()
                 ->first();
-        $student->status = $log ? $log->status : null;
-    }
+            $student->status = $log ? $log->status : null;
+        }
 
-    return response()->json($students);
-}
-
-
-
-
-
-public function reg_submitApplication($id)
-{
-    // 1️⃣ First check markaz_agreements table
-    $registration = reg_stu_information::find($id);
-    if (!$registration) {
-        return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
-    }
-
-    // 2️⃣ Now check schedule timing before anything else
-    $schedule = ExamFee::where('exam_setup_id', $registration->exam_id)
-        // ->where('schedule_type', 'মারকায আবেদন')
-        // ->where('is_active', true)
-        ->first();
-
-    if (!$schedule) {
-        return back()->withErrors(['error' => 'সময়সূচী পাওয়া যায়নি!']);
-    }
-
-    $currentDate = now();
-    $startDate = \Carbon\Carbon::parse($schedule->reg_date_from);
-    $endDate = \Carbon\Carbon::parse($schedule->reg_date_to);
-
-    if ($currentDate->lt($startDate)) {
-        return back()->withErrors(['error' => 'আবেদনের সময় শুরু হয়নি! ' . $startDate->format('d-m-Y') . ' তারিখে আবার চেষ্টা করুন।']);
-    }
-
-    if ($currentDate->gt($endDate)) {
-        return back()->withErrors(['error' => 'আবেদনের সময় শেষ! আগামী বছর আবার চেষ্টা করুন।']);
+        return response()->json($students);
     }
 
 
 
-    // 4️⃣ If all checks pass, then create activity log
-    reg_stu_information_log::create([
-        'reg_student_id' => $registration->id,
-        'user_id' => Auth::user()->id,
-        'status' => 'বোর্ড দাখিল',
-        'actor_type' => 'user',
-        'user_name' => Auth::user()->name,
-        'user_position' => Auth::user()->admin_Designation,
-        'admin_position' => null,
-        'admin_message' => null,
-        'admin_feedback_image' => null,
-        'created_at' => now(),
-        'updated_at' => now()
-    ]);
-
-    return back()->with('success', 'আবেদন সফলভাবে সাবমিট হয়েছে!');
-}
 
 
+    public function reg_submitApplication($id)
+    {
+        // 1️⃣ First check markaz_agreements table
+        $registration = reg_stu_information::find($id);
+        if (!$registration) {
+            return back()->withErrors(['error' => 'আবেদন পাওয়া যায়নি!']);
+        }
+
+        // 2️⃣ Now check schedule timing before anything else
+        $schedule = ExamFee::where('exam_setup_id', $registration->exam_id)
+            // ->where('schedule_type', 'মারকায আবেদন')
+            // ->where('is_active', true)
+            ->first();
+
+        if (!$schedule) {
+            return back()->withErrors(['error' => 'সময়সূচী পাওয়া যায়নি!']);
+        }
+
+        $currentDate = now();
+        $startDate = \Carbon\Carbon::parse($schedule->reg_date_from);
+        $endDate = \Carbon\Carbon::parse($schedule->reg_date_to);
+
+        if ($currentDate->lt($startDate)) {
+            return back()->withErrors(['error' => 'আবেদনের সময় শুরু হয়নি! ' . $startDate->format('d-m-Y') . ' তারিখে আবার চেষ্টা করুন।']);
+        }
+
+        if ($currentDate->gt($endDate)) {
+            return back()->withErrors(['error' => 'আবেদনের সময় শেষ! আগামী বছর আবার চেষ্টা করুন।']);
+        }
+
+
+
+        // 4️⃣ If all checks pass, then create activity log
+        reg_stu_information_log::create([
+            'reg_student_id' => $registration->id,
+            'user_id' => Auth::user()->id,
+            'status' => 'বোর্ড দাখিল',
+            'actor_type' => 'user',
+            'user_name' => Auth::user()->name,
+            'user_position' => Auth::user()->admin_Designation,
+            'admin_position' => null,
+            'admin_message' => null,
+            'admin_feedback_image' => null,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        return back()->with('success', 'আবেদন সফলভাবে সাবমিট হয়েছে!');
+    }
 
 
 
 
 
-// এডমিন পার্ট
+
+
+    // এডমিন পার্ট
 
 
 
@@ -203,7 +203,7 @@ public function reg_submitApplication($id)
 
 
 
-// public function getMarkazStudents()
+    // public function getMarkazStudents()
 // {
 //     // markaz_agreements টেবিল থেকে শুরু করে, প্রতিটি markaz_id একবারই দেখানো হবে
 //     $students = DB::table('markaz_agreements')
@@ -225,45 +225,46 @@ public function reg_submitApplication($id)
 //         ->having('student_count', '>', 0)
 //         ->get();
 
-//     return response()->json($students);
+    //     return response()->json($students);
 // }
 
 
-public function getMarkazStudents()
-{
-    $students = DB::table('reg_stu_informations')
-        ->select(
-            'reg_stu_informations.markaz_id as id',
-            DB::raw('(SELECT MName FROM madrasha WHERE id = reg_stu_informations.markaz_id LIMIT 1) as madrasha_Name'),
-            DB::raw('(SELECT ElhaqNo FROM madrasha WHERE id = reg_stu_informations.markaz_id LIMIT 1) as Elhaq_no'),
-            'reg_stu_informations.exam_name_Bn',
-            DB::raw('COUNT(reg_stu_informations.id) as student_count')
-        )
-        ->whereNotNull('reg_stu_informations.markaz_id')
-        ->groupBy(
-            'reg_stu_informations.markaz_id',
-            'reg_stu_informations.exam_name_Bn'
-        )
-        ->having('student_count', '>', 0)
-        ->get();
+    public function getMarkazStudents()
+    {
+        $students = DB::table('reg_stu_informations')
+            ->select(
+                'reg_stu_informations.markaz_id as id',
+                DB::raw('(SELECT MName FROM madrasha WHERE id = reg_stu_informations.markaz_id LIMIT 1) as madrasha_Name'),
+                DB::raw('(SELECT ElhaqNo FROM madrasha WHERE id = reg_stu_informations.markaz_id LIMIT 1) as Elhaq_no'),
+                'reg_stu_informations.exam_name_Bn',
+                DB::raw('COUNT(reg_stu_informations.id) as student_count')
+            )
+            ->whereNotNull('reg_stu_informations.markaz_id')
+            ->groupBy(
+                'reg_stu_informations.markaz_id',
+                'reg_stu_informations.exam_name_Bn'
+            )
+            ->having('student_count', '>', 0)
+            ->get();
 
-    // After getting the results, fetch the custom_code for each record
-    foreach ($students as $student) {
-        $user = DB::table('users')
-            ->where('madrasha_id', function($query) use ($student) {
-                $query->select('madrasha_id')
-                    ->from('reg_stu_informations')
-                    ->where('markaz_id', $student->id)
-                    ->limit(1);
-            })
-            ->select('custom_code')
-            ->first();
+        // After getting the results, fetch the custom_code for each record
+        foreach ($students as $student) {
+            $user = DB::table('users')
+                ->where('madrasha_id', function ($query) use ($student) {
+                    $query->select('madrasha_id')
+                        ->from('reg_stu_informations')
+                        ->where('markaz_id', $student->id)
+                        ->limit(1);
+                })
+                ->select('custom_code')
+                ->first();
 
-        $student->madrasha_code = $user ? $user->custom_code : null;
+            $student->madrasha_code = $user ? $user->custom_code : null;
+        }
+
+        return response()->json($students);
     }
 
-    return response()->json($students);
-}
 
 
 
@@ -285,19 +286,18 @@ public function getMarkazStudents()
 
 
 
-
-// public function abandonStuList($markaz_id)
+    // public function abandonStuList($markaz_id)
 // {
 //     // মারকাজ আইডি অনুযায়ী শুধু মাদরাসার নাম ও আইডি সিলেক্ট করা
 //     $madrashaList = MarkazAgreementMadrasa::where('markaz_agreement_id', $markaz_id)
 //         ->select('id', 'madrasa_Name')
 //         ->get();
 
-//     // মারকাজের নাম পাওয়া
+    //     // মারকাজের নাম পাওয়া
 //     $markazName = MarkazAgreement::where('id', $markaz_id)
 //         ->value('madrasha_Name');
 
-//     return Inertia::render('nibondon_for_admin/abandon_stu_list', [
+    //     return Inertia::render('nibondon_for_admin/abandon_stu_list', [
 //         'madrashaList' => $madrashaList,
 //         'markazName' => $markazName
 //     ]);
@@ -308,74 +308,74 @@ public function getMarkazStudents()
 
 
 
-public function getMarkazMadrasaList($markaz_id)
-{
-    // Get all MRID values from stu_rledger_p table where MDID matches the markaz ID
-    $mridValues = DB::table('stu_rledger_p')
-        ->where('MDID', $markaz_id)
-        ->pluck('MRID')
-        ->unique()
-        ->toArray();
+    public function getMarkazMadrasaList($markaz_id)
+    {
+        // Get all MRID values from stu_rledger_p table where MDID matches the markaz ID
+        $mridValues = DB::table('stu_rledger_p')
+            ->where('MDID', $markaz_id)
+            ->pluck('MRID')
+            ->unique()
+            ->toArray();
 
-    // Get madrashas where id matches any of the MRID values
-    $madrashaList = DB::table('madrasha')
-        ->whereIn('id', $mridValues)
-        ->select('id', 'MName as name', 'ElhaqNo as Elhaq_no', 'Mobile as mobile_no')
-        ->get();
-
-    // Get the markaz name
-    $markazName = DB::table('madrasha')
-        ->where('id', $markaz_id)
-        ->value('MName');
-
-    return response()->json([
-        'madrashaList' => $madrashaList,
-        'markazName' => $markazName
-    ]);
-}
-
-
-public function abandonStuList($markaz_id)
-{
-    // Just render the view, data will be fetched on the client side
-    return Inertia::render('nibondon_for_admin/abandon_stu_list', [
-        'markaz_id' => $markaz_id
-    ]);
-}
-
-
-
-
-
-public function madrashaWariStuNibondList($madrasha_id = null)
-{
-    // মাদরাসা আইডি অনুসারে ছাত্রদের তালিকা পাওয়া
-    $students = [];
-
-    if ($madrasha_id) {
-        // reg_stu_informations টেবিল থেকে ছাত্রদের তথ্য সংগ্রহ করা
-        $students = DB::table('reg_stu_informations')
-            ->where('madrasha_id', $madrasha_id)
-            ->select('id', 'name_bn','Date_of_birth','father_name_bn', 'mother_name_bn','student_image')
+        // Get madrashas where id matches any of the MRID values
+        $madrashaList = DB::table('madrasha')
+            ->whereIn('id', $mridValues)
+            ->select('id', 'MName as name', 'ElhaqNo as Elhaq_no', 'Mobile as mobile_no')
             ->get();
+
+        // Get the markaz name
+        $markazName = DB::table('madrasha')
+            ->where('id', $markaz_id)
+            ->value('MName');
+
+        return response()->json([
+            'madrashaList' => $madrashaList,
+            'markazName' => $markazName
+        ]);
     }
 
-    return Inertia::render('nibondon_for_admin/madrashaWari_stu_nibond_list', [
-        'students' => $students,
-        'madrasha_id' => $madrasha_id
-    ]);
-}
+
+    public function abandonStuList($markaz_id)
+    {
+        // Just render the view, data will be fetched on the client side
+        return Inertia::render('nibondon_for_admin/abandon_stu_list', [
+            'markaz_id' => $markaz_id
+        ]);
+    }
 
 
 
 
-// public function getMadrashaStudents($madrasha_id)
+
+    public function madrashaWariStuNibondList($madrasha_id = null)
+    {
+        // মাদরাসা আইডি অনুসারে ছাত্রদের তালিকা পাওয়া
+        $students = [];
+
+        if ($madrasha_id) {
+            // reg_stu_informations টেবিল থেকে ছাত্রদের তথ্য সংগ্রহ করা
+            $students = DB::table('reg_stu_informations')
+                ->where('madrasha_id', $madrasha_id)
+                ->select('id', 'name_bn', 'Date_of_birth', 'father_name_bn', 'mother_name_bn', 'student_image')
+                ->get();
+        }
+
+        return Inertia::render('nibondon_for_admin/madrashaWari_stu_nibond_list', [
+            'students' => $students,
+            'madrasha_id' => $madrasha_id
+        ]);
+    }
+
+
+
+
+    // public function getMadrashaStudents($madrasha_id)
 // {
 //     $students = reg_stu_information::where('madrasha_id', $madrasha_id)
 //         ->select('id', 'name_bn as name')
 //         ->get();
 
-//     return Inertia::render('nibondon_for_admin/madrashaWari_stu_nibond_list', [
+    //     return Inertia::render('nibondon_for_admin/madrashaWari_stu_nibond_list', [
 //         'students' => $students,
 //         'madrasha_id' => $madrasha_id
 //     ]);
@@ -387,20 +387,20 @@ public function madrashaWariStuNibondList($madrasha_id = null)
 
 
 
-public function editStudentRegistration($id)
-{
-    // Find the student record
-    $student = reg_stu_information::findOrFail($id);
+    public function editStudentRegistration($id)
+    {
+        // Find the student record
+        $student = reg_stu_information::findOrFail($id);
 
-    // Get marhalas for dropdown
-    $marhalas = DB::table('marhalas')->get();
+        // Get marhalas for dropdown
+        $marhalas = DB::table('marhalas')->get();
 
-    // Return Inertia response to render Vue component
-    return Inertia::render('students_registration/student_registration_edit', [
-        'student' => $student,
-        'marhalas' => $marhalas
-    ]);
-}
+        // Return Inertia response to render Vue component
+        return Inertia::render('students_registration/student_registration_edit', [
+            'student' => $student,
+            'marhalas' => $marhalas
+        ]);
+    }
 
     public function updateStudentRegistration(Request $request, $id)
     {
@@ -495,7 +495,7 @@ public function editStudentRegistration($id)
         $student->save();
 
         return redirect()->back()
-        ->with('success', 'Student information updated successfully');
+            ->with('success', 'Student information updated successfully');
 
     }
 
@@ -504,11 +504,32 @@ public function editStudentRegistration($id)
 
 
 
+    public function studentRegistrationView($id)
+    {
+        // reg_stu_informations টেবিল থেকে ডাটা নিয়ে আসা
+        $student = reg_stu_information::findOrFail($id);
+
+        // পুরো ডাটা পাঠানো হচ্ছে
+        return inertia('students_registration/student_registraion_view', [
+            'student' => $student
+        ]);
+    }
 
 
 
 
+    public function studentRegistrationDelete($id)
+    {
+        $student = reg_stu_information::find($id);
 
+        if (!$student) {
+            return response()->json(['error' => 'আবেদন পাওয়া যায়নি!'], 404);
+        }
+
+        $student->delete();
+
+        return redirect()->back()->with('success', 'আবেদন সফলভাবে মুছে ফেলা হয়েছে!');
+    }
 
 
 

@@ -176,12 +176,14 @@ class ExamRegistrationController extends Controller
             $student->DateofBirth = $translator->translate($student->DateofBirth);
 
             // Skip students with Division = রাসিব for specific CID and marhalaId combinations
-            if ($student->Division == 'রাসিব' && $student->years == '2024' && (
-                ($student->CID == 3 && $marhalaId == 9) ||
-                ($student->CID == 4 && $marhalaId == 10) ||
-                ($student->CID == 5 && $marhalaId == 11) ||
-                ($student->CID == 6 && $marhalaId == 12)
-            )) {
+            if (
+                $student->Division == 'রাসিব' && $student->years == '2024' && (
+                    ($student->CID == 3 && $marhalaId == 9) ||
+                    ($student->CID == 4 && $marhalaId == 10) ||
+                    ($student->CID == 5 && $marhalaId == 11) ||
+                    ($student->CID == 6 && $marhalaId == 12)
+                )
+            ) {
                 // Skip this student
                 continue;
             }
@@ -256,13 +258,13 @@ class ExamRegistrationController extends Controller
 
                 // "অনিয়মিত যেমনী" conditions
                 if (
-                    // 1. এক বা দুই বিষয়ে ফেল এবং বিভাগ রাসিব
+                        // 1. এক বা দুই বিষয়ে ফেল এবং বিভাগ রাসিব
                     (($failedSubjects == 1 || $failedSubjects == 2) && $student->Division === 'রাসিব') ||
 
-                    // 2. এক বা দুই বিষয়ে অনু (SubValue = 0) এবং কোন বিষয়ে ফেল নেই
+                        // 2. এক বা দুই বিষয়ে অনু (SubValue = 0) এবং কোন বিষয়ে ফেল নেই
                     (($zeroSubjects == 1 || $zeroSubjects == 2) && $failedSubjects == 0) ||
 
-                    // 3. এক বিষয়ে অনু এবং এক বিষয়ে ফেল
+                        // 3. এক বিষয়ে অনু এবং এক বিষয়ে ফেল
                     ($zeroSubjects == 1 && $failedSubjects == 1)
                 ) {
                     $student->student_type = 'অনিয়মিত যেমনী';
@@ -270,20 +272,20 @@ class ExamRegistrationController extends Controller
 
                 // "অনিয়মিত অন্যান্য" conditions
                 elseif (
-                    // 1. দুয়ের অধিক বিষয়ে ফেল এবং বিভাগ রাসিব
+                        // 1. দুয়ের অধিক বিষয়ে ফেল এবং বিভাগ রাসিব
                     ($failedSubjects > 2 && $student->Division === 'রাসিব') ||
 
-                    // 2. দুই বিষয় অনু এক বিষয়ে ফেল বা এক বিষয়ে অনু দুই বিষয়ে ফেল
+                        // 2. দুই বিষয় অনু এক বিষয়ে ফেল বা এক বিষয়ে অনু দুই বিষয়ে ফেল
                     ($zeroSubjects == 2 && $failedSubjects == 1) ||
                     ($zeroSubjects == 1 && $failedSubjects == 2) ||
 
-                    // 3. এক বিষয়ে অনু এবং দুয়ের অধিক বিষয়ে ফেল
+                        // 3. এক বিষয়ে অনু এবং দুয়ের অধিক বিষয়ে ফেল
                     ($zeroSubjects == 1 && $failedSubjects > 2) ||
 
-                    // 4. একের অধিক অনু একের অধিক ফেল
+                        // 4. একের অধিক অনু একের অধিক ফেল
                     ($zeroSubjects > 1 && $failedSubjects > 1) ||
 
-                    // 5. দুয়ের অধিক অনু বিভাগ অনু
+                        // 5. দুয়ের অধিক অনু বিভাগ অনু
                     ($zeroSubjects > 2 && $student->Absence === 'অনুপস্থিত')
                 ) {
                     $student->student_type = 'অনিয়মিত অন্যান্য';
@@ -407,7 +409,8 @@ class ExamRegistrationController extends Controller
                 'Madrasha' => $student->Madrasha,
                 'Markaj' => $student->Markaj,
                 'Class' => $student->Class,
-                'Division' => $student->Division
+                'Division' => $student->Division,
+                'years' => $student->years
             ],
             'currentExam' => [
                 'Madrasha' => Auth::user()->madrasha_name,
@@ -524,13 +527,13 @@ class ExamRegistrationController extends Controller
 
             // "অনিয়মিত যেমনী" conditions
             if (
-                // 1. এক বা দুই বিষয়ে ফেল এবং বিভাগ রাসিব
+                    // 1. এক বা দুই বিষয়ে ফেল এবং বিভাগ রাসিব
                 (($failedSubjects == 1 || $failedSubjects == 2) && $student->Division === 'রাসিব') ||
 
-                // 2. এক বা দুই বিষয়ে অনু (SubValue = 0) এবং কোন বিষয়ে ফেল নেই
+                    // 2. এক বা দুই বিষয়ে অনু (SubValue = 0) এবং কোন বিষয়ে ফেল নেই
                 (($zeroSubjects == 1 || $zeroSubjects == 2) && $failedSubjects == 0) ||
 
-                // 3. এক বিষয়ে অনু এবং এক বিষয়ে ফেল
+                    // 3. এক বিষয়ে অনু এবং এক বিষয়ে ফেল
                 ($zeroSubjects == 1 && $failedSubjects == 1)
             ) {
                 $currentExam['student_type'] = 'অনিয়মিত যেমনী';
@@ -538,20 +541,20 @@ class ExamRegistrationController extends Controller
 
             // "অনিয়মিত অন্যান্য" conditions
             elseif (
-                // 1. দুয়ের অধিক বিষয়ে ফেল এবং বিভাগ রাসিব
+                    // 1. দুয়ের অধিক বিষয়ে ফেল এবং বিভাগ রাসিব
                 ($failedSubjects > 2 && $student->Division === 'রাসিব') ||
 
-                // 2. দুই বিষয় অনু এক বিষয়ে ফেল বা এক বিষয়ে অনু দুই বিষয়ে ফেল
+                    // 2. দুই বিষয় অনু এক বিষয়ে ফেল বা এক বিষয়ে অনু দুই বিষয়ে ফেল
                 ($zeroSubjects == 2 && $failedSubjects == 1) ||
                 ($zeroSubjects == 1 && $failedSubjects == 2) ||
 
-                // 3. এক বিষয়ে অনু এবং দুয়ের অধিক বিষয়ে ফেল
+                    // 3. এক বিষয়ে অনু এবং দুয়ের অধিক বিষয়ে ফেল
                 ($zeroSubjects == 1 && $failedSubjects > 2) ||
 
-                // 4. একের অধিক অনু একের অধিক ফেল
+                    // 4. একের অধিক অনু একের অধিক ফেল
                 ($zeroSubjects > 1 && $failedSubjects > 1) ||
 
-                // 5. দুয়ের অধিক অনু বিভাগ অনু
+                    // 5. দুয়ের অধিক অনু বিভাগ অনু
                 ($zeroSubjects > 2 && $student->Absence === 'অনুপস্থিত')
             ) {
                 $currentExam['student_type'] = 'অনিয়মিত অন্যান্য';
@@ -629,10 +632,6 @@ class ExamRegistrationController extends Controller
 
 
 
-
-
-
-
     public function saveStudentInfo(Request $request)
     {
         $request->validate([
@@ -681,19 +680,19 @@ class ExamRegistrationController extends Controller
         }
 
         $examSetup = DB::table('exam_setups')
-        ->select('id', 'exam_name')
-        ->latest('id')
-        ->first();
+            ->select('id', 'exam_name')
+            ->latest('id')
+            ->first();
 
         $markazId = null;
-$markazFromRledger = DB::table('stu_rledger_p')
-    ->where('MRID', Auth::user()->madrasha_id)
-    ->select('MDID')
-    ->first();
+        $markazFromRledger = DB::table('stu_rledger_p')
+            ->where('MRID', Auth::user()->madrasha_id)
+            ->select('MDID')
+            ->first();
 
-if ($markazFromRledger) {
-    $markazId = $markazFromRledger->MDID;
-}
+        if ($markazFromRledger) {
+            $markazId = $markazFromRledger->MDID;
+        }
 
         // Create new record in reg_stu_informations table
         reg_stu_information::updateOrCreate(
@@ -701,12 +700,12 @@ if ($markazFromRledger) {
             [
 
                 'user_id' => Auth::user()->id,
-            'user_name' => Auth::user()->name,
+                'user_name' => Auth::user()->name,
                 'madrasha_id' => Auth::user()->madrasha_id,
-                  // Add exam information from exam_setups table
-                  'markaz_id' => $markazId,
-            'exam_id' => $examSetup ? $examSetup->id : null,
-            'exam_name_Bn' => $examSetup ? $examSetup->exam_name : null,
+                // Add exam information from exam_setups table
+                'markaz_id' => $markazId,
+                'exam_id' => $examSetup ? $examSetup->id : null,
+                'exam_name_Bn' => $examSetup ? $examSetup->exam_name : null,
                 'name_bn' => $request->name_bn,
                 'name_en' => $request->name_en,
                 'name_ar' => $request->name_ar,
@@ -730,7 +729,8 @@ if ($markazFromRledger) {
                 'current_class' => $request->current_class,
                 'exam_books_name' => $request->exam_books_name,
                 'mobile_no' => $request->mobile_no,
-
+                'markaz_name' => $request->markaz_name,
+                'passing_year' => $request->passing_year,
 
                 'present_division_name' => $request->present_division_name,
                 'presernt_DID' => $request->presernt_DID,
@@ -748,10 +748,10 @@ if ($markazFromRledger) {
                 'parmanent_TID' => $request->parmanent_TID,
                 'student_image' => $request->student_image,
 
-                'student_image' => $studentImagePath,
+                // 'student_image' => $studentImagePath,
                 'NID_attach' => $nidAttachmentPath,
 
-'is_old_student' => 1,
+                'is_old_student' => 1,
             ]
         );
 
@@ -813,14 +813,14 @@ if ($markazFromRledger) {
 
         // Get the latest active exam from exam_setups table
         $examSetup = DB::table('exam_setups')
-        ->select('id', 'exam_name')
-        ->latest('id')
-        ->first();
+            ->select('id', 'exam_name')
+            ->latest('id')
+            ->first();
 
         $marhala = DB::table('marhalas')
-        ->select('id', 'marhala_name_bn')
-        ->where('id', $marhalaId)
-        ->first();
+            ->select('id', 'marhala_name_bn')
+            ->where('id', $marhalaId)
+            ->first();
 
 
         // $markaz = DB::table('markaz_agreements')
@@ -829,16 +829,16 @@ if ($markazFromRledger) {
         // ->first();
 
 
-  // Directly look up the MDID in stu_rledger_p table
-$markazId = null;
-$markazFromRledger = DB::table('stu_rledger_p')
-    ->where('MRID', Auth::user()->madrasha_id)
-    ->select('MDID')
-    ->first();
+        // Directly look up the MDID in stu_rledger_p table
+        $markazId = null;
+        $markazFromRledger = DB::table('stu_rledger_p')
+            ->where('MRID', Auth::user()->madrasha_id)
+            ->select('MDID')
+            ->first();
 
-if ($markazFromRledger) {
-    $markazId = $markazFromRledger->MDID;
-}
+        if ($markazFromRledger) {
+            $markazId = $markazFromRledger->MDID;
+        }
 
 
         // Create new record in reg_stu_informations table
@@ -853,13 +853,13 @@ if ($markazFromRledger) {
             'exam_id' => $examSetup ? $examSetup->id : null,
             'exam_name_Bn' => $examSetup ? $examSetup->exam_name : null,
 
-          'current_class' => $marhala ? $marhala->marhala_name_bn : null,
-        'marhala_id' => $marhalaId,
+            'current_class' => $marhala ? $marhala->marhala_name_bn : null,
+            'marhala_id' => $marhalaId,
 
-// 'markaz_id' => $markaz ? $markaz->id : null,
-'markaz_id' => $markazId,
+            // 'markaz_id' => $markaz ? $markaz->id : null,
+            'markaz_id' => $markazId,
 
-// 'markaz_id' => $markazId,
+            // 'markaz_id' => $markazId,
 
             'name_bn' => $request->name_bn,
             'name_en' => $request->name_en,

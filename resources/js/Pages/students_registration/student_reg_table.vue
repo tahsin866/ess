@@ -1,13 +1,15 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Link,router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
 import { ref, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
 
 const students = ref([]);
 const loading = ref(true);
 const error = ref(null);
-
+const showModal = ref(false);
+const showToast = ref(false);
+let submitId = null;
 
 onMounted(async () => {
   try {
@@ -25,14 +27,14 @@ onMounted(async () => {
     loading.value = false;
   }
 
-  // Add click outside listener
-//   document.addEventListener('click', closeDropdownOnClickOutside);
+  // Add click outside listener to close menus
+  document.addEventListener('click', closeAllMenus);
 });
 
-// onUnmounted(() => {
-//   // Remove click outside listener
-//   document.removeEventListener('click', closeDropdownOnClickOutside);
-// });
+onUnmounted(() => {
+  // Remove click outside listener
+  document.removeEventListener('click', closeAllMenus);
+});
 
 const handleSearch = () => {
   // Implement search logic
@@ -52,44 +54,106 @@ function closeAllMenus(event) {
   }
 }
 
-// Add event listener when component is mounted
-onMounted(() => {
-  document.addEventListener('click', closeAllMenus);
-});
-
-// Remove event listener when component is unmounted
-onUnmounted(() => {
-  document.removeEventListener('click', closeAllMenus);
-});
-
-
-const showModal = ref(false);
-let submitId = null;
-const showToast = ref(false);
-
 const openModal = (id) => {
-    submitId = id;
-    showModal.value = true;
+  submitId = id;
+  showModal.value = true;
 };
-
-
-
 
 const submitApplication = () => {
-    router.post(route('student_reg.submit', submitId), {}, {
-        preserveScroll: true,
-        onSuccess: () => {
-            showModal.value = false;
-            showToast.value = true;
-            setTimeout(() => window.location.reload(), 2000);
-        },
-        onError: (errors) => {
-            if (errors.error) {
-                alert(errors.error);
-            }
-        }
-    });
+  router.post(route('student_reg.submit', submitId), {}, {
+    preserveScroll: true,
+    onSuccess: () => {
+      showModal.value = false;
+      showToast.value = true;
+      setTimeout(() => window.location.reload(), 2000);
+    },
+    onError: (errors) => {
+      if (errors.error) {
+        alert(errors.error);
+      }
+    }
+  });
 };
+
+// মেনু টগল করার ফাংশন
+const toggleMenu = (student) => {
+  // অন্য সব মেনু বন্ধ করা
+  students.value.forEach(s => {
+    if (s.id !== student.id) {
+      s.showMenu = false;
+    }
+  });
+
+  // বর্তমান মেনু টগল করা
+  student.showMenu = !student.showMenu;
+};
+
+// মেনুর পজিশন নির্ধারণ করার ফাংশন
+const getMenuPosition = (studentId) => {
+  // DOM এলিমেন্টের পজিশন চেক করা
+  const buttonElement = document.querySelector(`[data-student-id="${studentId}"]`);
+
+  if (!buttonElement) return 'right-0';
+
+  const rect = buttonElement.getBoundingClientRect();
+  const spaceBelow = window.innerHeight - rect.bottom;
+  const spaceRight = window.innerWidth - rect.right;
+
+  // নিচে যথেষ্ট জায়গা না থাকলে উপরে দেখানো
+  const verticalClass = spaceBelow < 200 ? 'bottom-full mb-2' : 'top-full mt-2';
+
+  // ডানে যথেষ্ট জায়গা না থাকলে বামে দেখানো
+  const horizontalClass = spaceRight < 200 ? 'right-full mr-2' : 'left-0';
+
+  return `${verticalClass} ${horizontalClass}`;
+};
+
+
+
+// delete student funtion
+
+const emit = defineEmits(['deleted'])
+
+const closeDeleteModal = () => {
+  showDeleteModal.value = false
+}
+
+
+
+
+const showDeleteModal = ref(false)
+const showDeleteToast = ref(false)
+
+const closeMenu = () => {
+  showMenu.value = false
+}
+
+const deleteId = ref(null)
+
+const openDeleteModal = (id) => {
+  deleteId.value = id
+  showDeleteModal.value = true
+  closeMenu()
+}
+
+const deleteStudent = () => {
+    router.delete(route('students.delete', { id: deleteId.value }), {
+        onSuccess: () => {
+            showDeleteModal.value = false
+            showDeleteToast.value = true
+            setTimeout(() => {
+                showDeleteToast.value = false
+                window.location.reload()
+            }, 3000)
+        },
+    })
+}
+
+const closeDeleteToast = () => {
+  showDeleteToast.value = false
+}
+
+
 
 
 
@@ -99,6 +163,7 @@ const submitApplication = () => {
 
 
 </script>
+
 
 <template>
 <AuthenticatedLayout>
@@ -391,51 +456,77 @@ const submitApplication = () => {
         </div>
       </td>
       <td class="text-center px-6 py-4">
-  <div class="text-left inline-block relative">
-    <div>
-      <button
-        @click="student.showMenu = !student.showMenu"
-        type="button"
-        class="bg-gray-100 p-1 rounded-full text-gray-600 focus:outline-none hover:bg-gray-200"
-      >
-        <i class="fa-ellipsis-v fas px-1"></i>
-      </button>
-    </div>
+<div class="text-left inline-block relative group">
+  <div>
+   <button
+  @click="toggleMenu(student)"
+  type="button"
+  :data-student-id="student.id"
+  class="bg-gray-100 p-2 rounded-full text-gray-700 focus:outline-none hover:bg-gray-200 transition-colors duration-200 shadow-sm hover:shadow"
+>
+  <i class="fa-ellipsis-v fas"></i>
+</button>
 
+  </div>
+
+  <div
+    v-if="student.showMenu"
+    class="absolute mt-2 z-20"
+    :class="getMenuPosition(student.id)"
+  >
     <div
-      v-if="student.showMenu"
-      class="bg-white rounded-md shadow-lg w-48 absolute mt-2 origin-top-right right-0 ring-1 ring-black ring-opacity-5 z-10"
+      class="bg-white rounded-lg shadow-xl w-56 ring-1 ring-black ring-opacity-5 overflow-hidden transform transition-all duration-200 ease-out scale-100"
     >
       <div class="py-1" role="menu" aria-orientation="vertical">
-        <a @click="openModal(student.id)"
-                        class="group flex items-center px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 cursor-pointer">
-                        <i class="fas fa-upload mr-3 text-emerald-400 group-hover:text-emerald-700"></i>
-                        বোর্ড দাখিল করুন
-                    </a>
+        <a
+          @click="openModal(student.id)"
+          class="group flex items-center px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 cursor-pointer transition-colors duration-150"
+        >
+          <i class="fas fa-upload mr-3 text-emerald-500 group-hover:text-emerald-700"></i>
+          <span class="font-medium">বোর্ড দাখিল করুন</span>
+        </a>
+
+        <div class="border-t border-gray-100"></div>
 
         <Link
           :href="route('students_registration.student_registration_edit', student.id)"
-          class="flex text-amber-600 text-left text-sm w-full hover:bg-amber-50 items-center px-4 py-2"
+          class="group flex items-center px-4 py-3 text-sm text-amber-600 hover:bg-amber-50 hover:text-amber-800 transition-colors duration-150"
         >
-          <i class="fa-pencil-alt fas mr-2"></i> এডিট
+          <i class="fa-pencil-alt fas mr-3 text-amber-500 group-hover:text-amber-700"></i>
+          <span class="font-medium">এডিট</span>
         </Link>
 
+        <div class="border-t border-gray-100"></div>
+
         <Link
-
-             :href="route('students_registration.student_registraion_view')"
-  class="flex text-blue-600 text-left text-sm w-full hover:bg-blue-50 items-center px-4 py-2"
->
-  <i class="fa-info-circle fas mr-2"></i> বিস্তারিত দেখুন
-</Link>
-
-        <button
-          class="flex text-left text-red-600 text-sm w-full hover:bg-red-50 items-center px-4 py-2"
+          :href="route('students_registration.student_registraion_view', student.id)"
+          class="group flex items-center px-4 py-3 text-sm text-blue-600 hover:bg-blue-50 hover:text-blue-800 transition-colors duration-150"
         >
-          <i class="fa-trash-alt fas mr-2"></i> ডিলিট
-        </button>
+          <i class="fa-info-circle fas mr-3 text-blue-500 group-hover:text-blue-700"></i>
+          <span class="font-medium">বিস্তারিত দেখুন</span>
+        </Link>
+
+        <div class="border-t border-gray-100"></div>
+
+        <!-- <Link
+          class="group flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 hover:text-red-800 w-full transition-colors duration-150"
+        >
+          <i class="fa-trash-alt fas mr-3 text-red-500 group-hover:text-red-700"></i>
+          <span class="font-medium">ডিলিট</span>
+        </Link> -->
+
+   <a @click="openDeleteModal(student.id)"
+                        class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 cursor-pointer">
+                        <i class="fas fa-trash-alt mr-3 text-gray-400 group-hover:text-red-700"></i>
+                        মুছে ফেলুন
+                    </a>
+        
+
+
       </div>
     </div>
   </div>
+</div>
 </td>
 
 
@@ -487,6 +578,60 @@ const submitApplication = () => {
         </div>
         <button @click="showToast = false" class="ml-auto text-white hover:text-emerald-200 text-xl">&times;</button>
     </div>
+
+
+
+
+  <!-- Delete Confirmation Modal -->
+    <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60 z-50">
+        <div class="bg-white rounded-lg shadow-2xl w-[450px] mx-auto transform transition-all">
+            <div class="bg-red-600 rounded-t-lg p-4">
+                <div class="flex justify-center">
+                    <i class="fas fa-exclamation-triangle text-4xl text-white mb-2"></i>
+                </div>
+                <h2 class="text-xl font-bold text-white text-center">সতর্কীকরণ!</h2>
+            </div>
+            <div class="p-6 border-t border-red-100">
+                <p class="text-gray-700 text-center text-lg">আপনি কি নিশ্চিত যে এই আবেদনটি মুছে ফেলতে চান?</p>
+                <p class="text-red-600 text-center text-sm mt-2">এই কাজটি অপরিবর্তনীয়!</p>
+                <div class="mt-6 flex justify-center space-x-4">
+                    <button @click="showDeleteModal = false"
+                        class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200">
+                        বাতিল করুন
+                    </button>
+                    <button @click="deleteStudent"
+                        class="px-6 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors duration-200 flex items-center">
+                        <i class="fas fa-trash-alt mr-2"></i>
+                        মুছে ফেলুন
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Success Toast -->
+    <div v-if="showDeleteToast"
+        class="fixed top-20 -right-96 flex items-center w-full max-w-md p-6 text-white bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow-2xl border-l-4 border-red-400 transition-all duration-300 ease-out transform translate-x-[-512px]">
+        <div class="flex items-center space-x-4">
+            <div class="bg-white bg-opacity-20 rounded-full p-3">
+                <i class="fas fa-check-circle text-2xl"></i>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xl">আবেদন সফলভাবে মুছে ফেলা হয়েছে!</span>
+            </div>
+        </div>
+        <button @click="showDeleteToast = false" class="ml-auto text-white hover:text-red-200 text-xl">&times;</button>
+    </div>
+
+
+
+
+
+
+
+
+
+
 
 
 

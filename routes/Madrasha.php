@@ -162,37 +162,37 @@ Route::get('others/massaging', function () {
 //     return Inertia::render('Auth/madrasha_check_for_user');
 // })->name('Auth.madrasha_check_for_user');
 
-    Route::get('/marhalas', [MarhalaController::class, 'index'])->name('marhalas.index');
-    Route::post('/marhalas', [MarhalaController::class, 'store'])->name('marhalas.store');
+Route::get('/marhalas', [MarhalaController::class, 'index'])->name('marhalas.index');
+Route::post('/marhalas', [MarhalaController::class, 'store'])->name('marhalas.store');
 
-    Route::get('/marhalas/{id}/edit', [MarhalaController::class, 'edit'])->name('marhalas.edit');
-    Route::put('/marhalas/{id}', [MarhalaController::class, 'update'])->name('marhalas.update');
+Route::get('/marhalas/{id}/edit', [MarhalaController::class, 'edit'])->name('marhalas.edit');
+Route::put('/marhalas/{id}', [MarhalaController::class, 'update'])->name('marhalas.update');
 
-    // Route::get('/Mrahala_for_Admin/marhala_details_list', [MarhalaListController::class, 'marhalaList'])
-    // ->name('Mrahala_for_Admin.marhala_details_list');
+// Route::get('/Mrahala_for_Admin/marhala_details_list', [MarhalaListController::class, 'marhalaList'])
+// ->name('Mrahala_for_Admin.marhala_details_list');
 
 
-    Route::resource('markaz-agreements', MarkazAgreementController::class);
-    Route::get('/markaz/makaj-apply', [MarkazAgreementController::class, 'getTableData'])
+Route::resource('markaz-agreements', MarkazAgreementController::class);
+Route::get('/markaz/makaj-apply', [MarkazAgreementController::class, 'getTableData'])
     ->name('markaz.makaj_apply.index');
 
-    // Route::get('/markaz-agreements', [MarkazAgreementController::class, 'index'])
-    // ->name('markaz-agreements.index');
-    Route::get('/Markaz/marjaz_detailes_view/{id}', [MarkazAgreementController::class, 'viewDetails'])->name('Markaz.view');
+// Route::get('/markaz-agreements', [MarkazAgreementController::class, 'index'])
+// ->name('markaz-agreements.index');
+Route::get('/Markaz/marjaz_detailes_view/{id}', [MarkazAgreementController::class, 'viewDetails'])->name('Markaz.view');
 
-    Route::get('/Markaz/markaz_apply_edit/{id}', [MarkazAgreementController::class, 'Edit'])->name('Markaz.edit');
-    Route::post('/Markaz/markaz_apply_update/{id}', [MarkazAgreementController::class, 'update'])->name('markaz-agreements.update');
+Route::get('/Markaz/markaz_apply_edit/{id}', [MarkazAgreementController::class, 'Edit'])->name('Markaz.edit');
+Route::post('/Markaz/markaz_apply_update/{id}', [MarkazAgreementController::class, 'update'])->name('markaz-agreements.update');
 
-    Route::post('/markaz/submit/{id}', [MarkazAgreementController::class, 'submitApplication'])->name('markaz.submit');
-    Route::post('/student_reg/submit/{id}', [StudentRegistrationController::class, 'reg_submitApplication'])->name('student_reg.submit');
+Route::post('/markaz/submit/{id}', [MarkazAgreementController::class, 'submitApplication'])->name('markaz.submit');
+Route::post('/student_reg/submit/{id}', [StudentRegistrationController::class, 'reg_submitApplication'])->name('student_reg.submit');
 
-    Route::delete('/markaz/delete/{id}', [MarkazAgreementController::class, 'deleteAgreement'])->name('markaz.delete');
+Route::delete('/markaz/delete/{id}', [MarkazAgreementController::class, 'deleteAgreement'])->name('markaz.delete');
 
 
 
-    // Route::get('/student-registration/edit', [ExamRegistrationController::class, 'editStudentRegistration'])
-    // ->name('students_registration.old_stu_reg_edit');
-    Route::get('/students/registration/edit', [ExamRegistrationController::class, 'editStudentRegistration'])
+// Route::get('/student-registration/edit', [ExamRegistrationController::class, 'editStudentRegistration'])
+// ->name('students_registration.old_stu_reg_edit');
+Route::get('/students/registration/edit', [ExamRegistrationController::class, 'editStudentRegistration'])
     ->name('students_registration.old_stu_reg_edit');
 
 
@@ -208,3 +208,10 @@ Route::get('/students-registration/{id}/edit', [StudentRegistrationController::c
 Route::put('/students-registration/{id}', [StudentRegistrationController::class, 'updateStudentRegistration'])
     ->name('students_registration.student_registration_update');
 
+
+
+Route::get('/students/registration/{id}', [StudentRegistrationController::class, 'studentRegistrationView'])
+    ->name('students_registration.student_registraion_view');
+
+
+Route::delete('/students/delete/{id}', [StudentRegistrationController::class, 'studentRegistrationDelete'])->name('students.delete');

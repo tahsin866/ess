@@ -717,6 +717,8 @@ const studentInfoForm = useForm({
     past_Roll: '',            // New field for national ID
     past_reg_id: '',
     madrasha_name: '',
+    markaz_name: '',
+    passing_year: '',
     class: '',
     Division: '',
     Date_of_birth: '',
@@ -791,6 +793,8 @@ onMounted(async () => {
             studentInfoForm.past_Roll = response.data.pastExam.Roll;
             studentInfoForm.past_reg_id = response.data.pastExam.reg_id;
             studentInfoForm.madrasha_name = response.data.pastExam.Madrasha;
+            studentInfoForm.markaz_name = response.data.pastExam.Markaj;
+               studentInfoForm.passing_year = response.data.pastExam.years;
             studentInfoForm.class = response.data.pastExam.Class;
             studentInfoForm.Division = response.data.pastExam.Division;
             studentInfoForm.Date_of_birth = response.data.pastExam.DateofBirth;

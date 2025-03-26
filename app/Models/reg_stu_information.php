@@ -44,28 +44,30 @@ class reg_stu_information extends Model
         'exam_books_name',
         'mobile_no',
 
-'present_division_name' ,
-            'presernt_DID',
-            'present_district_name' ,
-            'present_desId',
-            'present_thana_name' ,
-            'present_TID' ,
+        'present_division_name',
+        'presernt_DID',
+        'present_district_name',
+        'present_desId',
+        'present_thana_name',
+        'present_TID',
 
-            // New fields for permanent address
-            'parmanent_division_name' ,
-            'parmanent_DID' ,
-            'parmanent_district_name' ,
-            'parmanent_desId' ,
-            'parmanent_thana_name',
-            'parmanent_TID' ,
-            'student_image',
+        // New fields for permanent address
+        'parmanent_division_name',
+        'parmanent_DID',
+        'parmanent_district_name',
+        'parmanent_desId',
+        'parmanent_thana_name',
+        'parmanent_TID',
+        'student_image',
         'NID_attach',
-         'is_old_student',
-'madrasha_id',
-'marhala_id',
-'user_id',
-'user_name',
-'markaz_id'
+        'is_old_student',
+        'madrasha_id',
+        'marhala_id',
+        'user_id',
+        'user_name',
+        'markaz_id',
+        'passing_year',
+        'present_year'
 
     ];
 
